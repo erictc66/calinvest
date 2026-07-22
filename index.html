@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IB 美股買賣計數機</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6f9; --card:#ffffff; --card2:#eef1f5; --line:#dde3ea;
+  --text:#1a2532; --muted:#66788c; --faint:#96a5b6;
+  --green:#0f9d6e; --red:#e5484d; --accent:#2f6fb5; --accent-bg:rgba(47,111,181,.10);
+  --radius:14px; --shadow:0 1px 3px rgba(16,25,35,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#101923; --card:#18232f; --card2:#1e2b3a; --line:#2b3a4b;
+    --text:#e8edf2; --muted:#8fa1b3; --faint:#5d7186;
+    --green:#34c98e; --red:#f0605a; --accent:#7fb2e5; --accent-bg:rgba(127,178,229,.14);
+    --shadow:none;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  font-size:16px; line-height:1.6; padding:0 14px 56px;
+}
+.num{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace; font-variant-numeric:tabular-nums}
+main{max-width:640px; margin:0 auto}
+header{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:18px 2px 12px; flex-wrap:wrap}
+h1{font-size:19px; font-weight:700; margin:0}
+.seg{display:flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; background:var(--card)}
+.seg button{border:0; background:transparent; color:var(--muted); font-family:inherit; font-size:12.5px; padding:6px 12px; cursor:pointer}
+.seg button.on{background:var(--accent-bg); color:var(--accent); font-weight:500}
+.seg button:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+
+.sticky{
+  position:sticky; top:0; z-index:10; margin:0 -14px 14px; padding:14px 14px 12px;
+  background:color-mix(in srgb, var(--bg) 88%, transparent);
+  -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.sticky-in{max-width:640px; margin:0 auto}
+.pl-row{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.pl-lb{font-size:13px; color:var(--muted)}
+#bigPL{font-size:36px; font-weight:600; line-height:1.15}
+#bigPct{font-size:16px; font-weight:500}
+.sub-row{display:flex; gap:18px; flex-wrap:wrap; margin-top:4px; font-size:13.5px; color:var(--muted)}
+.sub-row .num{color:var(--text)}
+
+.sec{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; margin-bottom:12px; box-shadow:var(--shadow)}
+.sec h2{font-size:13px; font-weight:500; letter-spacing:.05em; color:var(--muted); margin:0 0 12px}
+label{display:block; font-size:13px; color:var(--muted); margin-bottom:6px}
+.row2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media (max-width:420px){.row2{grid-template-columns:1fr}}
+input[type=number]{
+  width:100%; background:var(--card2); border:1px solid var(--line); border-radius:10px;
+  color:var(--text); font-family:"IBM Plex Mono",monospace; font-size:17px;
+  padding:11px 12px; outline:none; min-height:46px;
+}
+input[type=number]:focus{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-bg)}
+.chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+.chip{
+  background:transparent; border:1px solid var(--line); border-radius:999px;
+  color:var(--muted); font-size:13px; font-family:"IBM Plex Mono",monospace;
+  padding:6px 14px; cursor:pointer; min-height:32px;
+}
+.chip:hover{border-color:var(--accent); color:var(--text)}
+.chip:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.chip.on{background:var(--accent-bg); border-color:var(--accent); color:var(--accent)}
+.chip.txt{font-family:inherit}
+
+input[type=range]{width:100%; margin:12px 0 2px; accent-color:var(--accent); min-height:28px}
+.range-lbs{display:flex; justify-content:space-between; font-size:12px; color:var(--faint)}
+
+table{width:100%; border-collapse:collapse; font-size:14.5px}
+td,th{padding:10px 4px; border-top:1px solid var(--line); text-align:right}
+th{font-size:12.5px; font-weight:500; color:var(--muted); border-top:0; padding-top:0}
+td:first-child,th:first-child{text-align:left}
+tr.pick{cursor:pointer}
+tr.pick:hover td{background:var(--accent-bg)}
+tr.be td{color:var(--muted)}
+tr.tot td{font-weight:600; border-top:1px solid var(--faint)}
+.hint{font-size:12.5px; color:var(--faint); margin:8px 0 0}
+
+.q-line{display:flex; gap:8px; align-items:stretch}
+.q-line input{flex:1; text-transform:uppercase}
+.q-btn{
+  border:1px solid var(--accent); background:var(--accent-bg); color:var(--accent);
+  font-family:inherit; font-size:14px; font-weight:500; padding:0 18px; border-radius:10px;
+  cursor:pointer; min-height:46px; white-space:nowrap;
+}
+.q-btn:hover{background:var(--accent); color:#fff}
+.q-btn:disabled{opacity:.5; cursor:default}
+.q-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.q-result{margin-top:12px; display:none}
+.q-result.show{display:block}
+.q-head{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.q-sym{font-size:15px; font-weight:700}
+.q-price{font-size:30px; font-weight:600}
+.q-chg{font-size:14.5px; font-weight:500}
+.q-meta{font-size:12px; color:var(--faint); margin-top:2px}
+.q-use{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap}
+.q-msg{font-size:13px; color:var(--red); margin-top:8px; display:none}
+.q-msg.show{display:block}
+.q-key{margin-top:12px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; font-size:12.5px; color:var(--muted)}
+.q-key input{flex:1; min-width:160px; font-size:13px; min-height:38px; padding:8px 10px}
+.q-key a{color:var(--accent)}
+.target-line{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.target-line input{width:110px}
+.target-out{font-size:15px}
+.target-out .num{font-size:19px; font-weight:600}
+
+details{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); margin-bottom:12px; box-shadow:var(--shadow)}
+summary{
+  cursor:pointer; padding:14px 18px; font-size:14px; font-weight:500; color:var(--text);
+  list-style:none; display:flex; justify-content:space-between; align-items:center; min-height:48px;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"▾"; color:var(--faint); transition:transform .15s}
+details[open] summary::after{transform:rotate(180deg)}
+details .body{padding:0 18px 16px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px}
+
+footer{max-width:640px; margin:8px auto 0; color:var(--faint); font-size:12px; line-height:1.7; padding:0 2px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} summary::after{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>IB 美股買賣計數機</h1>
+    <div class="seg" role="group" aria-label="漲跌顏色">
+      <button id="cUS" class="on" onclick="setColor('us')">綠升紅跌</button>
+      <button id="cHK" onclick="setColor('hk')">紅升綠跌</button>
+    </div>
+  </header>
+</main>
+
+<div class="sticky">
+  <div class="sticky-in">
+    <div class="pl-row">
+      <span class="pl-lb">淨盈虧</span>
+      <span class="num" id="bigPL">—</span>
+      <span class="num" id="bigPct"></span>
+    </div>
+    <div class="sub-row">
+      <span>回本價 <span class="num" id="sBE">—</span></span>
+      <span>淨收入 <span class="num" id="sNet">—</span></span>
+      <span>總費用 <span class="num" id="sFee">—</span></span>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section class="sec" aria-label="即時報價">
+    <h2>即時報價（免 key · Yahoo Finance）</h2>
+    <div class="q-line">
+      <input id="ticker" type="text" inputmode="latin" autocapitalize="characters" spellcheck="false" placeholder="美股代號，例 AAPL" value="AAPL">
+      <button class="q-btn" id="qBtn">取價</button>
+    </div>
+    <p class="q-msg" id="qMsg"></p>
+    <div class="q-result" id="qResult">
+      <div class="q-head">
+        <span class="q-sym" id="qSym"></span>
+        <span class="num q-price" id="qPrice"></span>
+        <span class="num q-chg" id="qChg"></span>
+      </div>
+      <div class="q-meta" id="qMeta"></div>
+      <div class="q-use">
+        <button class="chip txt" id="useBuy">設為買入價</button>
+        <button class="chip txt" id="useSell">設為賣出價</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-label="交易資料">
+    <h2>交易資料（美元）</h2>
+    <div style="margin-bottom:14px">
+      <label for="qty">股數</label>
+      <input id="qty" type="number" inputmode="numeric" min="0" step="1" value="100">
+      <div class="chips" id="qtyChips">
+        <button class="chip" data-q="100">100</button>
+        <button class="chip" data-q="200">200</button>
+        <button class="chip" data-q="500">500</button>
+        <button class="chip" data-q="1000">1000</button>
+      </div>
+    </div>
+    <div class="row2">
+      <div>
+        <label for="buyP">買入價（$）</label>
+        <input id="buyP" type="number" inputmode="decimal" min="0" step="0.01" value="150">
+      </div>
+      <div>
+        <label for="sellP">賣出價（$）</label>
+        <input id="sellP" type="number" inputmode="decimal" min="0" step="0.01" value="160">
+      </div>
+    </div>
+    <input id="sellSlider" type="range" min="105" max="195" step="0.01" value="160" aria-label="拖動調整賣出價">
+    <div class="range-lbs"><span class="num" id="rMin">-30%</span><span>拖動試唔同賣出價</span><span class="num" id="rMax">+30%</span></div>
+  </section>
+
+  <section class="sec" aria-label="情境試算">
+    <h2>情境試算（㩒一行即代入賣出價）</h2>
+    <table id="scnTable">
+      <thead><tr><th>賣出價變動</th><th>賣出價</th><th>淨盈虧</th></tr></thead>
+      <tbody id="scnBody"></tbody>
+    </table>
+    <p class="hint">已扣晒買賣佣金、SEC 費同 FINRA TAF</p>
+  </section>
+
+  <section class="sec" aria-label="目標反推">
+    <h2>目標反推</h2>
+    <div class="target-line">
+      <span>想淨賺</span>
+      <input id="target" type="number" inputmode="decimal" step="0.5" value="5">
+      <span>%，要賣</span>
+      <span class="target-out"><span class="num" id="targetOut">—</span></span>
+      <button class="chip txt" id="applyTarget">代入賣出價</button>
+    </div>
+  </section>
+
+  <section class="sec" aria-label="佣金方案">
+    <h2>佣金方案（IBKR 美股）</h2>
+    <div class="chips" role="group" aria-label="佣金預設">
+      <button class="chip txt on" id="pFixed" onclick="preset(0.005,1,1,'pFixed')">Pro 固定式</button>
+      <button class="chip txt" id="pTier" onclick="preset(0.0035,0.35,1,'pTier')">Pro 階梯式</button>
+      <button class="chip txt" id="pLite" onclick="preset(0,0,0,'pLite')">免佣（Lite）</button>
+    </div>
+  </section>
+
+  <details>
+    <summary>費用明細</summary>
+    <div class="body">
+      <table>
+        <tr><td style="color:var(--muted)">買入佣金</td><td class="num" id="fBuyC">—</td></tr>
+        <tr><td style="color:var(--muted)">賣出佣金</td><td class="num" id="fSellC">—</td></tr>
+        <tr><td style="color:var(--muted)">SEC 交易費（賣出）</td><td class="num" id="fSec">—</td></tr>
+        <tr><td style="color:var(--muted)">FINRA TAF（賣出）</td><td class="num" id="fTaf">—</td></tr>
+        <tr class="tot"><td>總手續費</td><td class="num" id="fTot">—</td></tr>
+        <tr><td style="color:var(--muted)">買入總成本</td><td class="num" id="fCost">—</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <details>
+    <summary>進階費率設定</summary>
+    <div class="body">
+      <div class="grid3" style="margin-bottom:14px">
+        <div><label for="per">每股佣金（$）</label><input id="per" type="number" min="0" step="0.0001" value="0.005"></div>
+        <div><label for="minC">每單最低（$）</label><input id="minC" type="number" min="0" step="0.01" value="1"></div>
+        <div><label for="maxPct">佣金上限（成交額 %）</label><input id="maxPct" type="number" min="0" step="0.1" value="1"></div>
+      </div>
+      <div class="grid3">
+        <div><label for="secRate">SEC 費率（$／百萬）</label><input id="secRate" type="number" min="0" step="0.01" value="20.60"></div>
+        <div><label for="tafRate">FINRA TAF（$／股）</label><input id="tafRate" type="number" min="0" step="0.000001" value="0.000195"></div>
+        <div><label for="tafCap">TAF 上限（$）</label><input id="tafCap" type="number" min="0" step="0.01" value="9.79"></div>
+      </div>
+    </div>
+  </details>
+</main>
+
+<footer>
+  報價由 Yahoo Finance 非官方資料提供，無需 API key，經公共 CORS 代理（AllOrigins／CodeTabs）轉發。因為係免費公共代理，偶爾會繁忙、限流或暫停，數據亦可能延遲，只供參考；如果經常取唔到價，用要 key 嘅 Finnhub 版本會穩定啲。Yahoo 隨時可能更改介面而導致報價失效。<br>
+  費率預設值（2026 年 7 月）：SEC Section 31 費 $20.60／每百萬成交額（2026-04-04 生效）；FINRA TAF $0.000195／股、每單上限 $9.79（2026-01-01 生效）。費率會不時調整，可以喺「進階費率設定」自行修改。階梯式佣金未計交易所／清算轉嫁費，實際略高。本工具只供參考，唔構成投資建議。
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const v=id=>{const x=parseFloat($(id).value);return isNaN(x)||x<0?0:x};
+const fmt=n=>'US$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtS=n=>(n>=0?'+':'-')+fmt(Math.abs(n));
+let colorMode='us';
+
+function upC(){return colorMode==='us'?'var(--green)':'var(--red)'}
+function dnC(){return colorMode==='us'?'var(--red)':'var(--green)'}
+function tint(el,p){el.style.color=p>0?upC():(p<0?dnC():'var(--text)')}
+
+function comm(q,p){let c=Math.max(q*v('per'),v('minC'));return Math.max(Math.min(c,q*p*v('maxPct')/100),0)}
+function secFee(g){return g>0?Math.ceil(g*v('secRate')/1e6*100)/100:0}
+function tafFee(q){return q>0?Math.min(Math.round(q*v('tafRate')*100)/100,v('tafCap')):0}
+function netAt(q,p){const g=q*p;return g-comm(q,p)-secFee(g)-tafFee(q)}
+function solvePrice(q,cost,targetNet){
+  let p=targetNet/q;
+  for(let i=0;i<30;i++){p=(targetNet+comm(q,p)+secFee(q*p)+tafFee(q))/q}
+  return Math.ceil(p*100)/100;
+}
+
+function updateSlider(){
+  const bp=v('buyP');if(bp<=0)return;
+  const sl=$('sellSlider');
+  let lo=Math.floor(bp*0.7*100)/100, hi=Math.ceil(bp*1.3*100)/100;
+  const sp=v('sellP');
+  if(sp>0){lo=Math.min(lo,sp);hi=Math.max(hi,sp)}
+  sl.min=lo;sl.max=hi;
+  if(sp>0)sl.value=sp;
+}
+
+function calc(){
+  const q=v('qty'),bp=v('buyP'),sp=v('sellP');
+  const bOK=q>0&&bp>0,sOK=q>0&&sp>0;
+  const buyC=bOK?comm(q,bp):0,cost=q*bp+buyC;
+  const gross=q*sp,sellC=sOK?comm(q,sp):0,sec=sOK?secFee(gross):0,taf=sOK?tafFee(q):0;
+  const net=gross-sellC-sec-taf,fees=buyC+sellC+sec+taf;
+
+  const big=$('bigPL'),pct=$('bigPct');
+  if(bOK&&sOK){
+    const p=net-cost;
+    big.textContent=fmtS(p);
+    pct.textContent=(p>=0?'+':'-')+Math.abs(p/cost*100).toFixed(2)+'%';
+    tint(big,p);tint(pct,p);
+  }else{big.textContent='—';big.style.color='var(--text)';pct.textContent=''}
+
+  let be=0;
+  if(bOK){
+    be=cost/q;
+    for(let i=0;i<30;i++){be=(cost+comm(q,be)+secFee(q*be)+tafFee(q))/q}
+    be=Math.ceil(be*100)/100;
+  }
+  $('sBE').textContent=bOK?fmt(be):'—';
+  $('sNet').textContent=sOK?fmt(net):'—';
+  $('sFee').textContent=(bOK||sOK)?fmt(fees):'—';
+
+  $('fBuyC').textContent=bOK?fmt(buyC):'—';
+  $('fSellC').textContent=sOK?fmt(sellC):'—';
+  $('fSec').textContent=sOK?fmt(sec):'—';
+  $('fTaf').textContent=sOK?fmt(taf):'—';
+  $('fTot').textContent=(bOK||sOK)?fmt(fees):'—';
+  $('fCost').textContent=bOK?fmt(cost):'—';
+
+  const body=$('scnBody');body.innerHTML='';
+  if(bOK){
+    const rows=[[-10],[-5],[null],[5],[10],[20]];
+    rows.forEach(([r])=>{
+      const price=r===null?be:Math.round(bp*(1+r/100)*100)/100;
+      const p=netAt(q,price)-cost;
+      const tr=document.createElement('tr');
+      tr.className='pick'+(r===null?' be':'');
+      const lbl=r===null?'回本':((r>0?'+':'')+r+'%');
+      tr.innerHTML='<td>'+lbl+'</td><td class="num">'+fmt(price)+'</td><td class="num scn-pl">'+fmtS(p)+'</td>';
+      tr.addEventListener('click',()=>{$('sellP').value=price;updateSlider();calc()});
+      tint(tr.querySelector('.scn-pl'),r===null?0:p);
+      body.appendChild(tr);
+    });
+  }
+
+  const t=parseFloat($('target').value);
+  if(bOK&&!isNaN(t)){
+    const need=solvePrice(q,cost,cost*(1+t/100));
+    $('targetOut').textContent=fmt(need)+'（'+((need/bp-1)*100>=0?'+':'')+((need/bp-1)*100).toFixed(2)+'%）';
+    $('targetOut').dataset.price=need;
+  }else{$('targetOut').textContent='—';delete $('targetOut').dataset.price}
+
+  $('rMin').textContent=fmt(parseFloat($('sellSlider').min)||0);
+  $('rMax').textContent=fmt(parseFloat($('sellSlider').max)||0);
+
+  document.querySelectorAll('#qtyChips .chip').forEach(c=>c.classList.toggle('on',parseFloat(c.dataset.q)===q));
+}
+
+function preset(per,mn,mx,btn){
+  $('per').value=per;$('minC').value=mn;$('maxPct').value=mx;
+  ['pFixed','pTier','pLite'].forEach(i=>$(i).classList.toggle('on',i===btn));
+  calc();
+}
+function setColor(m){
+  colorMode=m;
+  $('cUS').classList.toggle('on',m==='us');
+  $('cHK').classList.toggle('on',m==='hk');
+  calc();
+}
+
+document.querySelectorAll('#qtyChips .chip').forEach(c=>{
+  c.addEventListener('click',()=>{$('qty').value=c.dataset.q;calc()});
+});
+$('applyTarget').addEventListener('click',()=>{
+  const p=$('targetOut').dataset.price;
+  if(p){$('sellP').value=p;updateSlider();calc()}
+});
+$('sellSlider').addEventListener('input',()=>{$('sellP').value=$('sellSlider').value;calc()});
+$('buyP').addEventListener('input',()=>{updateSlider();calc()});
+$('sellP').addEventListener('input',()=>{updateSlider();calc()});
+['qty','per','minC','maxPct','secRate','tafRate','tafCap','target'].forEach(i=>$(i).addEventListener('input',calc));
+
+/* ── 即時報價（免 key）──
+   用 Yahoo Finance 非官方報價，經公共 CORS proxy 轉發。
+   proxy 會由上到下自動輪替，一個唔得試下一個。 */
+const PROXIES=[
+  u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u),
+  u=>'https://api.codetabs.com/v1/proxy/?quest='+encodeURIComponent(u)
+];
+
+let lastPrice=null;
+
+function qShowMsg(t){const m=$('qMsg');m.textContent=t;m.classList.toggle('show',!!t)}
+async function fetchQuote(){
+  const sym=$('ticker').value.trim().toUpperCase();
+  qShowMsg('');
+  if(!sym){qShowMsg('請先輸入股票代號');return}
+  const yahoo='https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?interval=1d&range=1d';
+  const btn=$('qBtn');btn.disabled=true;btn.textContent='取緊…';
+  let lastErr='';
+  try{
+    for(const wrap of PROXIES){
+      let text;
+      try{
+        const r=await fetch(wrap(yahoo));
+        if(!r.ok){lastErr='HTTP '+r.status;continue}
+        text=await r.text();
+      }catch(e){lastErr='網路';continue}
+      let d;
+      try{d=JSON.parse(text)}catch(e){lastErr='回應格式';continue}
+      if(d&&d.chart&&d.chart.error){qShowMsg('搵唔到「'+sym+'」，可能代號錯、已下市或者唔係美股');return}
+      const meta=d&&d.chart&&d.chart.result&&d.chart.result[0]&&d.chart.result[0].meta;
+      if(!meta||meta.regularMarketPrice==null){lastErr='冇報價資料';continue}
+      const price=meta.regularMarketPrice;
+      const pc=(meta.chartPreviousClose!=null?meta.chartPreviousClose:meta.previousClose);
+      lastPrice=Math.round(price*100)/100;
+      $('qSym').textContent=sym+(meta.currency&&meta.currency!=='USD'?' ('+meta.currency+')':'');
+      $('qPrice').textContent=fmt(price);
+      const chg=$('qChg');
+      if(pc!=null&&pc>0){
+        const d1=price-pc,dp=d1/pc*100;
+        chg.textContent=(d1>=0?'+':'-')+fmt(Math.abs(d1))+'（'+(dp>=0?'+':'')+dp.toFixed(2)+'%）';
+        chg.style.color=dp>0?upC():(dp<0?dnC():'var(--text)');
+      }else chg.textContent='';
+      const t=meta.regularMarketTime;
+      $('qMeta').textContent=(pc!=null?'前收 '+fmt(pc):'')+(t?' · 更新 '+new Date(t*1000).toLocaleString('zh-HK'):'')+' · 報價可能延遲';
+      $('qResult').classList.add('show');
+      return;
+    }
+    qShowMsg('取價失敗（'+lastErr+'）。公共代理有時會繁忙或者暫停，等一兩分鐘再試，或者用要 key 嘅版本會穩陣啲。');
+  }finally{btn.disabled=false;btn.textContent='取價'}
+}
+$('qBtn').addEventListener('click',fetchQuote);
+$('ticker').addEventListener('keydown',e=>{if(e.key==='Enter')fetchQuote()});
+$('useBuy').addEventListener('click',()=>{if(lastPrice!=null){$('buyP').value=lastPrice;updateSlider();calc()}});
+$('useSell').addEventListener('click',()=>{if(lastPrice!=null){$('sellP').value=lastPrice;updateSlider();calc()}});
+
+updateSlider();calc();
+</script>
+</body>
+</html>
