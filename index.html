@@ -120,6 +120,16 @@ input[type=range]{width:100%; margin:14px 0 4px; accent-color:var(--accent); min
 .q-use .chip:hover{border-color:var(--accent)}
 .q-msg{font-size:13px; color:var(--red); margin-top:10px; display:none; font-weight:500}
 .q-msg.show{display:block}
+.q-more{background:transparent; border:0; box-shadow:none; margin:14px 0 0}
+.q-more summary{padding:0; min-height:0; font-size:12.5px; font-weight:500; color:var(--muted)}
+.q-more summary::after{font-size:11px}
+.q-more[open] summary{margin-bottom:10px}
+.q-key{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+.q-key input{flex:1; min-width:170px; background:var(--card-2); border:1px solid var(--line); border-radius:9px; color:var(--text); font-family:inherit; font-size:14px; padding:9px 11px; outline:none; min-height:40px}
+.q-key input:focus{border-color:var(--accent); background:var(--card); box-shadow:0 0 0 3px var(--accent-bg)}
+.q-key a{color:var(--green); font-size:12.5px; font-weight:500; text-decoration:none; white-space:nowrap}
+.q-key a:hover{text-decoration:underline}
+.q-note{font-size:12px; color:var(--faint); margin:8px 0 0; line-height:1.6}
 
 /* table */
 table{width:100%; border-collapse:collapse; font-size:14.5px}
@@ -183,7 +193,7 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
   <section class="card" aria-label="即時報價">
     <h2>即時報價 · 免 key</h2>
     <div class="q-line">
-      <input id="ticker" type="text" inputmode="latin" autocapitalize="characters" spellcheck="false" placeholder="美股代號 例 AAPL" value="NOK">
+      <input id="ticker" type="text" inputmode="latin" autocapitalize="characters" spellcheck="false" placeholder="美股代號 例 AAPL" value="AAPL">
       <button class="q-btn" id="qBtn">取價</button>
     </div>
     <p class="q-msg" id="qMsg"></p>
@@ -199,13 +209,21 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
         <button class="chip" id="useSell">設為賣出價</button>
       </div>
     </div>
+    <details class="q-more">
+      <summary>取價唔穩定？加個免費 key（選填，更穩定）</summary>
+      <div class="q-key">
+        <input id="apiKey" type="password" placeholder="貼上 Finnhub key" autocomplete="off">
+        <a href="https://finnhub.io/register" target="_blank" rel="noopener">免費申請 ↗</a>
+      </div>
+      <p class="q-note">填咗之後，取價會優先用 Finnhub（幾乎次次成功）；唔填就照用免 key 方式。key 只存喺你部機，唔會傳去第二度。</p>
+    </details>
   </section>
 
   <section class="card" aria-label="交易資料">
     <h2>交易資料 · 美元</h2>
     <div style="margin-bottom:16px">
       <label for="qty">股數</label>
-      <input id="qty" type="number" inputmode="numeric" min="0" step="1" value="200">
+      <input id="qty" type="number" inputmode="numeric" min="0" step="1" value="100">
       <div class="chips" id="qtyChips">
         <button class="chip" data-q="100">100</button>
         <button class="chip" data-q="200">200</button>
@@ -216,11 +234,11 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
     <div class="row2">
       <div>
         <label for="buyP">買入價（$）</label>
-        <input id="buyP" type="number" inputmode="decimal" min="0" step="0.01" value="13.01">
+        <input id="buyP" type="number" inputmode="decimal" min="0" step="0.01" value="150">
       </div>
       <div>
         <label for="sellP">賣出價（$）</label>
-        <input id="sellP" type="number" inputmode="decimal" min="0" step="0.01" value="9">
+        <input id="sellP" type="number" inputmode="decimal" min="0" step="0.01" value="160">
       </div>
     </div>
     <input id="sellSlider" type="range" min="105" max="195" step="0.01" value="160" aria-label="拖動調整賣出價">
@@ -288,7 +306,7 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
 </main>
 
 <footer>
-  報價由 Yahoo Finance 非官方資料提供，無需 API key，經公共 CORS 代理（AllOrigins／CodeTabs）轉發。因為係免費公共代理，偶爾會繁忙、限流或暫停，數據亦可能延遲，只供參考；如果經常取唔到價，用要 key 嘅 Finnhub 版本會穩定啲。Yahoo 隨時可能更改介面而導致報價失效。<br>
+  報價預設用 Yahoo Finance 非官方資料、無需 key，經多個公共 CORS 代理（AllOrigins／CodeTabs／killcors）並行轉發，邊個先返到就用邊個，並設有逾時。公共代理仍可能同時繁忙或暫停，故取價未必次次成功；如需近乎穩定，可喺報價卡填一個免費 Finnhub key（會優先使用，免 key 作後備）。Yahoo 隨時可能更改介面而導致免 key 報價失效。<br>
   費率預設值（2026 年 7 月）：SEC Section 31 費 $20.60／每百萬成交額（2026-04-04 生效）；FINRA TAF $0.000195／股、每單上限 $9.79（2026-01-01 生效）。費率會不時調整，可以喺「進階費率設定」自行修改。階梯式佣金未計交易所／清算轉嫁費，實際略高。本工具只供參考，唔構成投資建議。
 </footer>
 
@@ -408,59 +426,83 @@ $('buyP').addEventListener('input',()=>{updateSlider();calc()});
 $('sellP').addEventListener('input',()=>{updateSlider();calc()});
 ['qty','per','minC','maxPct','secRate','tafRate','tafCap','target'].forEach(i=>$(i).addEventListener('input',calc));
 
-/* ── 即時報價（免 key）──
-   用 Yahoo Finance 非官方報價，經公共 CORS proxy 轉發。
-   proxy 會由上到下自動輪替，一個唔得試下一個。 */
+/* ── 即時報價 ──
+   免 key：Yahoo Finance 非官方報價，經多個公共 CORS proxy「同時發射、快者先得」。
+   選填 key：如填咗 Finnhub key，優先用佢（較穩定），失敗自動退回免 key。 */
 const PROXIES=[
-  u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u),
-  u=>'https://api.codetabs.com/v1/proxy/?quest='+encodeURIComponent(u)
+  {u:t=>'https://api.allorigins.win/raw?url='+encodeURIComponent(t), raw:true},
+  {u:t=>'https://api.codetabs.com/v1/proxy/?quest='+encodeURIComponent(t), raw:true},
+  {u:t=>'https://proxy.killcors.com/?url='+encodeURIComponent(t), raw:true}
 ];
+const YHOSTS=['query1','query2'];
+const TIMEOUT=7000;
 let lastPrice=null;
 
-function qShowMsg(t){const m=$('qMsg');m.textContent=t;m.classList.toggle('show',!!t)}
+function qShowMsg(t,warn){const m=$('qMsg');m.textContent=t;m.style.color=warn?'var(--muted)':'var(--red)';m.classList.toggle('show',!!t)}
+async function fetchText(url,ms){
+  const ac=new AbortController();const id=setTimeout(()=>ac.abort(),ms);
+  try{const r=await fetch(url,{signal:ac.signal});if(!r.ok)throw new Error('HTTP '+r.status);return await r.text()}
+  finally{clearTimeout(id)}
+}
+async function raceYahoo(sym){
+  const path='/v8/finance/chart/'+encodeURIComponent(sym)+'?interval=1d&range=1d';
+  for(const h of YHOSTS){
+    const target='https://'+h+'.finance.yahoo.com'+path;
+    const tasks=PROXIES.map(async p=>{
+      const text=await fetchText(p.u(target),TIMEOUT);
+      const payload=p.raw?text:(JSON.parse(text).contents);
+      if(payload==null)throw new Error('empty');
+      return JSON.parse(payload);
+    });
+    try{return await Promise.any(tasks)}catch(e){/* 呢個 host 全掛，試下一個 */}
+  }
+  return null;
+}
+function showQuote(sym,price,pc,timeSec,currency){
+  lastPrice=Math.round(price*100)/100;
+  $('qSym').textContent=sym+(currency&&currency!=='USD'?' ('+currency+')':'');
+  $('qPrice').textContent=fmt(price);
+  const chg=$('qChg');
+  if(pc!=null&&pc>0){
+    const d1=price-pc,dp=d1/pc*100;
+    chg.textContent=(d1>=0?'▲ ':'▼ ')+fmt(Math.abs(d1))+'（'+(dp>=0?'+':'')+dp.toFixed(2)+'%）';
+    chg.style.color=dp>0?upC():(dp<0?dnC():'var(--text)');
+  }else chg.textContent='';
+  $('qMeta').textContent=(pc!=null?'前收 '+fmt(pc):'')+(timeSec?' · 更新 '+new Date(timeSec*1000).toLocaleString('zh-HK'):'')+' · 報價可能延遲';
+  $('qResult').classList.add('show');
+}
 async function fetchQuote(){
   const sym=$('ticker').value.trim().toUpperCase();
   qShowMsg('');
   if(!sym){qShowMsg('請先輸入股票代號');return}
-  const yahoo='https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?interval=1d&range=1d';
+  const key=$('apiKey').value.trim();
   const btn=$('qBtn');btn.disabled=true;btn.textContent='取緊…';
-  let lastErr='';
   try{
-    for(const wrap of PROXIES){
-      let text;
+    // 1) 優先 Finnhub（如有 key，直連、最穩）
+    if(key){
       try{
-        const r=await fetch(wrap(yahoo));
-        if(!r.ok){lastErr='HTTP '+r.status;continue}
-        text=await r.text();
-      }catch(e){lastErr='網路';continue}
-      let d;
-      try{d=JSON.parse(text)}catch(e){lastErr='回應格式';continue}
-      if(d&&d.chart&&d.chart.error){qShowMsg('搵唔到「'+sym+'」，可能代號錯、已下市或者唔係美股');return}
-      const meta=d&&d.chart&&d.chart.result&&d.chart.result[0]&&d.chart.result[0].meta;
-      if(!meta||meta.regularMarketPrice==null){lastErr='冇報價資料';continue}
-      const price=meta.regularMarketPrice;
-      const pc=(meta.chartPreviousClose!=null?meta.chartPreviousClose:meta.previousClose);
-      lastPrice=Math.round(price*100)/100;
-      $('qSym').textContent=sym+(meta.currency&&meta.currency!=='USD'?' ('+meta.currency+')':'');
-      $('qPrice').textContent=fmt(price);
-      const chg=$('qChg');
-      if(pc!=null&&pc>0){
-        const d1=price-pc,dp=d1/pc*100;
-        chg.textContent=(d1>=0?'▲ ':'▼ ')+fmt(Math.abs(d1))+'（'+(dp>=0?'+':'')+dp.toFixed(2)+'%）';
-        chg.style.color=dp>0?upC():(dp<0?dnC():'var(--text)');
-      }else chg.textContent='';
-      const t=meta.regularMarketTime;
-      $('qMeta').textContent=(pc!=null?'前收 '+fmt(pc):'')+(t?' · 更新 '+new Date(t*1000).toLocaleString('zh-HK'):'')+' · 報價可能延遲';
-      $('qResult').classList.add('show');
-      return;
+        const text=await fetchText('https://finnhub.io/api/v1/quote?symbol='+encodeURIComponent(sym)+'&token='+encodeURIComponent(key),TIMEOUT);
+        const d=JSON.parse(text);
+        if(d&&(d.c||d.pc)){showQuote(sym,d.c,d.pc,d.t,'USD');return}
+      }catch(e){/* key 錯或繁忙，退回免 key */}
     }
-    qShowMsg('取價失敗（'+lastErr+'）。公共代理有時會繁忙或者暫停，等一兩分鐘再試，或者用要 key 嘅版本會穩陣啲。');
+    // 2) 免 key：多代理並行 + 多 host
+    const d=await raceYahoo(sym);
+    if(d&&d.chart&&d.chart.error){qShowMsg('搵唔到「'+sym+'」，可能代號錯、已下市或者唔係美股');return}
+    const meta=d&&d.chart&&d.chart.result&&d.chart.result[0]&&d.chart.result[0].meta;
+    if(meta&&meta.regularMarketPrice!=null){
+      const pc=(meta.chartPreviousClose!=null?meta.chartPreviousClose:meta.previousClose);
+      showQuote(sym,meta.regularMarketPrice,pc,meta.regularMarketTime,meta.currency);return;
+    }
+    qShowMsg('暫時取唔到價。免費公共代理當時繁忙／暫停，稍後再試通常得返；想幾乎次次都成功，可喺下面填個免費 Finnhub key。');
   }finally{btn.disabled=false;btn.textContent='取價'}
 }
 $('qBtn').addEventListener('click',fetchQuote);
 $('ticker').addEventListener('keydown',e=>{if(e.key==='Enter')fetchQuote()});
 $('useBuy').addEventListener('click',()=>{if(lastPrice!=null){$('buyP').value=lastPrice;updateSlider();calc()}});
 $('useSell').addEventListener('click',()=>{if(lastPrice!=null){$('sellP').value=lastPrice;updateSlider();calc()}});
+(function(){let k='';try{k=localStorage.getItem('ibcalc-key')||''}catch(e){}if(k)$('apiKey').value=k;})();
+$('apiKey').addEventListener('change',()=>{try{localStorage.setItem('ibcalc-key',$('apiKey').value.trim())}catch(e){}});
 
 updateSlider();calc();
 </script>
