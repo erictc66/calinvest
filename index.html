@@ -131,6 +131,26 @@ input[type=range]{width:100%; margin:14px 0 4px; accent-color:var(--accent); min
 .q-key a:hover{text-decoration:underline}
 .q-note{font-size:12px; color:var(--faint); margin:8px 0 0; line-height:1.6}
 
+/* fx */
+.hero-cad{font-size:14px; font-weight:600; color:var(--muted); margin-top:3px}
+.fx-top{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.fx-rate{font-size:26px; font-weight:700}
+.fx-eq{font-size:13px; color:var(--muted); font-weight:500}
+.fx-btn{border:1px solid var(--line-2); background:transparent; color:var(--muted); font-family:inherit; font-size:12.5px; font-weight:500; padding:6px 13px; border-radius:999px; cursor:pointer; min-height:32px}
+.fx-btn:hover{border-color:var(--accent); color:var(--green)}
+.fx-btn:disabled{opacity:.55; cursor:default}
+.fx-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.fx-src{font-size:12px; color:var(--faint); margin-top:3px}
+.fx-msg{font-size:13px; color:var(--red); font-weight:500; margin:8px 0 0; display:none}
+.fx-msg.show{display:block}
+.fx-conv{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:16px 0 0; padding-top:14px; border-top:1px solid var(--line)}
+.fx-conv input{width:120px}
+.fx-swap{border:1px solid var(--line-2); background:var(--card-2); color:var(--text); font-family:inherit; font-size:13px; font-weight:600; padding:0 14px; border-radius:9px; cursor:pointer; min-height:44px; white-space:nowrap}
+.fx-swap:hover{border-color:var(--accent); color:var(--green)}
+.fx-swap:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.fx-out{font-size:19px; font-weight:700}
+.fx-sub{font-size:12.5px; color:var(--muted); font-weight:500; margin:14px 0 10px; padding-top:14px; border-top:1px solid var(--line)}
+
 /* table */
 table{width:100%; border-collapse:collapse; font-size:14.5px}
 td,th{padding:11px 4px; border-top:1px solid var(--line); text-align:right}
@@ -184,6 +204,7 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
       <span class="num" id="bigPL">—</span>
       <span class="num" id="bigPct"></span>
     </div>
+    <div class="hero-cad num" id="bigPLcad"></div>
     <div class="hero-foot">
       <span class="lb">總費用</span>
       <span class="vl num" id="sFee">—</span>
@@ -243,6 +264,37 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
     </div>
     <input id="sellSlider" type="range" min="105" max="195" step="0.01" value="160" aria-label="拖動調整賣出價">
     <div class="range-lbs"><span class="num" id="rMin">—</span><span>拖動試唔同賣出價</span><span class="num" id="rMax">—</span></div>
+  </section>
+
+  <section class="card" aria-label="加紙兌美金">
+    <h2>加紙兌美金 · 即時匯率</h2>
+    <div class="fx-top">
+      <span class="num fx-rate" id="fxRate">—</span>
+      <span class="fx-eq" id="fxEq">1 美金 = ? 加紙</span>
+      <button class="fx-btn" id="fxBtn">↻ 更新</button>
+    </div>
+    <div class="fx-src" id="fxSrc">正在取匯率…</div>
+    <p class="fx-msg" id="fxMsg"></p>
+
+    <div class="fx-conv">
+      <input id="convAmt" type="number" inputmode="decimal" min="0" step="100" value="1000">
+      <button class="fx-swap" id="convDir">加紙 → 美金</button>
+      <span class="num fx-out" id="convOut">—</span>
+    </div>
+
+    <div class="fx-sub">IB 換匯方式（買入前換美金、賣出後換返加紙）</div>
+    <div class="chips" role="group" aria-label="換匯方式" style="margin-top:0">
+      <button class="chip on" id="fxManual" onclick="setFxMode('manual')">手動 0.002%（最低 $2）</button>
+      <button class="chip" id="fxAuto" onclick="setFxMode('auto')">自動 0.03%</button>
+      <button class="chip" id="fxNone" onclick="setFxMode('none')">已有美金 · 免費</button>
+    </div>
+
+    <table style="margin-top:14px">
+      <tr><td style="color:var(--muted)">買入需要（加紙）</td><td class="num" id="cadCost">—</td></tr>
+      <tr><td style="color:var(--muted)">賣出換返（加紙）</td><td class="num" id="cadNet">—</td></tr>
+      <tr><td style="color:var(--muted)">換匯費合計（加紙）</td><td class="num" id="cadFxFee">—</td></tr>
+      <tr class="tot"><td>加紙淨盈虧</td><td class="num" id="cadPL">—</td></tr>
+    </table>
   </section>
 
   <section class="card" aria-label="情境試算">
@@ -307,6 +359,8 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
 
 <footer>
   報價預設用 Yahoo Finance 非官方資料、無需 key，經多個公共 CORS 代理（AllOrigins／CodeTabs／killcors）並行轉發，邊個先返到就用邊個，並設有逾時。公共代理仍可能同時繁忙或暫停，故取價未必次次成功；如需近乎穩定，可喺報價卡填一個免費 Finnhub key（會優先使用，免 key 作後備）。Yahoo 隨時可能更改介面而導致免 key 報價失效。<br>
+  匯率：優先取 Yahoo USDCAD 市場價（較接近即時，經上述代理）；取唔到時自動改用 Frankfurter 的歐洲央行參考價（免 key 直連，每個工作日約歐洲時間 16:00 更新一次）或 exchangerate.fun（每小時）。免費來源冇真正逐秒即時價，卡上會顯示當次用咗邊個來源同時間，落單前請以 IB 報價為準。<br>
+  IB 換匯費：手動換匯（IDEALPRO）為成交額 0.20 個基點（0.002%），每單最低 US$2；自動換匯為 0.03%、冇另外佣金。約 US$6,667 以下自動較便宜，以上手動較便宜。加紙欄假設買入前由加紙換美金、賣出後換返加紙，即計兩次換匯費；如你本身持有美金，可揀「已有美金 · 免費」。<br>
   費率預設值（2026 年 7 月）：SEC Section 31 費 $20.60／每百萬成交額（2026-04-04 生效）；FINRA TAF $0.000195／股、每單上限 $9.79（2026-01-01 生效）。費率會不時調整，可以喺「進階費率設定」自行修改。階梯式佣金未計交易所／清算轉嫁費，實際略高。本工具只供參考，唔構成投資建議。
 </footer>
 
@@ -357,6 +411,7 @@ function calc(){
   }else{big.textContent='—';big.style.color='var(--text)';pct.textContent=''}
 
   $('sFee').textContent=(bOK||sOK)?fmt(fees):'—';
+  renderCAD(cost,net,bOK,sOK);
 
   $('fBuyC').textContent=bOK?fmt(buyC):'—';
   $('fSellC').textContent=sOK?fmt(sellC):'—';
@@ -504,7 +559,100 @@ $('useSell').addEventListener('click',()=>{if(lastPrice!=null){$('sellP').value=
 (function(){let k='';try{k=localStorage.getItem('ibcalc-key')||''}catch(e){}if(k)$('apiKey').value=k;})();
 $('apiKey').addEventListener('change',()=>{try{localStorage.setItem('ibcalc-key',$('apiKey').value.trim())}catch(e){}});
 
-updateSlider();calc();
+/* ── 加紙兌美金 ──
+   即時：先試 Yahoo USDCAD=X（市場價，經代理）；
+   後備：Frankfurter（ECB 參考價，直連免 key）、exchangerate.fun（每小時）。 */
+let fxRate=null, fxSrcTxt='', fxMode='manual', convC2U=true;
+const FX_HOSTS=['https://api.frankfurter.dev','https://api.frankfurter.app'];
+const fmtC=n=>'CA$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtCS=n=>(n>=0?'+':'-')+fmtC(Math.abs(n));
+
+function fxFeeUSD(amt){
+  if(!amt||amt<=0)return 0;
+  if(fxMode==='manual')return Math.max(amt*0.00002,2);
+  if(fxMode==='auto')return amt*0.0003;
+  return 0;
+}
+async function yahooFX(){
+  try{
+    const d=await raceYahoo('USDCAD=X');
+    const m=d&&d.chart&&d.chart.result&&d.chart.result[0]&&d.chart.result[0].meta;
+    if(m&&m.regularMarketPrice)return{rate:m.regularMarketPrice,src:'Yahoo 市場價'+(m.regularMarketTime?' · '+new Date(m.regularMarketTime*1000).toLocaleString('zh-HK'):'')};
+  }catch(e){}
+  return null;
+}
+async function backupFX(){
+  for(const h of FX_HOSTS){
+    try{
+      const d=JSON.parse(await fetchText(h+'/v1/latest?base=USD&symbols=CAD',TIMEOUT));
+      if(d&&d.rates&&d.rates.CAD)return{rate:d.rates.CAD,src:'ECB 參考價'+(d.date?' · '+d.date:'')+'（每個工作日更新一次）'};
+    }catch(e){}
+  }
+  try{
+    const d=JSON.parse(await fetchText('https://api.exchangerate.fun/latest?base=USD',TIMEOUT));
+    if(d&&d.rates&&d.rates.CAD)return{rate:d.rates.CAD,src:'exchangerate.fun（每小時更新）'};
+  }catch(e){}
+  return null;
+}
+function renderFX(){
+  if(fxRate==null){$('fxRate').textContent='—';$('fxEq').textContent='1 美金 = ? 加紙';return}
+  $('fxRate').textContent=fxRate.toFixed(4);
+  $('fxEq').textContent='1 美金 = '+fxRate.toFixed(4)+' 加紙 · 1 加紙 = '+(1/fxRate).toFixed(4)+' 美金';
+  $('fxSrc').textContent='來源：'+fxSrcTxt;
+  renderConv();
+}
+function renderConv(){
+  const a=parseFloat($('convAmt').value);
+  if(fxRate==null||isNaN(a)||a<0){$('convOut').textContent='—';return}
+  $('convOut').textContent=convC2U?fmt(a/fxRate):fmtC(a*fxRate);
+}
+async function loadFX(){
+  const btn=$('fxBtn');btn.disabled=true;btn.textContent='更新中…';
+  $('fxMsg').classList.remove('show');
+  const backup=backupFX().catch(()=>null);
+  try{
+    let got=await yahooFX();
+    if(!got)got=await backup;
+    if(got){fxRate=got.rate;fxSrcTxt=got.src;renderFX();calc()}
+    else{
+      $('fxSrc').textContent='';
+      $('fxMsg').textContent='暫時取唔到匯率，稍後再試；亦可自己㩒「更新」重試。';
+      $('fxMsg').classList.add('show');
+    }
+  }finally{btn.disabled=false;btn.textContent='↻ 更新'}
+}
+function setFxMode(m){
+  fxMode=m;
+  const map={manual:'fxManual',auto:'fxAuto',none:'fxNone'};
+  ['fxManual','fxAuto','fxNone'].forEach(id=>$(id).classList.toggle('on',id===map[m]));
+  calc();
+}
+function renderCAD(cost,net,bOK,sOK){
+  const cadPL=$('cadPL'),heroCad=$('bigPLcad');
+  if(fxRate==null){
+    ['cadCost','cadNet','cadFxFee','cadPL'].forEach(i=>$(i).textContent='—');
+    cadPL.style.color='var(--text)';heroCad.textContent='';return;
+  }
+  const feeIn=bOK?fxFeeUSD(cost):0, feeOut=sOK?fxFeeUSD(net):0;
+  const cadIn=bOK?(cost+feeIn)*fxRate:0, cadOut=sOK?(net-feeOut)*fxRate:0;
+  $('cadCost').textContent=bOK?fmtC(cadIn):'—';
+  $('cadNet').textContent=sOK?fmtC(cadOut):'—';
+  $('cadFxFee').textContent=(bOK||sOK)?fmtC((feeIn+feeOut)*fxRate):'—';
+  if(bOK&&sOK){
+    const p=cadOut-cadIn;
+    cadPL.textContent=fmtCS(p);tint(cadPL,p);
+    heroCad.textContent='≈ '+fmtCS(p)+' 加紙';heroCad.style.color=p>0?upC():(p<0?dnC():'var(--muted)');
+  }else{cadPL.textContent='—';cadPL.style.color='var(--text)';heroCad.textContent=''}
+}
+$('fxBtn').addEventListener('click',loadFX);
+$('convAmt').addEventListener('input',renderConv);
+$('convDir').addEventListener('click',()=>{
+  convC2U=!convC2U;
+  $('convDir').textContent=convC2U?'加紙 → 美金':'美金 → 加紙';
+  renderConv();
+});
+
+updateSlider();calc();loadFX();
 </script>
 </body>
 </html>
