@@ -199,7 +199,7 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
   </header>
 
   <div class="hero">
-    <div class="hero-lb">淨盈虧（已扣所有費用）</div>
+    <div class="hero-lb" id="heroLb">淨盈虧（已扣所有費用）</div>
     <div class="hero-main">
       <span class="num" id="bigPL">—</span>
       <span class="num" id="bigPct"></span>
@@ -264,6 +264,18 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
     </div>
     <input id="sellSlider" type="range" min="105" max="195" step="0.01" value="160" aria-label="拖動調整賣出價">
     <div class="range-lbs"><span class="num" id="rMin">—</span><span>拖動試唔同賣出價</span><span class="num" id="rMax">—</span></div>
+
+    <div style="margin-top:18px">
+      <label for="sellPct">賣出比例（%）· 分批出貨用</label>
+      <input id="sellPct" type="number" inputmode="decimal" min="0" max="100" step="5" value="100">
+      <div class="chips" id="pctChips">
+        <button class="chip" data-p="20">20%</button>
+        <button class="chip" data-p="25">25%</button>
+        <button class="chip" data-p="50">50%</button>
+        <button class="chip on" data-p="100">100%</button>
+      </div>
+      <p class="hint" id="pctInfo"></p>
+    </div>
   </section>
 
   <section class="card" aria-label="加紙兌美金">
@@ -291,6 +303,7 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
 
     <table style="margin-top:14px">
       <tr><td style="color:var(--muted)">買入需要（加紙）</td><td class="num" id="cadCost">—</td></tr>
+      <tr><td style="color:var(--muted)">已賣部分成本（加紙）</td><td class="num" id="cadSoldCost">—</td></tr>
       <tr><td style="color:var(--muted)">賣出換返（加紙）</td><td class="num" id="cadNet">—</td></tr>
       <tr><td style="color:var(--muted)">換匯費合計（加紙）</td><td class="num" id="cadFxFee">—</td></tr>
       <tr class="tot"><td>加紙淨盈虧</td><td class="num" id="cadPL">—</td></tr>
@@ -303,7 +316,7 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
       <thead><tr><th>賣出價變動</th><th>賣出價</th><th>淨盈虧</th></tr></thead>
       <tbody id="scnBody"></tbody>
     </table>
-    <p class="hint">已扣晒買賣佣金、SEC 費同 FINRA TAF</p>
+    <p class="hint">按上面「賣出比例」計，已扣晒買賣佣金、SEC 費同 FINRA TAF</p>
   </section>
 
   <section class="card" aria-label="目標反推">
@@ -331,11 +344,14 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
     <div class="body">
       <table>
         <tr><td style="color:var(--muted)">買入佣金</td><td class="num" id="fBuyC">—</td></tr>
+        <tr><td style="color:var(--muted)">賣出股數</td><td class="num" id="fSellQ">—</td></tr>
         <tr><td style="color:var(--muted)">賣出佣金</td><td class="num" id="fSellC">—</td></tr>
         <tr><td style="color:var(--muted)">SEC 交易費（賣出）</td><td class="num" id="fSec">—</td></tr>
         <tr><td style="color:var(--muted)">FINRA TAF（賣出）</td><td class="num" id="fTaf">—</td></tr>
         <tr class="tot"><td>總手續費</td><td class="num" id="fTot">—</td></tr>
         <tr><td style="color:var(--muted)">買入總成本</td><td class="num" id="fCost">—</td></tr>
+        <tr><td style="color:var(--muted)">已賣部分成本</td><td class="num" id="fSoldCost">—</td></tr>
+        <tr><td style="color:var(--muted)">賣出實收</td><td class="num" id="fNet">—</td></tr>
       </table>
     </div>
   </details>
@@ -359,6 +375,7 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
 
 <footer>
   報價預設用 Yahoo Finance 非官方資料、無需 key，經多個公共 CORS 代理（AllOrigins／CodeTabs／killcors）並行轉發，邊個先返到就用邊個，並設有逾時。公共代理仍可能同時繁忙或暫停，故取價未必次次成功；如需近乎穩定，可喺報價卡填一個免費 Finnhub key（會優先使用，免 key 作後備）。Yahoo 隨時可能更改介面而導致免 key 報價失效。<br>
+  賣出比例：可揀只賣部分持股。賣出股數會向下取整（例如 7 股賣 20% 當 1 股）。此時盈虧為「已實現」盈虧，成本按平均每股成本（買入金額連買入佣金 ÷ 總股數）攤分到已賣股數；買入佣金及換匯費按已賣比例分攤。注意分批出貨每次都要俾一次最低佣金同最低換匯費，總成本會高過一次過沽清。<br>
   匯率：優先取 Yahoo USDCAD 市場價（較接近即時，經上述代理）；取唔到時自動改用 Frankfurter 的歐洲央行參考價（免 key 直連，每個工作日約歐洲時間 16:00 更新一次）或 exchangerate.fun（每小時）。免費來源冇真正逐秒即時價，卡上會顯示當次用咗邊個來源同時間，落單前請以 IB 報價為準。<br>
   IB 換匯費：手動換匯（IDEALPRO）為成交額 0.20 個基點（0.002%），每單最低 US$2；自動換匯為 0.03%、冇另外佣金。約 US$6,667 以下自動較便宜，以上手動較便宜。加紙欄假設買入前由加紙換美金、賣出後換返加紙，即計兩次換匯費；如你本身持有美金，可揀「已有美金 · 免費」。<br>
   費率預設值（2026 年 7 月）：SEC Section 31 費 $20.60／每百萬成交額（2026-04-04 生效）；FINRA TAF $0.000195／股、每單上限 $9.79（2026-01-01 生效）。費率會不時調整，可以喺「進階費率設定」自行修改。階梯式佣金未計交易所／清算轉嫁費，實際略高。本工具只供參考，唔構成投資建議。
@@ -395,37 +412,56 @@ function updateSlider(){
   if(sp>0)sl.value=sp;
 }
 
+function sellQtyOf(q){
+  let p=parseFloat($('sellPct').value);
+  if(isNaN(p)||p<0)p=0; if(p>100)p=100;
+  return Math.max(0,Math.min(q,Math.floor(q*p/100)));
+}
+
 function calc(){
   const q=v('qty'),bp=v('buyP'),sp=v('sellP');
-  const bOK=q>0&&bp>0,sOK=q>0&&sp>0;
+  const sq=sellQtyOf(q),remain=q-sq;
+  const bOK=q>0&&bp>0,sOK=sq>0&&sp>0;
   const buyC=bOK?comm(q,bp):0,cost=q*bp+buyC;
-  const gross=q*sp,sellC=sOK?comm(q,sp):0,sec=sOK?secFee(gross):0,taf=sOK?tafFee(q):0;
+  const cps=(bOK&&q>0)?cost/q:0;
+  const soldCost=cps*sq;
+  const gross=sq*sp,sellC=sOK?comm(sq,sp):0,sec=sOK?secFee(gross):0,taf=sOK?tafFee(sq):0;
   const net=gross-sellC-sec-taf,fees=buyC+sellC+sec+taf;
+  const partial=sq>0&&sq<q;
+
+  $('pctInfo').textContent=q>0
+    ?('賣 '+sq+' 股'+(remain>0?' · 餘下 '+remain+' 股':' · 全部沽清')
+      +(remain>0&&sp>0?' · 餘下帳面 '+fmt(remain*sp):''))
+    :'';
+  $('heroLb').textContent=partial?('淨盈虧 · 已實現（賣 '+sq+' / '+q+' 股）'):'淨盈虧（已扣所有費用）';
 
   const big=$('bigPL'),pct=$('bigPct');
   if(bOK&&sOK){
-    const p=net-cost;
+    const p=net-soldCost;
     big.textContent=fmtS(p);
-    pct.textContent=(p>=0?'▲ ':'▼ ')+Math.abs(p/cost*100).toFixed(2)+'%';
+    pct.textContent=(p>=0?'▲ ':'▼ ')+Math.abs(p/soldCost*100).toFixed(2)+'%';
     tint(big,p);tint(pct,p);
   }else{big.textContent='—';big.style.color='var(--text)';pct.textContent=''}
 
   $('sFee').textContent=(bOK||sOK)?fmt(fees):'—';
-  renderCAD(cost,net,bOK,sOK);
+  renderCAD(cost,net,soldCost,sq,q,bOK,sOK);
 
   $('fBuyC').textContent=bOK?fmt(buyC):'—';
+  $('fSellQ').textContent=q>0?(sq+' 股'):'—';
   $('fSellC').textContent=sOK?fmt(sellC):'—';
   $('fSec').textContent=sOK?fmt(sec):'—';
   $('fTaf').textContent=sOK?fmt(taf):'—';
   $('fTot').textContent=(bOK||sOK)?fmt(fees):'—';
   $('fCost').textContent=bOK?fmt(cost):'—';
+  $('fSoldCost').textContent=(bOK&&sq>0)?fmt(soldCost):'—';
+  $('fNet').textContent=sOK?fmt(net):'—';
 
   const body=$('scnBody');body.innerHTML='';
-  if(bOK){
+  if(bOK&&sq>0){
     const rows=[-10,-5,5,10,20];
     rows.forEach(r=>{
       const price=Math.round(bp*(1+r/100)*100)/100;
-      const p=netAt(q,price)-cost;
+      const p=netAt(sq,price)-soldCost;
       const tr=document.createElement('tr');
       tr.className='pick';
       const lbl=(r>0?'+':'')+r+'%';
@@ -437,8 +473,8 @@ function calc(){
   }
 
   const t=parseFloat($('target').value);
-  if(bOK&&!isNaN(t)){
-    const need=solvePrice(q,cost,cost*(1+t/100));
+  if(bOK&&sq>0&&!isNaN(t)){
+    const need=solvePrice(sq,soldCost,soldCost*(1+t/100));
     $('targetOut').textContent=fmt(need)+'（'+((need/bp-1)*100>=0?'+':'')+((need/bp-1)*100).toFixed(2)+'%）';
     $('targetOut').dataset.price=need;
   }else{$('targetOut').textContent='—';delete $('targetOut').dataset.price}
@@ -447,6 +483,8 @@ function calc(){
   $('rMax').textContent=fmt(parseFloat($('sellSlider').max)||0);
 
   document.querySelectorAll('#qtyChips .chip').forEach(c=>c.classList.toggle('on',parseFloat(c.dataset.q)===q));
+  const curP=parseFloat($('sellPct').value);
+  document.querySelectorAll('#pctChips .chip').forEach(c=>c.classList.toggle('on',parseFloat(c.dataset.p)===curP));
 }
 
 function preset(per,mn,mx,btn){
@@ -472,6 +510,9 @@ function setTheme(t){
 document.querySelectorAll('#qtyChips .chip').forEach(c=>{
   c.addEventListener('click',()=>{$('qty').value=c.dataset.q;calc()});
 });
+document.querySelectorAll('#pctChips .chip').forEach(c=>{
+  c.addEventListener('click',()=>{$('sellPct').value=c.dataset.p;calc()});
+});
 $('applyTarget').addEventListener('click',()=>{
   const p=$('targetOut').dataset.price;
   if(p){$('sellP').value=p;updateSlider();calc()}
@@ -479,7 +520,7 @@ $('applyTarget').addEventListener('click',()=>{
 $('sellSlider').addEventListener('input',()=>{$('sellP').value=$('sellSlider').value;calc()});
 $('buyP').addEventListener('input',()=>{updateSlider();calc()});
 $('sellP').addEventListener('input',()=>{updateSlider();calc()});
-['qty','per','minC','maxPct','secRate','tafRate','tafCap','target'].forEach(i=>$(i).addEventListener('input',calc));
+['qty','sellPct','per','minC','maxPct','secRate','tafRate','tafCap','target'].forEach(i=>$(i).addEventListener('input',calc));
 
 /* ── 即時報價 ──
    免 key：Yahoo Finance 非官方報價，經多個公共 CORS proxy「同時發射、快者先得」。
@@ -627,19 +668,23 @@ function setFxMode(m){
   ['fxManual','fxAuto','fxNone'].forEach(id=>$(id).classList.toggle('on',id===map[m]));
   calc();
 }
-function renderCAD(cost,net,bOK,sOK){
+function renderCAD(cost,net,soldCost,sq,q,bOK,sOK){
   const cadPL=$('cadPL'),heroCad=$('bigPLcad');
   if(fxRate==null){
-    ['cadCost','cadNet','cadFxFee','cadPL'].forEach(i=>$(i).textContent='—');
+    ['cadCost','cadSoldCost','cadNet','cadFxFee','cadPL'].forEach(i=>$(i).textContent='—');
     cadPL.style.color='var(--text)';heroCad.textContent='';return;
   }
   const feeIn=bOK?fxFeeUSD(cost):0, feeOut=sOK?fxFeeUSD(net):0;
-  const cadIn=bOK?(cost+feeIn)*fxRate:0, cadOut=sOK?(net-feeOut)*fxRate:0;
-  $('cadCost').textContent=bOK?fmtC(cadIn):'—';
+  const share=(q>0)?sq/q:0;
+  const cadFull=bOK?(cost+feeIn)*fxRate:0;
+  const cadSold=(bOK&&sq>0)?(soldCost+feeIn*share)*fxRate:0;
+  const cadOut=sOK?(net-feeOut)*fxRate:0;
+  $('cadCost').textContent=bOK?fmtC(cadFull):'—';
+  $('cadSoldCost').textContent=(bOK&&sq>0)?fmtC(cadSold):'—';
   $('cadNet').textContent=sOK?fmtC(cadOut):'—';
   $('cadFxFee').textContent=(bOK||sOK)?fmtC((feeIn+feeOut)*fxRate):'—';
   if(bOK&&sOK){
-    const p=cadOut-cadIn;
+    const p=cadOut-cadSold;
     cadPL.textContent=fmtCS(p);tint(cadPL,p);
     heroCad.textContent='≈ '+fmtCS(p)+' 加紙';heroCad.style.color=p>0?upC():(p<0?dnC():'var(--muted)');
   }else{cadPL.textContent='—';cadPL.style.color='var(--text)';heroCad.textContent=''}
