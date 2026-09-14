@@ -332,13 +332,9 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
     <h2>交易資料 · 美元</h2>
     <div style="margin-bottom:16px">
       <label for="qty">股數</label>
-      <input id="qty" type="number" inputmode="numeric" min="0" step="1" value="100">
-      <div class="chips" id="qtyChips">
-        <button class="chip" data-q="100">100</button>
-        <button class="chip" data-q="200">200</button>
-        <button class="chip" data-q="500">500</button>
-        <button class="chip" data-q="1000">1000</button>
-      </div>
+      <input id="qty" type="number" inputmode="numeric" min="0" step="1" value="10">
+      <input id="qtySlider" type="range" min="0" max="25" step="1" value="9" aria-label="拖動調整股數">
+      <div class="range-lbs"><span class="num">1 股</span><span>拖動調整股數</span><span class="num">1000 股</span></div>
     </div>
     <div class="row2">
       <div>
@@ -700,9 +696,17 @@ function calc(){
   $('rMin').textContent=fmt(parseFloat($('sellSlider').min)||0);
   $('rMax').textContent=fmt(parseFloat($('sellSlider').max)||0);
 
-  document.querySelectorAll('#qtyChips .chip').forEach(c=>c.classList.toggle('on',parseFloat(c.dataset.q)===q));
   const curP=parseFloat($('sellPct').value);
   document.querySelectorAll('#pctChips .chip').forEach(c=>c.classList.toggle('on',parseFloat(c.dataset.p)===curP));
+  $('qtySlider').value=qtyToIdx(q);
+}
+
+/* 股數拉桿：低位每格 1 股，高位先跳大，等細股數都揀得準 */
+const QSTEPS=[1,2,3,4,5,6,7,8,9,10,12,15,20,25,30,40,50,75,100,150,200,300,400,500,750,1000];
+function qtyToIdx(q){
+  let best=0,bd=Infinity;
+  QSTEPS.forEach((v,i)=>{const d=Math.abs(v-q);if(d<bd){bd=d;best=i}});
+  return best;
 }
 
 function preset(per,mn,mx,btn){
@@ -725,8 +729,9 @@ function setTheme(t){
 }
 (function(){let t='auto';try{t=localStorage.getItem('ibcalc-theme')||'auto'}catch(e){}setTheme(t)})();
 
-document.querySelectorAll('#qtyChips .chip').forEach(c=>{
-  c.addEventListener('click',()=>{$('qty').value=c.dataset.q;calc()});
+$('qtySlider').max=QSTEPS.length-1;
+$('qtySlider').addEventListener('input',()=>{
+  $('qty').value=QSTEPS[+$('qtySlider').value];calc();
 });
 document.querySelectorAll('#pctChips .chip').forEach(c=>{
   c.addEventListener('click',()=>{$('sellPct').value=c.dataset.p;calc()});
