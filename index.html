@@ -2,8 +2,19 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>IB 美股買賣計數機</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>MapleCal · 加拿大投資稅務計數機</title>
+<meta name="description" content="MapleCal — IB 美股買賣手續費、加紙兌美金即時匯率，同加拿大 2026 年入息稅計算機。">
+<meta name="apple-mobile-web-app-title" content="MapleCal">
+<meta name="application-name" content="MapleCal">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#eef2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121a24" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2714%27%20fill%3D%27%2316a34a%27%2F%3E%3Cg%20transform%3D%27translate%287.68%207.68%29%20scale%280.76%29%27%3E%3Cpath%20d%3D%27M32%203%20L36%2021%20L45%2014%20L42%2027%20L56%2027%20L45%2035%20L44%2045%20L34%2044%20L34%2062%20L30%2062%20L30%2044%20L20%2045%20L19%2035%20L8%2027%20L22%2027%20L19%2014%20L28%2021%20Z%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2726.5%27%20y%3D%2725%27%20width%3D%2711%27%20height%3D%2716%27%20rx%3D%271.6%27%20fill%3D%27%2316a34a%27%2F%3E%3Crect%20x%3D%2728.3%27%20y%3D%2726.8%27%20width%3D%277.4%27%20height%3D%273.2%27%20rx%3D%27.8%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2728.3%27%20y%3D%2731.8%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2730.95%27%20y%3D%2731.8%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2733.6%27%20y%3D%2731.8%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2728.3%27%20y%3D%2734.5%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2730.95%27%20y%3D%2734.5%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2733.6%27%20y%3D%2734.5%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2728.3%27%20y%3D%2737.2%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2730.95%27%20y%3D%2737.2%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2733.6%27%20y%3D%2737.2%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -46,12 +57,14 @@ body{
   margin:0; background:var(--bg); color:var(--text);
   font-family:"Inter","Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
   font-size:16px; line-height:1.6; padding:0 14px calc(84px + env(safe-area-inset-bottom,0px)); -webkit-font-smoothing:antialiased;
+  touch-action:pan-x pan-y; -webkit-text-size-adjust:100%; text-size-adjust:100%;
 }
 .num{font-variant-numeric:tabular-nums; letter-spacing:-.01em}
 main{max-width:640px; margin:0 auto}
 
 header{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:20px 2px 14px; flex-wrap:wrap}
-h1{font-size:20px; font-weight:700; margin:0; letter-spacing:-.01em}
+h1{font-size:20px; font-weight:700; margin:0; letter-spacing:-.02em; display:flex; align-items:center; gap:7px}
+.logo{width:22px; height:22px; fill:var(--green); flex:none}
 .seg{display:flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; background:var(--card); box-shadow:var(--shadow)}
 .seg button{border:0; background:transparent; color:var(--muted); font-family:inherit; font-size:12.5px; padding:7px 13px; cursor:pointer}
 .seg button.on{background:var(--accent-bg); color:var(--green); font-weight:600}
@@ -125,7 +138,7 @@ input[type=range]{width:100%; margin:14px 0 4px; accent-color:var(--accent); min
 .q-more summary::after{font-size:11px}
 .q-more[open] summary{margin-bottom:10px}
 .q-key{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
-.q-key input{flex:1; min-width:170px; background:var(--card-2); border:1px solid var(--line); border-radius:9px; color:var(--text); font-family:inherit; font-size:14px; padding:9px 11px; outline:none; min-height:40px}
+.q-key input{flex:1; min-width:170px; background:var(--card-2); border:1px solid var(--line); border-radius:9px; color:var(--text); font-family:inherit; font-size:16px; padding:9px 11px; outline:none; min-height:40px}
 .q-key input:focus{border-color:var(--accent); background:var(--card); box-shadow:0 0 0 3px var(--accent-bg)}
 .q-key a{color:var(--green); font-size:12.5px; font-weight:500; text-decoration:none; white-space:nowrap}
 .q-key a:hover{text-decoration:underline}
@@ -258,7 +271,7 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
 <body>
 <main>
   <header>
-    <h1>IB 美股買賣計數機</h1>
+    <h1><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 3 L36 21 L45 14 L42 27 L56 27 L45 35 L44 45 L34 44 L34 62 L30 62 L30 44 L20 45 L19 35 L8 27 L22 27 L19 14 L28 21 Z"/></svg>MapleCal</h1>
     <div class="controls">
       <div class="seg" role="group" aria-label="漲跌顏色">
         <button id="cUS" class="on" onclick="setColor('us')">綠升紅跌</button>
@@ -469,10 +482,21 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
         <select id="txProv"></select>
       </div>
       <div style="margin-bottom:16px">
-        <label for="txIncome">年薪 · 受僱入息（加紙）</label>
-        <input id="txIncome" type="number" inputmode="numeric" min="0" step="1000" value="80000">
+        <label for="txIncome">受僱入息（加紙）</label>
+        <div class="chips" id="txPerChips" style="margin:0 0 10px">
+          <button class="chip on" data-p="year">每年</button>
+          <button class="chip" data-p="month">每月</button>
+          <button class="chip" data-p="biweek">雙週</button>
+          <button class="chip" data-p="hour">每小時</button>
+        </div>
+        <input id="txIncome" type="number" inputmode="decimal" min="0" step="1000" value="80000">
+        <div id="txHoursWrap" hidden style="margin-top:12px">
+          <label for="txHours">每週工作小時</label>
+          <input id="txHours" type="number" inputmode="decimal" min="1" max="168" step="1" value="40">
+        </div>
+        <p class="hint" id="txAnnualLine"></p>
         <div class="chips" id="txIncChips">
-          <button class="chip" data-i="50000">50k</button>
+          <button class="chip" data-i="50000">年薪 50k</button>
           <button class="chip" data-i="80000">80k</button>
           <button class="chip" data-i="120000">120k</button>
           <button class="chip" data-i="200000">200k</button>
@@ -499,6 +523,15 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
         <div><div class="lb">平均稅率（佔年薪）<button class="ib" onclick="openSheet('avg')" aria-label="平均稅率說明">i</button></div><div class="vl num" id="txAvg">—</div></div>
         <div><div class="lb">邊際稅率（下一蚊）<button class="ib" onclick="openSheet('marg')" aria-label="邊際稅率說明">i</button></div><div class="vl num" id="txMarg">—</div></div>
       </div>
+    </section>
+
+    <section class="card" aria-label="收入換算">
+      <h2>收入換算 · 稅前 vs 稅後</h2>
+      <table class="tx-rows">
+        <thead><tr><th>期間</th><th>稅前</th><th>稅後</th></tr></thead>
+        <tbody id="txConvRows"></tbody>
+      </table>
+      <p class="tx-note" id="txConvNote"></p>
     </section>
 
     <details open>
@@ -965,8 +998,27 @@ function taxEngine(gross,rrsp,code){
 function rowHTML(k,v,bold){
   return'<tr'+(bold?' class="tot"':'')+'><td'+(bold?'':' class="k"')+'>'+k+'</td><td class="num">'+v+'</td></tr>';
 }
+let txPeriod='year';
+const PER_DIV={year:1,month:12,biweek:26,week:52};
+function txHoursYr(){const h=parseFloat($('txHours').value);return (isNaN(h)||h<=0)?0:h*52}
+function grossAnnual(){
+  const v=Math.max(0,parseFloat($('txIncome').value)||0);
+  return txPeriod==='hour' ? v*txHoursYr() : v*PER_DIV[txPeriod];
+}
+function setPeriod(p){
+  const a=grossAnnual();                 // 用舊單位換算，令年薪保持不變
+  txPeriod=p;
+  $('txHoursWrap').hidden=(p!=='hour');
+  const hy=txHoursYr();
+  let nv = p==='hour' ? (hy>0?a/hy:0) : a/PER_DIV[p];
+  $('txIncome').value=Math.round(nv*100)/100;
+  $('txIncome').step = p==='hour'?0.25 : p==='year'?1000 : 100;
+  document.querySelectorAll('#txPerChips .chip').forEach(c=>c.classList.toggle('on',c.dataset.p===p));
+  calcTax();
+}
+
 function calcTax(){
-  const gross=Math.max(0,parseFloat($('txIncome').value)||0);
+  const gross=grossAnnual();
   const rrsp=Math.max(0,parseFloat($('txRrsp').value)||0);
   const code=$('txProv').value;
   const R=taxEngine(gross,rrsp,code);
@@ -1030,7 +1082,22 @@ function calcTax(){
   if(R.isQC){w.textContent='魁北克嘅 QPP／QPIP／16.5% 聯邦回扣為概算，請以 Revenu Québec 為準。';w.classList.add('show')}
   else w.classList.remove('show');
 
-  document.querySelectorAll('#txIncChips .chip').forEach(c=>c.classList.toggle('on',parseFloat(c.dataset.i)===gross));
+  $('txAnnualLine').textContent = gross>0
+    ? (txPeriod==='year' ? '' : '相當於年薪 '+fmt0(gross)
+        + (txPeriod==='hour' ? '（'+(parseFloat($('txHours').value)||0)+' 小時／週 × 52 週）' : ''))
+    : '';
+
+  const hy=txHoursYr();
+  const conv=[['每年',1],['每月',12],['雙週（26 期）',26],['每週',52]];
+  let ch=conv.map(([lb,d])=>'<tr><td class="k">'+lb+'</td><td class="num">'+fmtA(gross/d)
+      +'</td><td class="num">'+fmtA(R.net/d)+'</td></tr>').join('');
+  if(hy>0)ch+='<tr><td class="k">每小時（'+(parseFloat($('txHours').value)||0)+' 小時／週）</td><td class="num">'
+      +fmtA(gross/hy)+'</td><td class="num">'+fmtA(R.net/hy)+'</td></tr>';
+  $('txConvRows').innerHTML=ch;
+  $('txConvNote').textContent='稅後數字係全年平均。實際上年頭幾張糧會少啲，因為 CPP 同 EI 要供到年度上限先停；'
+    +'供滿之後嗰幾個月實收會多返。每小時以每年 52 週計（含有薪假期）。';
+
+  document.querySelectorAll('#txIncChips .chip').forEach(c=>c.classList.toggle('on',parseFloat(c.dataset.i)===gross&&txPeriod==='year'));
 }
 
 function showTab(t){
@@ -1048,15 +1115,24 @@ function showTab(t){
 $('txProv').innerHTML=Object.keys(PROV).map(k=>'<option value="'+k+'">'+PROV[k].n+'</option>').join('');
 $('txProv').value='BC';
 $('txProv').addEventListener('change',calcTax);
-['txIncome','txRrsp'].forEach(i=>$(i).addEventListener('input',calcTax));
+['txIncome','txRrsp','txHours'].forEach(i=>$(i).addEventListener('input',calcTax));
+document.querySelectorAll('#txPerChips .chip').forEach(c=>{
+  c.addEventListener('click',()=>setPeriod(c.dataset.p));
+});
 document.querySelectorAll('#txIncChips .chip').forEach(c=>{
-  c.addEventListener('click',()=>{$('txIncome').value=c.dataset.i;calcTax()});
+  c.addEventListener('click',()=>{
+    txPeriod='year';
+    $('txHoursWrap').hidden=true;
+    $('txIncome').step=1000;
+    document.querySelectorAll('#txPerChips .chip').forEach(x=>x.classList.toggle('on',x.dataset.p==='year'));
+    $('txIncome').value=c.dataset.i;calcTax();
+  });
 });
 calcTax();
 
 /* ── 稅項說明彈窗 ── */
 function curTax(){
-  return taxEngine(Math.max(0,parseFloat($('txIncome').value)||0),
+  return taxEngine(grossAnnual(),
                    Math.max(0,parseFloat($('txRrsp').value)||0),$('txProv').value);
 }
 const TAXINFO={
@@ -1136,6 +1212,17 @@ function closeSheet(){$('sheetBd').hidden=true;document.body.style.overflow=''}
 $('sheetX').addEventListener('click',closeSheet);
 $('sheetBd').addEventListener('click',e=>{if(e.target===$('sheetBd'))closeSheet()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sheetBd').hidden)closeSheet()});
+
+/* ── 防止手機唔小心放大 ──
+   iOS Safari 由 iOS 10 起會無視 user-scalable=no，所以要攔截手勢事件。
+   只攔兩指以上嘅縮放，單指捲動、㩒掣、揀字通通照舊。 */
+['gesturestart','gesturechange','gestureend'].forEach(ev=>{
+  document.addEventListener(ev,e=>e.preventDefault(),{passive:false});
+});
+document.addEventListener('touchmove',e=>{
+  if(e.touches.length>1||(e.scale&&e.scale!==1))e.preventDefault();
+},{passive:false});
+document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
 
 updateSlider();calc();loadFX();
 </script>

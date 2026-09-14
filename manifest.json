@@ -1,0 +1,17 @@
+{
+  "name": "MapleCal · 加拿大投資稅務計數機",
+  "short_name": "MapleCal",
+  "description": "IB 美股買賣手續費、加紙兌美金即時匯率，同加拿大 2026 年入息稅計算機。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef2f7",
+  "theme_color": "#16a34a",
+  "lang": "zh-Hant",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
