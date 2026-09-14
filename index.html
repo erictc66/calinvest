@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>MapleCal · 加拿大投資稅務計數機</title>
+<title>MapleCal</title>
 <meta name="description" content="MapleCal — IB 美股買賣手續費、加紙兌美金即時匯率，同加拿大 2026 年入息稅計算機。">
 <meta name="apple-mobile-web-app-title" content="MapleCal">
 <meta name="application-name" content="MapleCal">
@@ -14,654 +14,553 @@
 <meta name="theme-color" content="#121a24" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2714%27%20fill%3D%27%2316a34a%27%2F%3E%3Cg%20transform%3D%27translate%287.68%207.68%29%20scale%280.76%29%27%3E%3Cpath%20d%3D%27M32%203%20L36%2021%20L45%2014%20L42%2027%20L56%2027%20L45%2035%20L44%2045%20L34%2044%20L34%2062%20L30%2062%20L30%2044%20L20%2045%20L19%2035%20L8%2027%20L22%2027%20L19%2014%20L28%2021%20Z%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2726.5%27%20y%3D%2725%27%20width%3D%2711%27%20height%3D%2716%27%20rx%3D%271.6%27%20fill%3D%27%2316a34a%27%2F%3E%3Crect%20x%3D%2728.3%27%20y%3D%2726.8%27%20width%3D%277.4%27%20height%3D%273.2%27%20rx%3D%27.8%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2728.3%27%20y%3D%2731.8%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2730.95%27%20y%3D%2731.8%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2733.6%27%20y%3D%2731.8%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2728.3%27%20y%3D%2734.5%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2730.95%27%20y%3D%2734.5%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2733.6%27%20y%3D%2734.5%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2728.3%27%20y%3D%2737.2%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2730.95%27%20y%3D%2737.2%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3Crect%20x%3D%2733.6%27%20y%3D%2737.2%27%20width%3D%272.1%27%20height%3D%272%27%20rx%3D%27.5%27%20fill%3D%27%23fff%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#eef2f7; --card:#ffffff; --card-2:#f4f7fa; --line:#e5eaf1; --line-2:#dbe1ea;
+  --bg:#eef2f7; --card:#fff; --card-2:#f4f7fa; --line:#e5eaf1; --line-2:#dbe1ea;
   --text:#1f2836; --muted:#8b95a5; --faint:#a9b2bf;
-  --green:#16a34a; --green-bg:#e7f6ee; --red:#dc2626; --red-bg:#fdecec;
-  --accent:#16a34a; --accent-h:#15803d; --accent-bg:#e7f6ee; --on-accent:#ffffff;
-  --radius:12px; --radius-lg:16px;
-  --shadow:0 1px 2px rgba(20,30,45,.04), 0 1px 3px rgba(20,30,45,.05);
+  --green:#16a34a; --green-bg:#e7f6ee; --red:#dc2626;
+  --accent:#16a34a; --accent-h:#15803d; --accent-bg:#e7f6ee; --on-accent:#fff;
+  --r2:15px;
+  --shadow:0 1px 2px rgba(20,30,45,.04),0 1px 3px rgba(20,30,45,.05);
   --shadow-lg:0 4px 16px rgba(20,30,45,.08);
 }
-@media (prefers-color-scheme:dark){
-  :root{
-    --bg:#121a24; --card:#1b2732; --card-2:#212f3c; --line:#2b3a47; --line-2:#374654;
-    --text:#dbe3ea; --muted:#8b98a7; --faint:#5f6f7e;
-    --green:#37cf92; --green-bg:rgba(55,207,146,.12); --red:#f0736f; --red-bg:rgba(240,115,111,.12);
-    --accent:#1f9d56; --accent-h:#178047; --accent-bg:rgba(55,207,146,.13); --on-accent:#ffffff;
-    --shadow:none; --shadow-lg:0 6px 20px rgba(0,0,0,.4);
-  }
-}
-html[data-theme="light"]{
-  --bg:#eef2f7; --card:#ffffff; --card-2:#f4f7fa; --line:#e5eaf1; --line-2:#dbe1ea;
-  --text:#1f2836; --muted:#8b95a5; --faint:#a9b2bf;
-  --green:#16a34a; --green-bg:#e7f6ee; --red:#dc2626; --red-bg:#fdecec;
-  --accent:#16a34a; --accent-h:#15803d; --accent-bg:#e7f6ee; --on-accent:#ffffff;
-  --shadow:0 1px 2px rgba(20,30,45,.04), 0 1px 3px rgba(20,30,45,.05); --shadow-lg:0 4px 16px rgba(20,30,45,.08);
-}
-html[data-theme="dark"]{
+@media (prefers-color-scheme:dark){:root{
   --bg:#121a24; --card:#1b2732; --card-2:#212f3c; --line:#2b3a47; --line-2:#374654;
   --text:#dbe3ea; --muted:#8b98a7; --faint:#5f6f7e;
-  --green:#37cf92; --green-bg:rgba(55,207,146,.12); --red:#f0736f; --red-bg:rgba(240,115,111,.12);
-  --accent:#1f9d56; --accent-h:#178047; --accent-bg:rgba(55,207,146,.13); --on-accent:#ffffff;
+  --green:#37cf92; --green-bg:rgba(55,207,146,.12); --red:#f0736f;
+  --accent:#1f9d56; --accent-h:#178047; --accent-bg:rgba(55,207,146,.13); --on-accent:#fff;
   --shadow:none; --shadow-lg:0 6px 20px rgba(0,0,0,.4);
-}
+}}
+html[data-theme=light]{--bg:#eef2f7;--card:#fff;--card-2:#f4f7fa;--line:#e5eaf1;--line-2:#dbe1ea;--text:#1f2836;--muted:#8b95a5;--faint:#a9b2bf;--green:#16a34a;--green-bg:#e7f6ee;--red:#dc2626;--accent:#16a34a;--accent-h:#15803d;--accent-bg:#e7f6ee;--on-accent:#fff;--shadow:0 1px 2px rgba(20,30,45,.04),0 1px 3px rgba(20,30,45,.05);--shadow-lg:0 4px 16px rgba(20,30,45,.08)}
+html[data-theme=dark]{--bg:#121a24;--card:#1b2732;--card-2:#212f3c;--line:#2b3a47;--line-2:#374654;--text:#dbe3ea;--muted:#8b98a7;--faint:#5f6f7e;--green:#37cf92;--green-bg:rgba(55,207,146,.12);--red:#f0736f;--accent:#1f9d56;--accent-h:#178047;--accent-bg:rgba(55,207,146,.13);--on-accent:#fff;--shadow:none;--shadow-lg:0 6px 20px rgba(0,0,0,.4)}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{
-  margin:0; background:var(--bg); color:var(--text);
+  margin:0;background:var(--bg);color:var(--text);
   font-family:"Inter","Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
-  font-size:16px; line-height:1.6; padding:0 14px calc(84px + env(safe-area-inset-bottom,0px)); -webkit-font-smoothing:antialiased;
-  touch-action:pan-x pan-y; -webkit-text-size-adjust:100%; text-size-adjust:100%;
+  font-size:16px;line-height:1.55;padding:0 12px calc(80px + env(safe-area-inset-bottom,0px));
+  -webkit-font-smoothing:antialiased;touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100%;
 }
-.num{font-variant-numeric:tabular-nums; letter-spacing:-.01em}
-main{max-width:640px; margin:0 auto}
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+main{max-width:640px;margin:0 auto}
+[hidden]{display:none!important}
 
-header{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:20px 2px 14px; flex-wrap:wrap}
-h1{font-size:20px; font-weight:700; margin:0; letter-spacing:-.02em; display:flex; align-items:center; gap:7px}
-.logo{width:22px; height:22px; fill:var(--green); flex:none}
-.seg{display:flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; background:var(--card); box-shadow:var(--shadow)}
-.seg button{border:0; background:transparent; color:var(--muted); font-family:inherit; font-size:12.5px; padding:7px 13px; cursor:pointer}
-.seg button.on{background:var(--accent-bg); color:var(--green); font-weight:600}
-.seg button:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+header{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:14px 2px 10px}
+h1{font-size:19px;font-weight:700;margin:0;letter-spacing:-.02em;display:flex;align-items:center;gap:7px}
+.logo{width:21px;height:21px;fill:var(--green);flex:none}
+.hgroup{display:flex;gap:6px;align-items:center}
+.seg{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
+.seg button{border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:12.5px;font-weight:600;padding:7px 11px;cursor:pointer;min-height:36px}
+.seg button.on{background:var(--accent-bg);color:var(--green)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.icb{border:1px solid var(--line);background:var(--card);color:var(--muted);width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none}
+.icb svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.icb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
-.controls{display:flex; gap:8px; flex-wrap:wrap}
-.hero{position:sticky; top:10px; z-index:20; background:var(--card); border:1px solid var(--line); border-radius:var(--radius-lg); padding:18px 20px; box-shadow:var(--shadow-lg); margin-bottom:14px}
-.hero-lb{font-size:12px; color:var(--muted); font-weight:500; letter-spacing:.02em; margin-bottom:2px}
-.hero-main{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
-#bigPL{font-size:34px; font-weight:700; line-height:1.1}
-#bigPct{font-size:15px; font-weight:600}
-.hero-foot{display:flex; justify-content:space-between; align-items:baseline; margin-top:16px; padding-top:14px; border-top:1px solid var(--line)}
-.hero-foot .lb{font-size:13px; color:var(--muted); font-weight:500}
-.hero-foot .vl{font-size:17px; font-weight:600}
+.hero{position:sticky;top:8px;z-index:20;background:var(--card);border:1px solid var(--line);border-radius:var(--r2);padding:14px 16px;box-shadow:var(--shadow-lg);margin-bottom:10px}
+.hero-lb{font-size:11.5px;color:var(--muted);font-weight:500}
+.hero-main{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big{font-size:31px;font-weight:700;line-height:1.1}
+.pct{font-size:14px;font-weight:600}
+.sub{font-size:13px;font-weight:600;color:var(--muted);margin-top:1px}
+.hero-foot{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;padding-top:9px;border-top:1px solid var(--line);font-size:13px}
+.hero-foot .lb{color:var(--muted);font-weight:500}
+.hero-foot .vl{font-weight:700;font-size:15px}
 
-.card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius-lg); padding:18px 20px; margin-bottom:14px; box-shadow:var(--shadow)}
-.card h2{font-size:12.5px; font-weight:600; letter-spacing:.03em; color:var(--muted); margin:0 0 14px; text-transform:uppercase}
-
-label{display:block; font-size:13px; color:var(--muted); font-weight:500; margin-bottom:7px}
-.row2{display:grid; grid-template-columns:1fr 1fr; gap:14px}
-@media (max-width:420px){.row2{grid-template-columns:1fr}}
-input[type=number]{
-  width:100%; background:var(--card-2); border:1px solid var(--line); border-radius:10px;
-  color:var(--text); font-family:inherit; font-variant-numeric:tabular-nums; font-size:17px; font-weight:600;
-  padding:12px 13px; outline:none; min-height:48px;
+.card,details.acc{background:var(--card);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:10px;box-shadow:var(--shadow)}
+.card{padding:14px 16px}
+.card h2{font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--muted);margin:0 0 11px;text-transform:uppercase}
+label{display:block;font-size:12.5px;color:var(--muted);font-weight:500;margin-bottom:5px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fld{margin-bottom:12px}
+.fld:last-child{margin-bottom:0}
+input[type=number],input[type=text],input[type=password],select{
+  width:100%;background:var(--card-2);border:1px solid var(--line);border-radius:10px;color:var(--text);
+  font-family:inherit;font-variant-numeric:tabular-nums;font-size:16.5px;font-weight:600;
+  padding:10px 12px;outline:none;min-height:46px;
 }
-input[type=number]:focus{border-color:var(--accent); background:var(--card); box-shadow:0 0 0 3px var(--accent-bg)}
-
-.chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
-.chip{
-  background:transparent; border:1px solid var(--line-2); border-radius:999px;
-  color:var(--muted); font-size:13px; font-family:inherit; font-weight:500;
-  padding:7px 15px; cursor:pointer; min-height:34px; transition:all .12s;
-}
-.chip:hover{border-color:var(--accent); color:var(--text)}
-.chip:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-.chip.on{background:var(--accent-bg); border-color:var(--accent); color:var(--green); font-weight:600}
-
-input[type=range]{width:100%; margin:14px 0 4px; accent-color:var(--accent); min-height:28px}
-.range-lbs{display:flex; justify-content:space-between; font-size:12px; color:var(--faint)}
-
-/* quote */
-.q-line{display:flex; gap:10px; align-items:stretch}
-.q-line input{
-  flex:1; background:var(--card-2); border:1px solid var(--line); border-radius:10px; color:var(--text);
-  font-family:inherit; font-size:16px; font-weight:600; padding:12px 13px; outline:none; min-height:48px; text-transform:uppercase;
-}
-.q-line input:focus{border-color:var(--accent); background:var(--card); box-shadow:0 0 0 3px var(--accent-bg)}
-.q-btn{
-  border:0; background:var(--accent); color:var(--on-accent);
-  font-family:inherit; font-size:15px; font-weight:600; padding:0 22px; border-radius:10px;
-  cursor:pointer; min-height:48px; white-space:nowrap; transition:background .12s;
-}
-.q-btn:hover{background:var(--accent-h)}
-.q-btn:disabled{opacity:.55; cursor:default}
-.q-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-.q-result{margin-top:14px; display:none}
-.q-result.show{display:block}
-.q-head{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
-.q-sym{font-size:14px; font-weight:700; color:var(--muted)}
-.q-price{font-size:28px; font-weight:700}
-.q-chg{font-size:14.5px; font-weight:600}
-.q-meta{font-size:12px; color:var(--faint); margin-top:3px}
-.q-use{display:flex; gap:8px; margin-top:12px; flex-wrap:wrap}
-.q-use .chip{background:var(--accent-bg); border-color:transparent; color:var(--green); font-weight:600}
-.q-use .chip:hover{border-color:var(--accent)}
-.q-msg{font-size:13px; color:var(--red); margin-top:10px; display:none; font-weight:500}
-.q-msg.show{display:block}
-.q-more{background:transparent; border:0; box-shadow:none; margin:14px 0 0}
-.q-more summary{padding:0; min-height:0; font-size:12.5px; font-weight:500; color:var(--muted)}
-.q-more summary::after{font-size:11px}
-.q-more[open] summary{margin-bottom:10px}
-.q-key{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
-.q-key input{flex:1; min-width:170px; background:var(--card-2); border:1px solid var(--line); border-radius:9px; color:var(--text); font-family:inherit; font-size:16px; padding:9px 11px; outline:none; min-height:40px}
-.q-key input:focus{border-color:var(--accent); background:var(--card); box-shadow:0 0 0 3px var(--accent-bg)}
-.q-key a{color:var(--green); font-size:12.5px; font-weight:500; text-decoration:none; white-space:nowrap}
-.q-key a:hover{text-decoration:underline}
-.q-note{font-size:12px; color:var(--faint); margin:8px 0 0; line-height:1.6}
-
-/* fx */
-.hero-cad{font-size:14px; font-weight:600; color:var(--muted); margin-top:3px}
-.fx-top{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
-.fx-rate{font-size:26px; font-weight:700}
-.fx-eq{font-size:13px; color:var(--muted); font-weight:500}
-.fx-btn{border:1px solid var(--line-2); background:transparent; color:var(--muted); font-family:inherit; font-size:12.5px; font-weight:500; padding:6px 13px; border-radius:999px; cursor:pointer; min-height:32px}
-.fx-btn:hover{border-color:var(--accent); color:var(--green)}
-.fx-btn:disabled{opacity:.55; cursor:default}
-.fx-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-.fx-src{font-size:12px; color:var(--faint); margin-top:3px}
-.fx-msg{font-size:13px; color:var(--red); font-weight:500; margin:8px 0 0; display:none}
-.fx-msg.show{display:block}
-.fx-conv{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:16px 0 0; padding-top:14px; border-top:1px solid var(--line)}
-.fx-conv input{width:120px}
-.fx-swap{border:1px solid var(--line-2); background:var(--card-2); color:var(--text); font-family:inherit; font-size:13px; font-weight:600; padding:0 14px; border-radius:9px; cursor:pointer; min-height:44px; white-space:nowrap}
-.fx-swap:hover{border-color:var(--accent); color:var(--green)}
-.fx-swap:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-.fx-out{font-size:19px; font-weight:700}
-.fx-sub{font-size:12.5px; color:var(--muted); font-weight:500; margin:14px 0 10px; padding-top:14px; border-top:1px solid var(--line)}
-
-/* tabs */
-/* bottom tab bar (mobile-app style) */
-.tabbar{
-  position:fixed; left:0; right:0; bottom:0; z-index:60;
-  background:var(--card); border-top:1px solid var(--line);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-  box-shadow:0 -1px 12px rgba(20,30,45,.06);
-}
-@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
-  .tabbar{background:color-mix(in srgb,var(--card) 88%,transparent); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px)}
-}
-.tabbar-in{max-width:640px; margin:0 auto; display:flex}
-.tabbar button{
-  flex:1; border:0; background:transparent; color:var(--muted);
-  font-family:inherit; font-size:11px; font-weight:600; letter-spacing:.01em;
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
-  padding:8px 4px 7px; cursor:pointer; min-height:56px; position:relative; -webkit-tap-highlight-color:transparent;
-}
-.tabbar button.on{color:var(--green)}
-.tabbar button.on::before{content:""; position:absolute; top:0; left:50%; transform:translateX(-50%); width:32px; height:2.5px; border-radius:0 0 3px 3px; background:var(--green)}
-.tabbar button:focus-visible{outline:2px solid var(--accent); outline-offset:-3px; border-radius:10px}
-.tabbar svg{width:23px; height:23px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
-
-/* info button + bottom sheet */
-.ib{
-  position:relative; display:inline-flex; align-items:center; justify-content:center;
-  width:18px; height:18px; margin-left:6px; vertical-align:-3px; padding:0; line-height:1;
-  border:1.3px solid var(--line-2); border-radius:50%; background:transparent; color:var(--muted);
-  font-family:Georgia,serif; font-size:12px; font-weight:700; font-style:italic; cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-}
-.ib::after{content:""; position:absolute; top:-12px; left:-12px; right:-12px; bottom:-12px}
-.ib:hover{border-color:var(--accent); color:var(--green)}
-.ib:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-.sheet-bd{position:fixed; inset:0; z-index:100; background:rgba(12,20,30,.55); display:flex; align-items:flex-end; justify-content:center}
-.sheet{
-  width:100%; max-width:640px; background:var(--card); color:var(--text);
-  border-radius:20px 20px 0 0; padding:10px 20px calc(26px + env(safe-area-inset-bottom,0px));
-  max-height:84vh; overflow-y:auto; box-shadow:0 -8px 30px rgba(0,0,0,.22);
-}
-@media (prefers-reduced-motion:no-preference){.sheet{animation:sheetUp .22s cubic-bezier(.2,.8,.3,1)}}
-@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.sheet-grab{width:38px; height:4px; border-radius:99px; background:var(--line-2); margin:0 auto 14px}
-.sheet-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:4px}
-.sheet-head h3{font-size:18px; font-weight:700; margin:0}
-.sheet-x{border:0; background:var(--card-2); color:var(--muted); width:32px; height:32px; border-radius:50%; font-size:15px; cursor:pointer; flex:none}
-.sheet-x:hover{color:var(--text)}
-.sheet-x:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
-.sheet h4{font-size:12.5px; font-weight:600; color:var(--green); letter-spacing:.03em; margin:18px 0 5px; text-transform:uppercase}
-.sheet p{font-size:14.5px; line-height:1.7; margin:0 0 8px; color:var(--text)}
-.sheet .dim{color:var(--muted); font-size:13px}
-.sheet .kv{background:var(--card-2); border-radius:10px; padding:12px 14px; margin:10px 0 0; font-size:14px}
-.sheet .kv b{font-weight:700}
-[hidden]{display:none !important}
-
-/* tax */
-select{
-  width:100%; background:var(--card-2); border:1px solid var(--line); border-radius:10px; color:var(--text);
-  font-family:inherit; font-size:16px; font-weight:600; padding:12px 13px; outline:none; min-height:48px;
-  -webkit-appearance:none; appearance:none;
+input:focus,select:focus{border-color:var(--accent);background:var(--card);box-shadow:0 0 0 3px var(--accent-bg)}
+select{-webkit-appearance:none;appearance:none;
   background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
-  background-position:calc(100% - 19px) 21px,calc(100% - 13px) 21px; background-size:6px 6px,6px 6px; background-repeat:no-repeat;
-}
-select:focus{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-bg)}
-.tx-rows td{font-size:14px}
-.tx-rows td.k{color:var(--muted)}
-.tx-note{font-size:12px; color:var(--faint); margin:10px 0 0; line-height:1.6}
-.tx-warn{font-size:12.5px; color:var(--red); font-weight:500; margin:10px 0 0; display:none}
-.tx-warn.show{display:block}
-.tx-band{font-size:13px; color:var(--muted)}
-.tx-two{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px; padding-top:14px; border-top:1px solid var(--line)}
-.tx-two .lb{font-size:12px; color:var(--muted); font-weight:500}
-.tx-two .vl{font-size:18px; font-weight:700}
+  background-position:calc(100% - 18px) 20px,calc(100% - 12px) 20px;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
+input[type=range]{width:100%;margin:9px 0 1px;accent-color:var(--accent);min-height:26px;padding:0}
+.rlb{display:flex;justify-content:space-between;font-size:11.5px;color:var(--faint)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{background:transparent;border:1px solid var(--line-2);border-radius:999px;color:var(--muted);
+  font-size:12.5px;font-family:inherit;font-weight:600;padding:6px 12px;cursor:pointer;min-height:34px;-webkit-tap-highlight-color:transparent}
+.chip:hover{border-color:var(--accent);color:var(--text)}
+.chip.on{background:var(--accent-bg);border-color:var(--accent);color:var(--green)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hint{font-size:12px;color:var(--faint);margin:7px 0 0}
 
-/* table */
-table{width:100%; border-collapse:collapse; font-size:14.5px}
-td,th{padding:11px 4px; border-top:1px solid var(--line); text-align:right}
-th{font-size:12px; font-weight:600; color:var(--muted); border-top:0; padding-top:0; text-transform:uppercase; letter-spacing:.02em}
+details.acc>summary{cursor:pointer;padding:13px 16px;font-size:13.5px;font-weight:600;list-style:none;
+  display:flex;align-items:center;gap:8px;min-height:48px;-webkit-tap-highlight-color:transparent}
+details.acc>summary::-webkit-details-marker{display:none}
+details.acc>summary::after{content:"▾";color:var(--faint);font-size:12px;transition:transform .15s}
+details.acc[open]>summary::after{transform:rotate(180deg)}
+summary .sv{margin-left:auto;font-size:13px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+details.acc .body{padding:0 16px 14px}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+td,th{padding:8px 3px;border-top:1px solid var(--line);text-align:right}
+th{font-size:11.5px;font-weight:600;color:var(--muted);border-top:0;padding-top:0;text-transform:uppercase}
 td:first-child,th:first-child{text-align:left}
+td.k{color:var(--muted)}
 tr.pick{cursor:pointer}
 tr.pick:hover td{background:var(--accent-bg)}
-tr.be td{color:var(--muted)}
-tr.be td:first-child{font-weight:600; color:var(--text)}
-tr.tot td{font-weight:700; border-top:1px solid var(--line-2)}
-.hint{font-size:12.5px; color:var(--faint); margin:10px 0 0}
+tr.tot td{font-weight:700;border-top:1px solid var(--line-2)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:11px;padding-top:11px;border-top:1px solid var(--line)}
+.two .lb{font-size:11.5px;color:var(--muted);font-weight:500}
+.two .vl{font-size:17px;font-weight:700}
 
-/* target */
-.target-line{display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:14.5px}
-.target-line input{width:100px}
-.target-out .num{font-size:19px; font-weight:700}
+.qline{display:flex;gap:8px}
+.qline input{flex:1;text-transform:uppercase}
+.btn{border:0;background:var(--accent);color:var(--on-accent);font-family:inherit;font-size:14.5px;font-weight:600;
+  padding:0 18px;border-radius:10px;cursor:pointer;min-height:46px;white-space:nowrap}
+.btn:hover{background:var(--accent-h)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.qres{margin-top:10px;display:none}
+.qres.show{display:block}
+.qhead{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.qsym{font-size:13px;font-weight:700;color:var(--muted)}
+.qprice{font-size:24px;font-weight:700}
+.qchg{font-size:13.5px;font-weight:600}
+.qmeta{font-size:11.5px;color:var(--faint);margin-top:2px}
+.msg{font-size:12.5px;color:var(--red);font-weight:500;margin:8px 0 0;display:none}
+.msg.show{display:block}
+.subt{font-size:11.5px;color:var(--muted);font-weight:600;margin:12px 0 8px;padding-top:11px;border-top:1px solid var(--line)}
+.inline-in{width:104px;min-height:40px;font-size:15px}
 
-/* collapsibles */
-details{background:var(--card); border:1px solid var(--line); border-radius:var(--radius-lg); margin-bottom:14px; box-shadow:var(--shadow)}
-summary{cursor:pointer; padding:16px 20px; font-size:14px; font-weight:600; color:var(--text); list-style:none; display:flex; justify-content:space-between; align-items:center; min-height:52px}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"▾"; color:var(--faint); transition:transform .15s}
-details[open] summary::after{transform:rotate(180deg)}
-details .body{padding:0 20px 18px}
-.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px}
+.ib{position:relative;display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;
+  margin-left:5px;vertical-align:-3px;padding:0;line-height:1;border:1.3px solid var(--line-2);border-radius:50%;
+  background:transparent;color:var(--muted);font-family:Georgia,serif;font-size:11px;font-weight:700;font-style:italic;
+  cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ib::after{content:"";position:absolute;top:-12px;left:-12px;right:-12px;bottom:-12px}
+.ib:hover{border-color:var(--accent);color:var(--green)}
+.ib:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
-footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; line-height:1.7; padding:0 2px}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} .chip,.q-btn,summary::after{transition:none}}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--card);border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:0 -1px 12px rgba(20,30,45,.06)}
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  .tabbar{background:color-mix(in srgb,var(--card) 88%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}}
+.tabbar-in{max-width:640px;margin:0 auto;display:flex}
+.tabbar button{flex:1;border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:11px;font-weight:600;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:7px 4px 6px;cursor:pointer;
+  min-height:54px;position:relative;-webkit-tap-highlight-color:transparent}
+.tabbar button.on{color:var(--green)}
+.tabbar button.on::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:30px;height:2.5px;border-radius:0 0 3px 3px;background:var(--green)}
+.tabbar svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+.sheet-bd{position:fixed;inset:0;z-index:100;background:rgba(12,20,30,.55);display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:640px;background:var(--card);color:var(--text);border-radius:20px 20px 0 0;
+  padding:10px 18px calc(24px + env(safe-area-inset-bottom,0px));max-height:84vh;overflow-y:auto;box-shadow:0 -8px 30px rgba(0,0,0,.22)}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:up .22s cubic-bezier(.2,.8,.3,1)}}
+@keyframes up{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.grab{width:36px;height:4px;border-radius:99px;background:var(--line-2);margin:0 auto 12px}
+.shead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.shead h3{font-size:17px;font-weight:700;margin:0}
+.sx{border:0;background:var(--card-2);color:var(--muted);width:31px;height:31px;border-radius:50%;font-size:14px;cursor:pointer;flex:none}
+.sheet h4{font-size:11.5px;font-weight:600;color:var(--green);letter-spacing:.03em;margin:15px 0 4px;text-transform:uppercase}
+.sheet p{font-size:14px;line-height:1.65;margin:0 0 7px}
+.sheet .dim{color:var(--muted);font-size:12.5px}
+.sheet .kv{background:var(--card-2);border-radius:10px;padding:11px 13px;margin:9px 0 0;font-size:13.5px}
+
+footer{color:var(--faint);font-size:11.5px;line-height:1.65}
+@media (min-width:860px){
+  main{max-width:920px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;align-items:start}
+}
+@media (prefers-reduced-motion:reduce){details.acc>summary::after{transition:none}}
 </style>
 </head>
 <body>
 <main>
   <header>
     <h1><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 3 L36 21 L45 14 L42 27 L56 27 L45 35 L44 45 L34 44 L34 62 L30 62 L30 44 L20 45 L19 35 L8 27 L22 27 L19 14 L28 21 Z"/></svg>MapleCal</h1>
-    <div class="controls">
-      <div class="seg" role="group" aria-label="漲跌顏色">
-        <button id="cUS" class="on" onclick="setColor('us')">綠升紅跌</button>
-        <button id="cHK" onclick="setColor('hk')">紅升綠跌</button>
+    <div class="hgroup">
+      <div class="seg" role="group" data-ta="lang" aria-label="Language">
+        <button id="langZh" class="on" onclick="setLang('zh')">中</button>
+        <button id="langEn" onclick="setLang('en')">EN</button>
       </div>
-      <div class="seg" role="group" aria-label="主題">
-        <button id="tAuto" class="on" onclick="setTheme('auto')">自動</button>
-        <button id="tLight" onclick="setTheme('light')">淺</button>
-        <button id="tDark" onclick="setTheme('dark')">深</button>
-      </div>
+      <button class="icb" id="themeBtn" data-ta="theme" aria-label="Theme" onclick="cycleTheme()">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16" fill="currentColor" stroke="none"/></svg>
+      </button>
     </div>
   </header>
 
   <div id="tabStock">
-  <div class="hero">
-    <div class="hero-lb" id="heroLb">淨盈虧（已扣所有費用）</div>
-    <div class="hero-main">
-      <span class="num" id="bigPL">—</span>
-      <span class="num" id="bigPct"></span>
+    <div class="hero">
+      <div class="hero-lb" id="plLb">淨盈虧</div>
+      <div class="hero-main"><span class="num big" id="bigPL">—</span><span class="num pct" id="bigPct"></span></div>
+      <div class="num sub" id="bigCad"></div>
+      <div class="hero-foot"><span class="lb" data-t="totFee">總費用</span><span class="num vl" id="sFee">—</span></div>
     </div>
-    <div class="hero-cad num" id="bigPLcad"></div>
-    <div class="hero-foot">
-      <span class="lb">總費用</span>
-      <span class="vl num" id="sFee">—</span>
+
+    <section class="card">
+      <div class="qline">
+        <input id="ticker" type="text" inputmode="latin" autocapitalize="characters" spellcheck="false" data-tph="tickerPh" placeholder="AAPL" value="AAPL">
+        <button class="btn" id="qBtn" data-t="getPrice">取價</button>
+      </div>
+      <p class="msg" id="qMsg"></p>
+      <div class="qres" id="qRes">
+        <div class="qhead"><span class="qsym" id="qSym"></span><span class="num qprice" id="qPrice"></span><span class="num qchg" id="qChg"></span></div>
+        <div class="qmeta" id="qMeta"></div>
+        <div class="chips" style="margin-top:9px">
+          <button class="chip" id="useBuy" data-t="asBuy">設為買入價</button>
+          <button class="chip" id="useSell" data-t="asSell">設為賣出價</button>
+        </div>
+      </div>
+
+      <div class="subt" data-t="tradeData">交易資料 · 美元</div>
+      <div class="fld">
+        <label for="qty" data-t="shares">股數</label>
+        <input id="qty" type="number" inputmode="numeric" min="0" step="1" value="10">
+        <input id="qtySlider" type="range" min="0" max="25" step="1" value="9" data-ta="dragShares" aria-label="Shares">
+        <div class="rlb"><span class="num">1</span><span data-t="dragShares">拖動調整股數</span><span class="num">1000</span></div>
+      </div>
+      <div class="row2 fld">
+        <div><label for="buyP" data-t="buyP">買入價（$）</label><input id="buyP" type="number" inputmode="decimal" min="0" step="0.01" value="150"></div>
+        <div><label for="sellP" data-t="sellP">賣出價（$）</label><input id="sellP" type="number" inputmode="decimal" min="0" step="0.01" value="160"></div>
+      </div>
+      <div class="fld">
+        <input id="sellSlider" type="range" min="105" max="195" step="0.01" value="160" data-ta="dragSell" aria-label="Sell price">
+        <div class="rlb"><span class="num" id="rMin">—</span><span data-t="dragSell">拖動試唔同賣出價</span><span class="num" id="rMax">—</span></div>
+      </div>
+      <div class="fld">
+        <label for="sellPct" data-t="sellPct">賣出比例（%）</label>
+        <input id="sellPct" type="number" inputmode="decimal" min="0" max="100" step="5" value="100">
+        <div class="chips" style="margin-top:8px" id="pctChips">
+          <button class="chip" data-p="20">20%</button><button class="chip" data-p="25">25%</button>
+          <button class="chip" data-p="50">50%</button><button class="chip on" data-p="100">100%</button>
+        </div>
+        <p class="hint" id="pctInfo"></p>
+      </div>
+    </section>
+
+    <div class="grid2">
+      <details class="acc"><summary><span data-t="scen">情境試算</span><span class="sv" id="scenSv"></span></summary>
+        <div class="body">
+          <table><thead><tr><th data-t="chg">變動</th><th data-t="sellP2">賣出價</th><th data-t="pl">淨盈虧</th></tr></thead><tbody id="scnBody"></tbody></table>
+          <div class="subt" data-t="target">目標反推</div>
+          <div class="chips" style="align-items:center">
+            <span style="font-size:13.5px" data-t="wantGain">想淨賺</span>
+            <input id="target" type="number" inputmode="decimal" step="0.5" value="5" class="inline-in" style="width:80px">
+            <span style="font-size:13.5px" data-t="needSell">%，要賣</span>
+            <span class="num" id="targetOut" style="font-size:16px;font-weight:700">—</span>
+            <button class="chip" id="applyTarget" data-t="applyT">代入</button>
+          </div>
+        </div>
+      </details>
+
+      <details class="acc"><summary><span data-t="feeDetail">費用明細</span><span class="sv" id="feeSv"></span></summary>
+        <div class="body"><table>
+          <tr><td class="k" data-t="buyComm">買入佣金</td><td class="num" id="fBuyC">—</td></tr>
+          <tr><td class="k" data-t="soldQty">賣出股數</td><td class="num" id="fSellQ">—</td></tr>
+          <tr><td class="k" data-t="sellComm">賣出佣金</td><td class="num" id="fSellC">—</td></tr>
+          <tr><td class="k" data-t="secFee">SEC 交易費</td><td class="num" id="fSec">—</td></tr>
+          <tr><td class="k" data-t="tafFee">FINRA TAF</td><td class="num" id="fTaf">—</td></tr>
+          <tr class="tot"><td data-t="totFee">總費用</td><td class="num" id="fTot">—</td></tr>
+          <tr><td class="k" data-t="buyCost">買入總成本</td><td class="num" id="fCost">—</td></tr>
+          <tr><td class="k" data-t="soldCost">已賣部分成本</td><td class="num" id="fSoldCost">—</td></tr>
+          <tr><td class="k" data-t="netProc">賣出實收</td><td class="num" id="fNet">—</td></tr>
+        </table></div>
+      </details>
+
+      <details class="acc"><summary><span data-t="fxTitle">加紙兌美金</span><span class="sv" id="fxSv"></span></summary>
+        <div class="body">
+          <div class="qhead"><span class="num qprice" id="fxRate">—</span><span class="qsym" id="fxEq"></span>
+            <button class="chip" id="fxBtn" data-t="refresh">↻ 更新</button></div>
+          <div class="qmeta" id="fxSrc"></div>
+          <p class="msg" id="fxMsg"></p>
+          <div class="chips" style="margin-top:11px;align-items:center">
+            <input id="convAmt" type="number" inputmode="decimal" min="0" step="100" value="1000" class="inline-in">
+            <button class="chip" id="convDir">CAD → USD</button>
+            <span class="num" id="convOut" style="font-size:16px;font-weight:700">—</span>
+          </div>
+          <div class="subt" data-t="fxMode">IB 換匯方式</div>
+          <div class="chips">
+            <button class="chip on" id="fxManual" onclick="setFxMode('manual')" data-t="fxMan">手動 0.002%</button>
+            <button class="chip" id="fxAuto" onclick="setFxMode('auto')" data-t="fxAut">自動 0.03%</button>
+            <button class="chip" id="fxNone" onclick="setFxMode('none')" data-t="fxNon">已有美金</button>
+          </div>
+          <table style="margin-top:11px">
+            <tr><td class="k" data-t="cadIn">買入需要（加紙）</td><td class="num" id="cadCost">—</td></tr>
+            <tr><td class="k" data-t="cadSold">已賣部分成本（加紙）</td><td class="num" id="cadSoldCost">—</td></tr>
+            <tr><td class="k" data-t="cadOut">賣出換返（加紙）</td><td class="num" id="cadNet">—</td></tr>
+            <tr><td class="k" data-t="cadFee">換匯費合計（加紙）</td><td class="num" id="cadFxFee">—</td></tr>
+            <tr class="tot"><td data-t="cadPL">加紙淨盈虧</td><td class="num" id="cadPL">—</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details class="acc"><summary><span data-t="settings">佣金方案同設定</span><span class="sv" id="commSv"></span></summary>
+        <div class="body">
+          <div class="chips">
+            <button class="chip on" id="pFixed" onclick="preset(0.005,1,1,'pFixed')" data-t="pFix">Pro 固定式</button>
+            <button class="chip" id="pTier" onclick="preset(0.0035,0.35,1,'pTier')" data-t="pTie">Pro 階梯式</button>
+            <button class="chip" id="pLite" onclick="preset(0,0,0,'pLite')" data-t="pLit">免佣 Lite</button>
+          </div>
+          <div class="subt" data-t="upDown">升跌顏色</div>
+          <div class="chips">
+            <button class="chip on" id="cUS" onclick="setColor('us')" data-t="cUS">綠升紅跌</button>
+            <button class="chip" id="cHK" onclick="setColor('hk')" data-t="cHK">紅升綠跌</button>
+          </div>
+          <div class="subt" data-t="advRates">進階費率</div>
+          <div class="row2"><div><label for="per" data-t="perSh">每股佣金（$）</label><input id="per" type="number" min="0" step="0.0001" value="0.005"></div>
+            <div><label for="minC" data-t="minC">每單最低（$）</label><input id="minC" type="number" min="0" step="0.01" value="1"></div></div>
+          <div class="row2" style="margin-top:10px"><div><label for="maxPct" data-t="maxPct">佣金上限（%）</label><input id="maxPct" type="number" min="0" step="0.1" value="1"></div>
+            <div><label for="secRate" data-t="secR">SEC（$／百萬）</label><input id="secRate" type="number" min="0" step="0.01" value="20.60"></div></div>
+          <div class="row2" style="margin-top:10px"><div><label for="tafRate" data-t="tafR">TAF（$／股）</label><input id="tafRate" type="number" min="0" step="0.000001" value="0.000195"></div>
+            <div><label for="tafCap" data-t="tafC">TAF 上限（$）</label><input id="tafCap" type="number" min="0" step="0.01" value="9.79"></div></div>
+          <div class="subt" data-t="apiKeyT">報價 API key（選填）</div>
+          <div class="chips" style="align-items:center">
+            <input id="apiKey" type="password" data-tph="keyPh" placeholder="Finnhub key" autocomplete="off" style="flex:1;min-width:150px;min-height:40px;font-size:16px">
+            <a href="https://finnhub.io/register" target="_blank" rel="noopener" style="color:var(--green);font-size:12.5px;font-weight:600;text-decoration:none" data-t="applyKey">免費申請 ↗</a>
+          </div>
+        </div>
+      </details>
     </div>
+    <details class="acc"><summary><span data-t="notes">資料來源同限制</span></summary><div class="body"><footer id="footStock"></footer></div></details>
   </div>
-
-  <section class="card" aria-label="即時報價">
-    <h2>即時報價 · 免 key</h2>
-    <div class="q-line">
-      <input id="ticker" type="text" inputmode="latin" autocapitalize="characters" spellcheck="false" placeholder="美股代號 例 AAPL" value="AAPL">
-      <button class="q-btn" id="qBtn">取價</button>
-    </div>
-    <p class="q-msg" id="qMsg"></p>
-    <div class="q-result" id="qResult">
-      <div class="q-head">
-        <span class="q-sym" id="qSym"></span>
-        <span class="num q-price" id="qPrice"></span>
-        <span class="num q-chg" id="qChg"></span>
-      </div>
-      <div class="q-meta" id="qMeta"></div>
-      <div class="q-use">
-        <button class="chip" id="useBuy">設為買入價</button>
-        <button class="chip" id="useSell">設為賣出價</button>
-      </div>
-    </div>
-    <details class="q-more">
-      <summary>取價唔穩定？加個免費 key（選填，更穩定）</summary>
-      <div class="q-key">
-        <input id="apiKey" type="password" placeholder="貼上 Finnhub key" autocomplete="off">
-        <a href="https://finnhub.io/register" target="_blank" rel="noopener">免費申請 ↗</a>
-      </div>
-      <p class="q-note">填咗之後，取價會優先用 Finnhub（幾乎次次成功）；唔填就照用免 key 方式。key 只存喺你部機，唔會傳去第二度。</p>
-    </details>
-  </section>
-
-  <section class="card" aria-label="交易資料">
-    <h2>交易資料 · 美元</h2>
-    <div style="margin-bottom:16px">
-      <label for="qty">股數</label>
-      <input id="qty" type="number" inputmode="numeric" min="0" step="1" value="10">
-      <input id="qtySlider" type="range" min="0" max="25" step="1" value="9" aria-label="拖動調整股數">
-      <div class="range-lbs"><span class="num">1 股</span><span>拖動調整股數</span><span class="num">1000 股</span></div>
-    </div>
-    <div class="row2">
-      <div>
-        <label for="buyP">買入價（$）</label>
-        <input id="buyP" type="number" inputmode="decimal" min="0" step="0.01" value="150">
-      </div>
-      <div>
-        <label for="sellP">賣出價（$）</label>
-        <input id="sellP" type="number" inputmode="decimal" min="0" step="0.01" value="160">
-      </div>
-    </div>
-    <input id="sellSlider" type="range" min="105" max="195" step="0.01" value="160" aria-label="拖動調整賣出價">
-    <div class="range-lbs"><span class="num" id="rMin">—</span><span>拖動試唔同賣出價</span><span class="num" id="rMax">—</span></div>
-
-    <div style="margin-top:18px">
-      <label for="sellPct">賣出比例（%）· 分批出貨用</label>
-      <input id="sellPct" type="number" inputmode="decimal" min="0" max="100" step="5" value="100">
-      <div class="chips" id="pctChips">
-        <button class="chip" data-p="20">20%</button>
-        <button class="chip" data-p="25">25%</button>
-        <button class="chip" data-p="50">50%</button>
-        <button class="chip on" data-p="100">100%</button>
-      </div>
-      <p class="hint" id="pctInfo"></p>
-    </div>
-  </section>
-
-  <section class="card" aria-label="加紙兌美金">
-    <h2>加紙兌美金 · 即時匯率</h2>
-    <div class="fx-top">
-      <span class="num fx-rate" id="fxRate">—</span>
-      <span class="fx-eq" id="fxEq">1 美金 = ? 加紙</span>
-      <button class="fx-btn" id="fxBtn">↻ 更新</button>
-    </div>
-    <div class="fx-src" id="fxSrc">正在取匯率…</div>
-    <p class="fx-msg" id="fxMsg"></p>
-
-    <div class="fx-conv">
-      <input id="convAmt" type="number" inputmode="decimal" min="0" step="100" value="1000">
-      <button class="fx-swap" id="convDir">加紙 → 美金</button>
-      <span class="num fx-out" id="convOut">—</span>
-    </div>
-
-    <div class="fx-sub">IB 換匯方式（買入前換美金、賣出後換返加紙）</div>
-    <div class="chips" role="group" aria-label="換匯方式" style="margin-top:0">
-      <button class="chip on" id="fxManual" onclick="setFxMode('manual')">手動 0.002%（最低 $2）</button>
-      <button class="chip" id="fxAuto" onclick="setFxMode('auto')">自動 0.03%</button>
-      <button class="chip" id="fxNone" onclick="setFxMode('none')">已有美金 · 免費</button>
-    </div>
-
-    <table style="margin-top:14px">
-      <tr><td style="color:var(--muted)">買入需要（加紙）</td><td class="num" id="cadCost">—</td></tr>
-      <tr><td style="color:var(--muted)">已賣部分成本（加紙）</td><td class="num" id="cadSoldCost">—</td></tr>
-      <tr><td style="color:var(--muted)">賣出換返（加紙）</td><td class="num" id="cadNet">—</td></tr>
-      <tr><td style="color:var(--muted)">換匯費合計（加紙）</td><td class="num" id="cadFxFee">—</td></tr>
-      <tr class="tot"><td>加紙淨盈虧</td><td class="num" id="cadPL">—</td></tr>
-    </table>
-  </section>
-
-  <section class="card" aria-label="情境試算">
-    <h2>情境試算 · 㩒一行即代入</h2>
-    <table id="scnTable">
-      <thead><tr><th>賣出價變動</th><th>賣出價</th><th>淨盈虧</th></tr></thead>
-      <tbody id="scnBody"></tbody>
-    </table>
-    <p class="hint">按上面「賣出比例」計，已扣晒買賣佣金、SEC 費同 FINRA TAF</p>
-  </section>
-
-  <section class="card" aria-label="目標反推">
-    <h2>目標反推</h2>
-    <div class="target-line">
-      <span>想淨賺</span>
-      <input id="target" type="number" inputmode="decimal" step="0.5" value="5">
-      <span>%，要賣</span>
-      <span class="target-out"><span class="num" id="targetOut">—</span></span>
-      <button class="chip" id="applyTarget">代入賣出價</button>
-    </div>
-  </section>
-
-  <section class="card" aria-label="佣金方案">
-    <h2>佣金方案 · IBKR 美股</h2>
-    <div class="chips" role="group" aria-label="佣金預設">
-      <button class="chip on" id="pFixed" onclick="preset(0.005,1,1,'pFixed')">Pro 固定式</button>
-      <button class="chip" id="pTier" onclick="preset(0.0035,0.35,1,'pTier')">Pro 階梯式</button>
-      <button class="chip" id="pLite" onclick="preset(0,0,0,'pLite')">免佣 Lite</button>
-    </div>
-  </section>
-
-  <details>
-    <summary>費用明細</summary>
-    <div class="body">
-      <table>
-        <tr><td style="color:var(--muted)">買入佣金</td><td class="num" id="fBuyC">—</td></tr>
-        <tr><td style="color:var(--muted)">賣出股數</td><td class="num" id="fSellQ">—</td></tr>
-        <tr><td style="color:var(--muted)">賣出佣金</td><td class="num" id="fSellC">—</td></tr>
-        <tr><td style="color:var(--muted)">SEC 交易費（賣出）</td><td class="num" id="fSec">—</td></tr>
-        <tr><td style="color:var(--muted)">FINRA TAF（賣出）</td><td class="num" id="fTaf">—</td></tr>
-        <tr class="tot"><td>總手續費</td><td class="num" id="fTot">—</td></tr>
-        <tr><td style="color:var(--muted)">買入總成本</td><td class="num" id="fCost">—</td></tr>
-        <tr><td style="color:var(--muted)">已賣部分成本</td><td class="num" id="fSoldCost">—</td></tr>
-        <tr><td style="color:var(--muted)">賣出實收</td><td class="num" id="fNet">—</td></tr>
-      </table>
-    </div>
-  </details>
-
-  <details>
-    <summary>進階費率設定</summary>
-    <div class="body">
-      <div class="grid3" style="margin-bottom:16px">
-        <div><label for="per">每股佣金（$）</label><input id="per" type="number" min="0" step="0.0001" value="0.005"></div>
-        <div><label for="minC">每單最低（$）</label><input id="minC" type="number" min="0" step="0.01" value="1"></div>
-        <div><label for="maxPct">佣金上限（成交額 %）</label><input id="maxPct" type="number" min="0" step="0.1" value="1"></div>
-      </div>
-      <div class="grid3">
-        <div><label for="secRate">SEC 費率（$／百萬）</label><input id="secRate" type="number" min="0" step="0.01" value="20.60"></div>
-        <div><label for="tafRate">FINRA TAF（$／股）</label><input id="tafRate" type="number" min="0" step="0.000001" value="0.000195"></div>
-        <div><label for="tafCap">TAF 上限（$）</label><input id="tafCap" type="number" min="0" step="0.01" value="9.79"></div>
-      </div>
-    </div>
-  </details>
-  </div><!-- /tabStock -->
 
   <div id="tabTax" hidden>
     <div class="hero">
-      <div class="hero-lb">稅後淨收入（全年）</div>
-      <div class="hero-main">
-        <span class="num" id="txNet">—</span>
-        <span class="num" id="txKeepPct"></span>
-      </div>
-      <div class="hero-cad num" id="txMonthly"></div>
-      <div class="hero-foot">
-        <span class="lb">總扣除（稅 + CPP + EI）</span>
-        <span class="vl num" id="txTotalDed">—</span>
-      </div>
+      <div class="hero-lb" data-t="netInc">稅後淨收入（全年）</div>
+      <div class="hero-main"><span class="num big" id="txNet">—</span><span class="num pct" id="txKeep"></span></div>
+      <div class="num sub" id="txMonthly"></div>
+      <div class="hero-foot"><span class="lb" data-t="totDed">總扣除</span><span class="num vl" id="txTotalDed">—</span></div>
     </div>
 
-    <section class="card" aria-label="基本資料">
-      <h2>基本資料 · 2026 稅年</h2>
-      <div style="margin-bottom:16px">
-        <label for="txProv">省份 / 地區</label>
-        <select id="txProv"></select>
-      </div>
-      <div style="margin-bottom:16px">
-        <label for="txIncome">受僱入息（加紙）</label>
-        <div class="chips" id="txPerChips" style="margin:0 0 10px">
-          <button class="chip on" data-p="year">每年</button>
-          <button class="chip" data-p="month">每月</button>
-          <button class="chip" data-p="biweek">雙週</button>
-          <button class="chip" data-p="hour">每小時</button>
+    <section class="card">
+      <div class="fld"><label for="txProv" data-t="province">省份 / 地區</label><select id="txProv"></select></div>
+      <div class="fld">
+        <label for="txIncome" data-t="income">受僱入息（加紙）</label>
+        <div class="chips" style="margin-bottom:8px" id="txPerChips">
+          <button class="chip on" data-p="year" data-t="pYear">每年</button>
+          <button class="chip" data-p="month" data-t="pMonth">每月</button>
+          <button class="chip" data-p="biweek" data-t="pBi">雙週</button>
+          <button class="chip" data-p="hour" data-t="pHour">每小時</button>
         </div>
         <input id="txIncome" type="number" inputmode="decimal" min="0" step="1000" value="80000">
-        <div id="txHoursWrap" hidden style="margin-top:12px">
-          <label for="txHours">每週工作小時</label>
+        <div id="txHoursWrap" hidden style="margin-top:10px">
+          <label for="txHours" data-t="hrsWk">每週工作小時</label>
           <input id="txHours" type="number" inputmode="decimal" min="1" max="168" step="1" value="40">
         </div>
         <p class="hint" id="txAnnualLine"></p>
-        <div class="chips" id="txIncChips">
-          <button class="chip" data-i="50000">年薪 50k</button>
-          <button class="chip" data-i="80000">80k</button>
-          <button class="chip" data-i="120000">120k</button>
-          <button class="chip" data-i="200000">200k</button>
-        </div>
       </div>
-      <div>
-        <label for="txRrsp">RRSP 供款（可扣稅，冇就填 0）</label>
-        <input id="txRrsp" type="number" inputmode="numeric" min="0" step="500" value="0">
-      </div>
-      <p class="tx-warn" id="txWarn"></p>
+      <div class="fld"><label for="txRrsp" data-t="rrsp">RRSP 供款（可扣稅）</label><input id="txRrsp" type="number" inputmode="numeric" min="0" step="500" value="0"></div>
+      <p class="msg" id="txWarn"></p>
     </section>
 
-    <section class="card" aria-label="扣除總覽">
-      <h2>扣除總覽</h2>
-      <table class="tx-rows">
-        <tr><td class="k">聯邦入息稅<button class="ib" onclick="openSheet('fed')" aria-label="聯邦入息稅說明">i</button></td><td class="num" id="txFed">—</td></tr>
-        <tr><td class="k"><span id="txProvLb">省入息稅</span><button class="ib" onclick="openSheet('prov')" aria-label="省入息稅說明">i</button></td><td class="num" id="txProvTax">—</td></tr>
-        <tr><td class="k"><span id="txCppLb">CPP 供款</span><button class="ib" onclick="openSheet('cpp')" aria-label="CPP 供款說明">i</button></td><td class="num" id="txCpp">—</td></tr>
-        <tr><td class="k"><span id="txEiLb">EI 就業保險</span><button class="ib" onclick="openSheet('ei')" aria-label="EI 說明">i</button></td><td class="num" id="txEi">—</td></tr>
-        <tr class="tot"><td>總扣除</td><td class="num" id="txTot">—</td></tr>
-        <tr><td class="k">稅後淨收入</td><td class="num" id="txNet2">—</td></tr>
+    <section class="card">
+      <h2 data-t="dedSum">扣除總覽</h2>
+      <table>
+        <tr><td class="k"><span data-t="fedTax">聯邦入息稅</span><button class="ib" onclick="openSheet('fed')" aria-label="info">i</button></td><td class="num" id="txFed">—</td></tr>
+        <tr><td class="k"><span id="txProvLb">省入息稅</span><button class="ib" onclick="openSheet('prov')" aria-label="info">i</button></td><td class="num" id="txProvTax">—</td></tr>
+        <tr><td class="k"><span id="txCppLb">CPP</span><button class="ib" onclick="openSheet('cpp')" aria-label="info">i</button></td><td class="num" id="txCpp">—</td></tr>
+        <tr><td class="k"><span id="txEiLb">EI</span><button class="ib" onclick="openSheet('ei')" aria-label="info">i</button></td><td class="num" id="txEi">—</td></tr>
+        <tr class="tot"><td data-t="totDed">總扣除</td><td class="num" id="txTot">—</td></tr>
       </table>
-      <div class="tx-two">
-        <div><div class="lb">平均稅率（佔年薪）<button class="ib" onclick="openSheet('avg')" aria-label="平均稅率說明">i</button></div><div class="vl num" id="txAvg">—</div></div>
-        <div><div class="lb">邊際稅率（下一蚊）<button class="ib" onclick="openSheet('marg')" aria-label="邊際稅率說明">i</button></div><div class="vl num" id="txMarg">—</div></div>
+      <div class="two">
+        <div><div class="lb"><span data-t="avgRate">平均稅率</span><button class="ib" onclick="openSheet('avg')" aria-label="info">i</button></div><div class="vl num" id="txAvg">—</div></div>
+        <div><div class="lb"><span data-t="margRate">邊際稅率</span><button class="ib" onclick="openSheet('marg')" aria-label="info">i</button></div><div class="vl num" id="txMarg">—</div></div>
       </div>
     </section>
 
-    <section class="card" aria-label="收入換算">
-      <h2>收入換算 · 稅前 vs 稅後</h2>
-      <table class="tx-rows">
-        <thead><tr><th>期間</th><th>稅前</th><th>稅後</th></tr></thead>
-        <tbody id="txConvRows"></tbody>
-      </table>
-      <p class="tx-note" id="txConvNote"></p>
-    </section>
-
-    <details open>
-      <summary>聯邦稅詳情（逐級稅階）</summary>
-      <div class="body">
-        <p class="tx-band" id="txTaxableLine"></p>
-        <table class="tx-rows"><tbody id="txFedRows"></tbody></table>
-        <table class="tx-rows" style="margin-top:10px"><tbody id="txFedCred"></tbody></table>
-      </div>
-    </details>
-
-    <details>
-      <summary id="txProvSum">省稅詳情（逐級稅階）</summary>
-      <div class="body">
-        <table class="tx-rows"><tbody id="txProvRows"></tbody></table>
-        <table class="tx-rows" style="margin-top:10px"><tbody id="txProvCred"></tbody></table>
-      </div>
-    </details>
-
-    <details>
-      <summary>CPP / EI 供款詳情</summary>
-      <div class="body">
-        <table class="tx-rows"><tbody id="txCppRows"></tbody></table>
-      </div>
-    </details>
-  </div><!-- /tabTax -->
+    <div class="grid2">
+      <details class="acc" open><summary><span data-t="incConv">收入換算</span><span class="sv" id="convSv"></span></summary>
+        <div class="body"><table><thead><tr><th data-t="period">期間</th><th data-t="gross">稅前</th><th data-t="netT">稅後</th></tr></thead><tbody id="txConvRows"></tbody></table>
+        <p class="hint" id="txConvNote"></p></div>
+      </details>
+      <details class="acc"><summary><span data-t="fedDetail">聯邦稅詳情</span><span class="sv" id="fedSv"></span></summary>
+        <div class="body"><p class="hint" id="txTaxableLine" style="margin:0 0 8px"></p>
+        <table><tbody id="txFedRows"></tbody></table><table style="margin-top:8px"><tbody id="txFedCred"></tbody></table></div>
+      </details>
+      <details class="acc"><summary><span id="txProvSum">省稅詳情</span><span class="sv" id="provSv"></span></summary>
+        <div class="body"><table><tbody id="txProvRows"></tbody></table><table style="margin-top:8px"><tbody id="txProvCred"></tbody></table></div>
+      </details>
+      <details class="acc"><summary><span data-t="cppEiDetail">CPP / EI 詳情</span><span class="sv" id="cppSv"></span></summary>
+        <div class="body"><table><tbody id="txCppRows"></tbody></table></div>
+      </details>
+    </div>
+    <details class="acc"><summary><span data-t="notes">資料來源同限制</span></summary><div class="body"><footer id="footTax"></footer></div></details>
+  </div>
 </main>
 
-<footer>
-<div id="footStock">
-  報價預設用 Yahoo Finance 非官方資料、無需 key，經多個公共 CORS 代理（AllOrigins／CodeTabs／killcors）並行轉發，邊個先返到就用邊個，並設有逾時。公共代理仍可能同時繁忙或暫停，故取價未必次次成功；如需近乎穩定，可喺報價卡填一個免費 Finnhub key（會優先使用，免 key 作後備）。Yahoo 隨時可能更改介面而導致免 key 報價失效。<br>
-  賣出比例：可揀只賣部分持股。賣出股數會向下取整（例如 7 股賣 20% 當 1 股）。此時盈虧為「已實現」盈虧，成本按平均每股成本（買入金額連買入佣金 ÷ 總股數）攤分到已賣股數；買入佣金及換匯費按已賣比例分攤。注意分批出貨每次都要俾一次最低佣金同最低換匯費，總成本會高過一次過沽清。<br>
-  匯率：優先取 Yahoo USDCAD 市場價（較接近即時，經上述代理）；取唔到時自動改用 Frankfurter 的歐洲央行參考價（免 key 直連，每個工作日約歐洲時間 16:00 更新一次）或 exchangerate.fun（每小時）。免費來源冇真正逐秒即時價，卡上會顯示當次用咗邊個來源同時間，落單前請以 IB 報價為準。<br>
-  IB 換匯費：手動換匯（IDEALPRO）為成交額 0.20 個基點（0.002%），每單最低 US$2；自動換匯為 0.03%、冇另外佣金。約 US$6,667 以下自動較便宜，以上手動較便宜。加紙欄假設買入前由加紙換美金、賣出後換返加紙，即計兩次換匯費；如你本身持有美金，可揀「已有美金 · 免費」。<br>
-  費率預設值（2026 年 7 月）：SEC Section 31 費 $20.60／每百萬成交額（2026-04-04 生效）；FINRA TAF $0.000195／股、每單上限 $9.79（2026-01-01 生效）。費率會不時調整，可以喺「進階費率設定」自行修改。階梯式佣金未計交易所／清算轉嫁費，實際略高。本工具只供參考，唔構成投資建議。
-</div>
-<div id="footTax" hidden>
-  2026 稅年數據來源：聯邦稅階及基本個人免稅額（BPA $16,452，收入 $181,440–$258,482 之間遞減至 $14,829）、各省／地區稅階及 BPA 已對照 CRA T4127 薪俸扣除公式表 8.1；卑詩數字另經卑詩省政府官網核實（2026 年最低稅率由 5.06% 升至 5.60%，BPA $13,216，稅務減免上限 $690、淨收入門檻 $25,570、超出部分按 3.56% 遞減，至 $44,952 歸零）。CPP：YMPE $74,600、基本免供額 $3,500、稅率 5.95%、上限 $4,230.45；CPP2：YAMPE $85,000、稅率 4%、上限 $416。EI：最高可保收入 $68,900、稅率 1.63%、上限 $1,123.07（魁省 1.30%／$895.70）。<br>
-  計算方法：CPP 供款中「加強部分」（1% 及 CPP2）作收入扣除，「基本部分」（4.95%，上限 $3,519.45）同 EI 一樣作非退款稅項抵免。安大略計埋附加稅（省稅超過 $5,818 部分加 20%，超過 $7,446 部分再加 36%）及健康保費。<br>
-  重要限制：此計算機只處理受僱薪金收入，假設單身、無受養人、無其他收入或抵免（例如配偶、託兒、學費、醫療、股息、資本增值、自僱）。淨收入以應課稅收入代替，如有其他扣除會有差異。魁北克（QPP／QPIP／16.5% 聯邦回扣）為概算，請以 Revenu Québec 為準。安大略低收入稅務減免未計算。結果為估算，唔係報稅或稅務建議，實際以 CRA 評稅為準；重要決定請諮詢會計師。
-</div>
-</footer>
-
-<nav class="tabbar" role="tablist" aria-label="主導航">
+<nav class="tabbar" role="tablist" aria-label="Main">
   <div class="tabbar-in">
     <button id="tabBtnStock" class="on" role="tab" aria-selected="true" onclick="showTab('stock')">
       <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
-      <span>股票計數機</span>
-    </button>
+      <span data-t="tabStock">股票計數機</span></button>
     <button id="tabBtnTax" role="tab" aria-selected="false" onclick="showTab('tax')">
       <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.8" cy="6.8" r="2.6"/><circle cx="17.2" cy="17.2" r="2.6"/></svg>
-      <span>入息稅</span>
-    </button>
+      <span data-t="tabTax">入息稅</span></button>
   </div>
 </nav>
 
 <div class="sheet-bd" id="sheetBd" hidden>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
-    <div class="sheet-grab"></div>
-    <div class="sheet-head">
-      <h3 id="sheetTitle"></h3>
-      <button class="sheet-x" id="sheetX" aria-label="關閉">✕</button>
-    </div>
+    <div class="grab"></div>
+    <div class="shead"><h3 id="sheetTitle"></h3><button class="sx" id="sheetX" aria-label="Close">✕</button></div>
     <div id="sheetBody"></div>
   </div>
 </div>
 
 <script>
 const $=id=>document.getElementById(id);
+const I18N={zh:{
+ title:'MapleCal · 加拿大投資稅務計數機',lang:'語言',theme:'主題',
+ tabStock:'股票計數機',tabTax:'入息稅',
+ plLb:'淨盈虧（已扣所有費用）',plReal:'淨盈虧 · 已實現（賣 {0} / {1} 股）',totFee:'總費用',
+ tickerPh:'美股代號 例 AAPL',getPrice:'取價',getting:'取緊…',asBuy:'設為買入價',asSell:'設為賣出價',
+ tradeData:'交易資料 · 美元',shares:'股數',dragShares:'拖動調整股數',
+ buyP:'買入價（$）',sellP:'賣出價（$）',dragSell:'拖動試唔同賣出價',sellPct:'賣出比例（%）· 分批出貨用',
+ sellInfo:'賣 {0} 股 · 餘下 {1} 股',sellAll:'賣 {0} 股 · 全部沽清',remainVal:' · 餘下帳面 {0}',
+ scen:'情境試算',chg:'變動',sellP2:'賣出價',pl:'淨盈虧',
+ target:'目標反推',wantGain:'想淨賺',needSell:'%，要賣',applyT:'代入',
+ feeDetail:'費用明細',buyComm:'買入佣金',soldQty:'賣出股數',sellComm:'賣出佣金',secFee:'SEC 交易費（賣出）',
+ tafFee:'FINRA TAF（賣出）',buyCost:'買入總成本',soldCost:'已賣部分成本',netProc:'賣出實收',shUnit:' 股',
+ fxTitle:'加紙兌美金',refresh:'↻ 更新',refreshing:'更新中…',fxMode:'IB 換匯方式（買入前換、賣出後換返）',
+ fxMan:'手動 0.002%（最低 $2）',fxAut:'自動 0.03%',fxNon:'已有美金 · 免費',
+ cadIn:'買入需要（加紙）',cadSold:'已賣部分成本（加紙）',cadOut:'賣出換返（加紙）',cadFee:'換匯費合計（加紙）',cadPL:'加紙淨盈虧',
+ settings:'佣金方案同設定',pFix:'Pro 固定式',pTie:'Pro 階梯式',pLit:'免佣 Lite',
+ upDown:'升跌顏色',cUS:'綠升紅跌',cHK:'紅升綠跌',advRates:'進階費率',
+ perSh:'每股佣金（$）',minC:'每單最低（$）',maxPct:'佣金上限（%）',secR:'SEC（$／百萬）',tafR:'TAF（$／股）',tafC:'TAF 上限（$）',
+ apiKeyT:'報價 API key（選填，更穩定）',keyPh:'貼上 Finnhub key',applyKey:'免費申請 ↗',notes:'資料來源同限制',
+ prevClose:'前收 {0}',updated:' · 更新 {0}',delayed:' · 報價可能延遲',
+ noSym:'搵唔到「{0}」，可能代號錯、已下市或者唔係美股',noTicker:'請先輸入股票代號',
+ quoteFail:'暫時取唔到價。公共代理當時繁忙，稍後再試；想穩定啲可以喺設定填個免費 Finnhub key。',
+ fxFail:'暫時取唔到匯率，稍後再試。',fxSrcL:'來源：{0}',yahooSrc:'Yahoo 市場價',ecbSrc:'ECB 參考價',daily:'（每個工作日更新一次）',hourly:'（每小時更新）',
+ netInc:'稅後淨收入（全年）',totDed:'總扣除',keepPct:'留低 {0}',perMo:'每月約 {0} · 每兩星期約 {1}',
+ province:'省份 / 地區',income:'受僱入息（加紙）',pYear:'每年',pMonth:'每月',pBi:'雙週',pHour:'每小時',
+ hrsWk:'每週工作小時',rrsp:'RRSP 供款（可扣稅，冇就填 0）',annualEq:'相當於年薪 {0}',hrNote:'（{0} 小時／週 × 52 週）',
+ dedSum:'扣除總覽',fedTax:'聯邦入息稅',provTax:'{0}省稅',cppC:'CPP 供款',qppC:'QPP 供款',eiC:'EI 就業保險',eiQpip:'EI + QPIP',
+ avgRate:'平均稅率',margRate:'邊際稅率',
+ incConv:'收入換算',period:'期間',gross:'稅前',netT:'稅後',
+ cYear:'每年',cMonth:'每月',cBi:'雙週（26 期）',cWeek:'每週',cHour:'每小時（{0} 小時／週）',
+ convNote:'稅後數字係全年平均。實際年頭幾張糧會少啲，因為 CPP 同 EI 要供到年度上限先停；供滿之後實收會多返。每小時以每年 52 週計。',
+ fedDetail:'聯邦稅詳情',provDetail:'{0} 稅詳情',cppEiDetail:'CPP / EI 詳情',
+ taxableLine:'年薪 {0} − CPP 加強部分 {1}{2} = 應課稅收入 {3}',rrspMinus:' − RRSP {0}',
+ fedSub:'聯邦稅小計',bpaRow:'基本個人免稅額 {0}',cppEiRow:'CPP 基本部分 {0} + EI {1}',credTot:'抵免合計 × {0}',
+ abate:'魁省聯邦回扣 16.5%',fedDue:'應繳聯邦稅',provSub:'省稅小計',provBpa:'省基本個人免稅額 {0}',
+ surtax:'安省附加稅',health:'安省健康保費',bcRed:'卑詩低收入稅務減免',provDue:'應繳省稅',
+ cppEarn:'{0} 可供款收入（{1} − 免供額 {2}）',cppAt:'{0} @ {1}',cpp2Earn:'CPP2 可供款收入（{0} – {1}）',
+ cpp2At:'CPP2 @ {0}',eiRow:'EI（上限 {0} @ {1}）',qpipRow:'QPIP 魁省育兒保險（概算）',
+ contTot:'供款合計',dedPart:'其中可扣稅（加強部分）',credPart:'其中可作抵免（基本部分）',
+ qcWarn:'魁北克嘅 QPP／QPIP／16.5% 聯邦回扣為概算，請以 Revenu Québec 為準。'
+},en:{
+ title:'MapleCal · Canadian Investing & Tax Calculator',lang:'Language',theme:'Theme',
+ tabStock:'Stocks',tabTax:'Income Tax',
+ plLb:'Net profit / loss (after all fees)',plReal:'Net P/L · realized ({0} of {1} shares)',totFee:'Total fees',
+ tickerPh:'US ticker e.g. AAPL',getPrice:'Get price',getting:'Loading…',asBuy:'Use as buy price',asSell:'Use as sell price',
+ tradeData:'Trade details · USD',shares:'Shares',dragShares:'Drag to set shares',
+ buyP:'Buy price ($)',sellP:'Sell price ($)',dragSell:'Drag to try sell prices',sellPct:'Sell portion (%) · partial exits',
+ sellInfo:'Selling {0} · {1} left',sellAll:'Selling {0} · full exit',remainVal:' · remaining value {0}',
+ scen:'Scenarios',chg:'Change',sellP2:'Sell price',pl:'Net P/L',
+ target:'Target solver',wantGain:'To net',needSell:'%, sell at',applyT:'Apply',
+ feeDetail:'Fee breakdown',buyComm:'Buy commission',soldQty:'Shares sold',sellComm:'Sell commission',secFee:'SEC fee (sell)',
+ tafFee:'FINRA TAF (sell)',buyCost:'Total buy cost',soldCost:'Cost of shares sold',netProc:'Net proceeds',shUnit:' sh',
+ fxTitle:'CAD / USD',refresh:'↻ Refresh',refreshing:'Loading…',fxMode:'IBKR conversion (in to buy, back after selling)',
+ fxMan:'Manual 0.002% (min $2)',fxAut:'Auto 0.03%',fxNon:'Already hold USD',
+ cadIn:'CAD needed to buy',cadSold:'CAD cost of shares sold',cadOut:'CAD received on sale',cadFee:'Total FX fees (CAD)',cadPL:'Net P/L in CAD',
+ settings:'Commission & settings',pFix:'Pro Fixed',pTie:'Pro Tiered',pLit:'Lite (no commission)',
+ upDown:'Up / down colours',cUS:'Green up',cHK:'Red up',advRates:'Advanced rates',
+ perSh:'Per share ($)',minC:'Min per order ($)',maxPct:'Cap (% of trade)',secR:'SEC ($/million)',tafR:'TAF ($/share)',tafC:'TAF cap ($)',
+ apiKeyT:'Quote API key (optional, more reliable)',keyPh:'Paste Finnhub key',applyKey:'Get one free ↗',notes:'Sources & limitations',
+ prevClose:'Prev close {0}',updated:' · updated {0}',delayed:' · quote may be delayed',
+ noSym:'Could not find "{0}" — check the ticker; it may be delisted or not a US stock',noTicker:'Enter a ticker first',
+ quoteFail:'Could not fetch a price — the public proxies are busy. Try again shortly, or add a free Finnhub key under settings.',
+ fxFail:'Could not fetch the rate. Try again shortly.',fxSrcL:'Source: {0}',yahooSrc:'Yahoo market rate',ecbSrc:'ECB reference rate',daily:' (once each business day)',hourly:' (hourly)',
+ netInc:'Net income after tax (year)',totDed:'Total deductions',keepPct:'you keep {0}',perMo:'≈ {0} / month · {1} / bi-weekly',
+ province:'Province / territory',income:'Employment income (CAD)',pYear:'Yearly',pMonth:'Monthly',pBi:'Bi-weekly',pHour:'Hourly',
+ hrsWk:'Hours per week',rrsp:'RRSP contribution (deductible, 0 if none)',annualEq:'= {0} per year',hrNote:' ({0} h/week × 52 weeks)',
+ dedSum:'Deductions summary',fedTax:'Federal income tax',provTax:'{0} tax',cppC:'CPP contributions',qppC:'QPP contributions',eiC:'EI premiums',eiQpip:'EI + QPIP',
+ avgRate:'Average rate',margRate:'Marginal rate',
+ incConv:'Income by pay period',period:'Period',gross:'Gross',netT:'Net',
+ cYear:'Yearly',cMonth:'Monthly',cBi:'Bi-weekly (26)',cWeek:'Weekly',cHour:'Hourly ({0} h/week)',
+ convNote:'Net figures are a full-year average. Early paycheques are smaller because CPP and EI come off until the annual maximum is reached, then take-home rises. Hourly assumes 52 weeks a year.',
+ fedDetail:'Federal tax detail',provDetail:'{0} tax detail',cppEiDetail:'CPP / EI detail',
+ taxableLine:'Salary {0} − CPP enhanced portion {1}{2} = taxable income {3}',rrspMinus:' − RRSP {0}',
+ fedSub:'Federal tax subtotal',bpaRow:'Basic personal amount {0}',cppEiRow:'CPP base {0} + EI {1}',credTot:'Credits × {0}',
+ abate:'Quebec federal abatement 16.5%',fedDue:'Federal tax payable',provSub:'Provincial subtotal',provBpa:'Provincial basic personal amount {0}',
+ surtax:'Ontario surtax',health:'Ontario health premium',bcRed:'BC low-income tax reduction',provDue:'Provincial tax payable',
+ cppEarn:'{0} contributory earnings ({1} − {2} exemption)',cppAt:'{0} @ {1}',cpp2Earn:'CPP2 earnings ({0} – {1})',
+ cpp2At:'CPP2 @ {0}',eiRow:'EI (max {0} @ {1})',qpipRow:'QPIP Quebec parental insurance (estimate)',
+ contTot:'Total contributions',dedPart:'of which deductible (enhanced)',credPart:'of which creditable (base)',
+ qcWarn:'Quebec QPP / QPIP / 16.5% abatement figures are estimates — confirm with Revenu Québec.'
+}};
+let LANG='zh';
+function T(k,...a){let s=(I18N[LANG]&&I18N[LANG][k]!==undefined)?I18N[LANG][k]:(I18N.zh[k]||k);
+  a.forEach((x,i)=>{s=s.split('{'+i+'}').join(x)});return s}
+function setLang(l){LANG=l;try{localStorage.setItem('mc-lang',l)}catch(e){}
+  $('langZh').classList.toggle('on',l==='zh');$('langEn').classList.toggle('on',l==='en');
+  document.documentElement.lang=(l==='zh'?'zh-Hant':'en');applyI18n()}
+function applyI18n(){
+  document.title=T('title');
+  document.querySelectorAll('[data-t]').forEach(el=>{el.textContent=T(el.dataset.t)});
+  document.querySelectorAll('[data-tph]').forEach(el=>{el.placeholder=T(el.dataset.tph)});
+  document.querySelectorAll('[data-ta]').forEach(el=>{el.setAttribute('aria-label',T(el.dataset.ta))});
+  buildProv();renderFoot();
+  $('convDir').textContent=convC2U?'CAD → USD':'USD → CAD';
+  calc();calcTax();renderFX();
+}
+
 const v=id=>{const x=parseFloat($(id).value);return isNaN(x)||x<0?0:x};
 const fmt=n=>'US$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 const fmtS=n=>(n>=0?'+':'-')+fmt(Math.abs(n));
+const fmtC=n=>'CA$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtCS=n=>(n>=0?'+':'-')+fmtC(Math.abs(n));
+const fmtA=n=>'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmt0=n=>'$'+Math.round(n).toLocaleString('en-US');
+const pctS=n=>(n*100).toFixed(2)+'%';
 let colorMode='us';
+const upC=()=>colorMode==='us'?'var(--green)':'var(--red)';
+const dnC=()=>colorMode==='us'?'var(--red)':'var(--green)';
+const tint=(el,p)=>{el.style.color=p>0?upC():(p<0?dnC():'var(--text)')};
+const row=(k,val,bold)=>'<tr'+(bold?' class="tot"':'')+'><td'+(bold?'':' class="k"')+'>'+k+'</td><td class="num">'+val+'</td></tr>';
 
-function upC(){return colorMode==='us'?'var(--green)':'var(--red)'}
-function dnC(){return colorMode==='us'?'var(--red)':'var(--green)'}
-function tint(el,p){el.style.color=p>0?upC():(p<0?dnC():'var(--text)')}
-
-function comm(q,p){let c=Math.max(q*v('per'),v('minC'));return Math.max(Math.min(c,q*p*v('maxPct')/100),0)}
+function comm(q,p){return Math.max(Math.min(Math.max(q*v('per'),v('minC')),q*p*v('maxPct')/100),0)}
 function secFee(g){return g>0?Math.ceil(g*v('secRate')/1e6*100)/100:0}
 function tafFee(q){return q>0?Math.min(Math.round(q*v('tafRate')*100)/100,v('tafCap')):0}
 function netAt(q,p){const g=q*p;return g-comm(q,p)-secFee(g)-tafFee(q)}
-function solvePrice(q,cost,targetNet){
-  let p=targetNet/q;
-  for(let i=0;i<30;i++){p=(targetNet+comm(q,p)+secFee(q*p)+tafFee(q))/q}
-  return Math.ceil(p*100)/100;
-}
-
-function updateSlider(){
-  const bp=v('buyP');if(bp<=0)return;
-  const sl=$('sellSlider');
-  let lo=Math.floor(bp*0.7*100)/100, hi=Math.ceil(bp*1.3*100)/100;
-  const sp=v('sellP');
-  if(sp>0){lo=Math.min(lo,sp);hi=Math.max(hi,sp)}
-  sl.min=lo;sl.max=hi;
-  if(sp>0)sl.value=sp;
-}
-
-function sellQtyOf(q){
-  let p=parseFloat($('sellPct').value);
-  if(isNaN(p)||p<0)p=0; if(p>100)p=100;
-  return Math.max(0,Math.min(q,Math.floor(q*p/100)));
-}
+function solvePrice(q,targetNet){let p=targetNet/q;
+  for(let i=0;i<30;i++)p=(targetNet+comm(q,p)+secFee(q*p)+tafFee(q))/q;return Math.ceil(p*100)/100}
+const QSTEPS=[1,2,3,4,5,6,7,8,9,10,12,15,20,25,30,40,50,75,100,150,200,300,400,500,750,1000];
+function qtyToIdx(q){let b=0,bd=Infinity;QSTEPS.forEach((x,i)=>{const d=Math.abs(x-q);if(d<bd){bd=d;b=i}});return b}
+function sellQtyOf(q){let p=parseFloat($('sellPct').value);if(isNaN(p)||p<0)p=0;if(p>100)p=100;
+  return Math.max(0,Math.min(q,Math.floor(q*p/100)))}
+function updateSlider(){const bp=v('buyP');if(bp<=0)return;const sl=$('sellSlider');
+  let lo=Math.floor(bp*.7*100)/100,hi=Math.ceil(bp*1.3*100)/100;const sp=v('sellP');
+  if(sp>0){lo=Math.min(lo,sp);hi=Math.max(hi,sp)}sl.min=lo;sl.max=hi;if(sp>0)sl.value=sp}
 
 function calc(){
   const q=v('qty'),bp=v('buyP'),sp=v('sellP');
   const sq=sellQtyOf(q),remain=q-sq;
-  const bOK=q>0&&bp>0,sOK=sq>0&&sp>0;
-  const buyC=bOK?comm(q,bp):0,cost=q*bp+buyC;
-  const cps=(bOK&&q>0)?cost/q:0;
-  const soldCost=cps*sq;
+  const bOK=q>0&&bp>0,sOK=sq>0&&sp>0,partial=sq>0&&sq<q;
+  const buyC=bOK?comm(q,bp):0,cost=q*bp+buyC,cps=(bOK&&q>0)?cost/q:0,soldCost=cps*sq;
   const gross=sq*sp,sellC=sOK?comm(sq,sp):0,sec=sOK?secFee(gross):0,taf=sOK?tafFee(sq):0;
   const net=gross-sellC-sec-taf,fees=buyC+sellC+sec+taf;
-  const partial=sq>0&&sq<q;
 
-  $('pctInfo').textContent=q>0
-    ?('賣 '+sq+' 股'+(remain>0?' · 餘下 '+remain+' 股':' · 全部沽清')
-      +(remain>0&&sp>0?' · 餘下帳面 '+fmt(remain*sp):''))
-    :'';
-  $('heroLb').textContent=partial?('淨盈虧 · 已實現（賣 '+sq+' / '+q+' 股）'):'淨盈虧（已扣所有費用）';
+  $('pctInfo').textContent=q>0?((remain>0?T('sellInfo',sq,remain):T('sellAll',sq))
+    +(remain>0&&sp>0?T('remainVal',fmt(remain*sp)):'')):'';
+  $('plLb').textContent=partial?T('plReal',sq,q):T('plLb');
 
   const big=$('bigPL'),pct=$('bigPct');
-  if(bOK&&sOK){
-    const p=net-soldCost;
-    big.textContent=fmtS(p);
-    pct.textContent=(p>=0?'▲ ':'▼ ')+Math.abs(p/soldCost*100).toFixed(2)+'%';
+  if(bOK&&sOK){const p=net-soldCost;
+    big.textContent=fmtS(p);pct.textContent=(p>=0?'▲ ':'▼ ')+Math.abs(p/soldCost*100).toFixed(2)+'%';
     tint(big,p);tint(pct,p);
   }else{big.textContent='—';big.style.color='var(--text)';pct.textContent=''}
-
   $('sFee').textContent=(bOK||sOK)?fmt(fees):'—';
-  renderCAD(cost,net,soldCost,sq,q,bOK,sOK);
+  $('feeSv').textContent=(bOK||sOK)?fmt(fees):'';
+  $('commSv').textContent=$('pFixed').classList.contains('on')?T('pFix')
+    :($('pTier').classList.contains('on')?T('pTie'):T('pLit'));
 
   $('fBuyC').textContent=bOK?fmt(buyC):'—';
-  $('fSellQ').textContent=q>0?(sq+' 股'):'—';
+  $('fSellQ').textContent=q>0?(sq+T('shUnit')):'—';
   $('fSellC').textContent=sOK?fmt(sellC):'—';
   $('fSec').textContent=sOK?fmt(sec):'—';
   $('fTaf').textContent=sOK?fmt(taf):'—';
@@ -672,564 +571,403 @@ function calc(){
 
   const body=$('scnBody');body.innerHTML='';
   if(bOK&&sq>0){
-    const rows=[-10,-5,5,10,20];
-    rows.forEach(r=>{
-      const price=Math.round(bp*(1+r/100)*100)/100;
-      const p=netAt(sq,price)-soldCost;
-      const tr=document.createElement('tr');
-      tr.className='pick';
-      const lbl=(r>0?'+':'')+r+'%';
-      tr.innerHTML='<td>'+lbl+'</td><td class="num">'+fmt(price)+'</td><td class="num scn-pl">'+fmtS(p)+'</td>';
+    [-10,-5,5,10,20].forEach(r=>{
+      const price=Math.round(bp*(1+r/100)*100)/100,p=netAt(sq,price)-soldCost;
+      const tr=document.createElement('tr');tr.className='pick';
+      tr.innerHTML='<td>'+(r>0?'+':'')+r+'%</td><td class="num">'+fmt(price)+'</td><td class="num sp">'+fmtS(p)+'</td>';
       tr.addEventListener('click',()=>{$('sellP').value=price;updateSlider();calc()});
-      tint(tr.querySelector('.scn-pl'),p);
-      body.appendChild(tr);
+      tint(tr.querySelector('.sp'),p);body.appendChild(tr);
     });
-  }
+    $('scenSv').textContent=fmtS(netAt(sq,Math.round(bp*1.1*100)/100)-soldCost)+' @ +10%';
+  }else $('scenSv').textContent='';
 
   const t=parseFloat($('target').value);
-  if(bOK&&sq>0&&!isNaN(t)){
-    const need=solvePrice(sq,soldCost,soldCost*(1+t/100));
-    $('targetOut').textContent=fmt(need)+'（'+((need/bp-1)*100>=0?'+':'')+((need/bp-1)*100).toFixed(2)+'%）';
-    $('targetOut').dataset.price=need;
+  if(bOK&&sq>0&&!isNaN(t)){const need=solvePrice(sq,soldCost*(1+t/100));
+    $('targetOut').textContent=fmt(need);$('targetOut').dataset.price=need;
   }else{$('targetOut').textContent='—';delete $('targetOut').dataset.price}
 
   $('rMin').textContent=fmt(parseFloat($('sellSlider').min)||0);
   $('rMax').textContent=fmt(parseFloat($('sellSlider').max)||0);
-
   const curP=parseFloat($('sellPct').value);
   document.querySelectorAll('#pctChips .chip').forEach(c=>c.classList.toggle('on',parseFloat(c.dataset.p)===curP));
   $('qtySlider').value=qtyToIdx(q);
+  renderCAD(cost,net,soldCost,sq,q,bOK,sOK);
 }
+function preset(per,mn,mx,b){$('per').value=per;$('minC').value=mn;$('maxPct').value=mx;
+  ['pFixed','pTier','pLite'].forEach(i=>$(i).classList.toggle('on',i===b));calc()}
+function setColor(m){colorMode=m;$('cUS').classList.toggle('on',m==='us');$('cHK').classList.toggle('on',m==='hk');calc()}
 
-/* 股數拉桿：低位每格 1 股，高位先跳大，等細股數都揀得準 */
-const QSTEPS=[1,2,3,4,5,6,7,8,9,10,12,15,20,25,30,40,50,75,100,150,200,300,400,500,750,1000];
-function qtyToIdx(q){
-  let best=0,bd=Infinity;
-  QSTEPS.forEach((v,i)=>{const d=Math.abs(v-q);if(d<bd){bd=d;best=i}});
-  return best;
-}
-
-function preset(per,mn,mx,btn){
-  $('per').value=per;$('minC').value=mn;$('maxPct').value=mx;
-  ['pFixed','pTier','pLite'].forEach(i=>$(i).classList.toggle('on',i===btn));
-  calc();
-}
-function setColor(m){
-  colorMode=m;
-  $('cUS').classList.toggle('on',m==='us');
-  $('cHK').classList.toggle('on',m==='hk');
-  calc();
-}
-function setTheme(t){
-  const html=document.documentElement;
-  if(t==='auto') html.removeAttribute('data-theme'); else html.setAttribute('data-theme',t);
-  const map={auto:'tAuto',light:'tLight',dark:'tDark'};
-  ['tAuto','tLight','tDark'].forEach(id=>$(id).classList.toggle('on',id===map[t]));
-  try{localStorage.setItem('ibcalc-theme',t)}catch(e){}
-}
-(function(){let t='auto';try{t=localStorage.getItem('ibcalc-theme')||'auto'}catch(e){}setTheme(t)})();
-
-$('qtySlider').max=QSTEPS.length-1;
-$('qtySlider').addEventListener('input',()=>{
-  $('qty').value=QSTEPS[+$('qtySlider').value];calc();
-});
-document.querySelectorAll('#pctChips .chip').forEach(c=>{
-  c.addEventListener('click',()=>{$('sellPct').value=c.dataset.p;calc()});
-});
-$('applyTarget').addEventListener('click',()=>{
-  const p=$('targetOut').dataset.price;
-  if(p){$('sellP').value=p;updateSlider();calc()}
-});
-$('sellSlider').addEventListener('input',()=>{$('sellP').value=$('sellSlider').value;calc()});
-$('buyP').addEventListener('input',()=>{updateSlider();calc()});
-$('sellP').addEventListener('input',()=>{updateSlider();calc()});
-['qty','sellPct','per','minC','maxPct','secRate','tafRate','tafCap','target'].forEach(i=>$(i).addEventListener('input',calc));
-
-/* ── 即時報價 ──
-   免 key：Yahoo Finance 非官方報價，經多個公共 CORS proxy「同時發射、快者先得」。
-   選填 key：如填咗 Finnhub key，優先用佢（較穩定），失敗自動退回免 key。 */
-const PROXIES=[
-  {u:t=>'https://api.allorigins.win/raw?url='+encodeURIComponent(t), raw:true},
-  {u:t=>'https://api.codetabs.com/v1/proxy/?quest='+encodeURIComponent(t), raw:true},
-  {u:t=>'https://proxy.killcors.com/?url='+encodeURIComponent(t), raw:true}
-];
-const YHOSTS=['query1','query2'];
-const TIMEOUT=7000;
+const PROXIES=[t=>'https://api.allorigins.win/raw?url='+encodeURIComponent(t),
+               t=>'https://api.codetabs.com/v1/proxy/?quest='+encodeURIComponent(t),
+               t=>'https://proxy.killcors.com/?url='+encodeURIComponent(t)];
+const YHOSTS=['query1','query2'],TIMEOUT=7000;
 let lastPrice=null;
-
-function qShowMsg(t,warn){const m=$('qMsg');m.textContent=t;m.style.color=warn?'var(--muted)':'var(--red)';m.classList.toggle('show',!!t)}
-async function fetchText(url,ms){
-  const ac=new AbortController();const id=setTimeout(()=>ac.abort(),ms);
+async function fetchText(url,ms){const ac=new AbortController(),id=setTimeout(()=>ac.abort(),ms);
   try{const r=await fetch(url,{signal:ac.signal});if(!r.ok)throw new Error('HTTP '+r.status);return await r.text()}
-  finally{clearTimeout(id)}
-}
+  finally{clearTimeout(id)}}
 async function raceYahoo(sym){
   const path='/v8/finance/chart/'+encodeURIComponent(sym)+'?interval=1d&range=1d';
-  for(const h of YHOSTS){
-    const target='https://'+h+'.finance.yahoo.com'+path;
-    const tasks=PROXIES.map(async p=>{
-      const text=await fetchText(p.u(target),TIMEOUT);
-      const payload=p.raw?text:(JSON.parse(text).contents);
-      if(payload==null)throw new Error('empty');
-      return JSON.parse(payload);
-    });
-    try{return await Promise.any(tasks)}catch(e){/* 呢個 host 全掛，試下一個 */}
-  }
-  return null;
-}
-function showQuote(sym,price,pc,timeSec,currency){
+  for(const h of YHOSTS){const target='https://'+h+'.finance.yahoo.com'+path;
+    try{return await Promise.any(PROXIES.map(async p=>JSON.parse(await fetchText(p(target),TIMEOUT))))}catch(e){}}
+  return null}
+function qMsg(t){const m=$('qMsg');m.textContent=t;m.classList.toggle('show',!!t)}
+function showQuote(sym,price,pc,ts,cur){
   lastPrice=Math.round(price*100)/100;
-  $('qSym').textContent=sym+(currency&&currency!=='USD'?' ('+currency+')':'');
+  $('qSym').textContent=sym+(cur&&cur!=='USD'?' ('+cur+')':'');
   $('qPrice').textContent=fmt(price);
-  const chg=$('qChg');
-  if(pc!=null&&pc>0){
-    const d1=price-pc,dp=d1/pc*100;
-    chg.textContent=(d1>=0?'▲ ':'▼ ')+fmt(Math.abs(d1))+'（'+(dp>=0?'+':'')+dp.toFixed(2)+'%）';
-    chg.style.color=dp>0?upC():(dp<0?dnC():'var(--text)');
-  }else chg.textContent='';
-  $('qMeta').textContent=(pc!=null?'前收 '+fmt(pc):'')+(timeSec?' · 更新 '+new Date(timeSec*1000).toLocaleString('zh-HK'):'')+' · 報價可能延遲';
-  $('qResult').classList.add('show');
+  const c=$('qChg');
+  if(pc!=null&&pc>0){const d=price-pc,dp=d/pc*100;
+    c.textContent=(d>=0?'▲ ':'▼ ')+fmt(Math.abs(d))+' ('+(dp>=0?'+':'')+dp.toFixed(2)+'%)';
+    c.style.color=dp>0?upC():(dp<0?dnC():'var(--text)')}else c.textContent='';
+  $('qMeta').textContent=(pc!=null?T('prevClose',fmt(pc)):'')+(ts?T('updated',new Date(ts*1000).toLocaleString()):'')+T('delayed');
+  $('qRes').classList.add('show');
 }
 async function fetchQuote(){
-  const sym=$('ticker').value.trim().toUpperCase();
-  qShowMsg('');
-  if(!sym){qShowMsg('請先輸入股票代號');return}
-  const key=$('apiKey').value.trim();
-  const btn=$('qBtn');btn.disabled=true;btn.textContent='取緊…';
+  const sym=$('ticker').value.trim().toUpperCase();qMsg('');
+  if(!sym){qMsg(T('noTicker'));return}
+  const key=$('apiKey').value.trim(),b=$('qBtn');b.disabled=true;b.textContent=T('getting');
   try{
-    // 1) 優先 Finnhub（如有 key，直連、最穩）
-    if(key){
-      try{
-        const text=await fetchText('https://finnhub.io/api/v1/quote?symbol='+encodeURIComponent(sym)+'&token='+encodeURIComponent(key),TIMEOUT);
-        const d=JSON.parse(text);
-        if(d&&(d.c||d.pc)){showQuote(sym,d.c,d.pc,d.t,'USD');return}
-      }catch(e){/* key 錯或繁忙，退回免 key */}
-    }
-    // 2) 免 key：多代理並行 + 多 host
+    if(key){try{const d=JSON.parse(await fetchText('https://finnhub.io/api/v1/quote?symbol='+encodeURIComponent(sym)+'&token='+encodeURIComponent(key),TIMEOUT));
+      if(d&&(d.c||d.pc)){showQuote(sym,d.c,d.pc,d.t,'USD');return}}catch(e){}}
     const d=await raceYahoo(sym);
-    if(d&&d.chart&&d.chart.error){qShowMsg('搵唔到「'+sym+'」，可能代號錯、已下市或者唔係美股');return}
-    const meta=d&&d.chart&&d.chart.result&&d.chart.result[0]&&d.chart.result[0].meta;
-    if(meta&&meta.regularMarketPrice!=null){
-      const pc=(meta.chartPreviousClose!=null?meta.chartPreviousClose:meta.previousClose);
-      showQuote(sym,meta.regularMarketPrice,pc,meta.regularMarketTime,meta.currency);return;
-    }
-    qShowMsg('暫時取唔到價。免費公共代理當時繁忙／暫停，稍後再試通常得返；想幾乎次次都成功，可喺下面填個免費 Finnhub key。');
-  }finally{btn.disabled=false;btn.textContent='取價'}
-}
-$('qBtn').addEventListener('click',fetchQuote);
-$('ticker').addEventListener('keydown',e=>{if(e.key==='Enter')fetchQuote()});
-$('useBuy').addEventListener('click',()=>{if(lastPrice!=null){$('buyP').value=lastPrice;updateSlider();calc()}});
-$('useSell').addEventListener('click',()=>{if(lastPrice!=null){$('sellP').value=lastPrice;updateSlider();calc()}});
-(function(){let k='';try{k=localStorage.getItem('ibcalc-key')||''}catch(e){}if(k)$('apiKey').value=k;})();
-$('apiKey').addEventListener('change',()=>{try{localStorage.setItem('ibcalc-key',$('apiKey').value.trim())}catch(e){}});
-
-/* ── 加紙兌美金 ──
-   即時：先試 Yahoo USDCAD=X（市場價，經代理）；
-   後備：Frankfurter（ECB 參考價，直連免 key）、exchangerate.fun（每小時）。 */
-let fxRate=null, fxSrcTxt='', fxMode='manual', convC2U=true;
-const FX_HOSTS=['https://api.frankfurter.dev','https://api.frankfurter.app'];
-const fmtC=n=>'CA$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-const fmtCS=n=>(n>=0?'+':'-')+fmtC(Math.abs(n));
-
-function fxFeeUSD(amt){
-  if(!amt||amt<=0)return 0;
-  if(fxMode==='manual')return Math.max(amt*0.00002,2);
-  if(fxMode==='auto')return amt*0.0003;
-  return 0;
-}
-async function yahooFX(){
-  try{
-    const d=await raceYahoo('USDCAD=X');
+    if(d&&d.chart&&d.chart.error){qMsg(T('noSym',sym));return}
     const m=d&&d.chart&&d.chart.result&&d.chart.result[0]&&d.chart.result[0].meta;
-    if(m&&m.regularMarketPrice)return{rate:m.regularMarketPrice,src:'Yahoo 市場價'+(m.regularMarketTime?' · '+new Date(m.regularMarketTime*1000).toLocaleString('zh-HK'):'')};
-  }catch(e){}
-  return null;
+    if(m&&m.regularMarketPrice!=null){showQuote(sym,m.regularMarketPrice,
+      m.chartPreviousClose!=null?m.chartPreviousClose:m.previousClose,m.regularMarketTime,m.currency);return}
+    qMsg(T('quoteFail'));
+  }finally{b.disabled=false;b.textContent=T('getPrice')}
 }
-async function backupFX(){
-  for(const h of FX_HOSTS){
-    try{
-      const d=JSON.parse(await fetchText(h+'/v1/latest?base=USD&symbols=CAD',TIMEOUT));
-      if(d&&d.rates&&d.rates.CAD)return{rate:d.rates.CAD,src:'ECB 參考價'+(d.date?' · '+d.date:'')+'（每個工作日更新一次）'};
-    }catch(e){}
-  }
-  try{
-    const d=JSON.parse(await fetchText('https://api.exchangerate.fun/latest?base=USD',TIMEOUT));
-    if(d&&d.rates&&d.rates.CAD)return{rate:d.rates.CAD,src:'exchangerate.fun（每小時更新）'};
-  }catch(e){}
-  return null;
-}
-function renderFX(){
-  if(fxRate==null){$('fxRate').textContent='—';$('fxEq').textContent='1 美金 = ? 加紙';return}
-  $('fxRate').textContent=fxRate.toFixed(4);
-  $('fxEq').textContent='1 美金 = '+fxRate.toFixed(4)+' 加紙 · 1 加紙 = '+(1/fxRate).toFixed(4)+' 美金';
-  $('fxSrc').textContent='來源：'+fxSrcTxt;
-  renderConv();
-}
-function renderConv(){
-  const a=parseFloat($('convAmt').value);
-  if(fxRate==null||isNaN(a)||a<0){$('convOut').textContent='—';return}
-  $('convOut').textContent=convC2U?fmt(a/fxRate):fmtC(a*fxRate);
-}
-async function loadFX(){
-  const btn=$('fxBtn');btn.disabled=true;btn.textContent='更新中…';
-  $('fxMsg').classList.remove('show');
-  const backup=backupFX().catch(()=>null);
-  try{
-    let got=await yahooFX();
-    if(!got)got=await backup;
-    if(got){fxRate=got.rate;fxSrcTxt=got.src;renderFX();calc()}
-    else{
-      $('fxSrc').textContent='';
-      $('fxMsg').textContent='暫時取唔到匯率，稍後再試；亦可自己㩒「更新」重試。';
-      $('fxMsg').classList.add('show');
-    }
-  }finally{btn.disabled=false;btn.textContent='↻ 更新'}
-}
-function setFxMode(m){
-  fxMode=m;
-  const map={manual:'fxManual',auto:'fxAuto',none:'fxNone'};
-  ['fxManual','fxAuto','fxNone'].forEach(id=>$(id).classList.toggle('on',id===map[m]));
-  calc();
-}
-function renderCAD(cost,net,soldCost,sq,q,bOK,sOK){
-  const cadPL=$('cadPL'),heroCad=$('bigPLcad');
-  if(fxRate==null){
-    ['cadCost','cadSoldCost','cadNet','cadFxFee','cadPL'].forEach(i=>$(i).textContent='—');
-    cadPL.style.color='var(--text)';heroCad.textContent='';return;
-  }
-  const feeIn=bOK?fxFeeUSD(cost):0, feeOut=sOK?fxFeeUSD(net):0;
-  const share=(q>0)?sq/q:0;
-  const cadFull=bOK?(cost+feeIn)*fxRate:0;
-  const cadSold=(bOK&&sq>0)?(soldCost+feeIn*share)*fxRate:0;
-  const cadOut=sOK?(net-feeOut)*fxRate:0;
-  $('cadCost').textContent=bOK?fmtC(cadFull):'—';
-  $('cadSoldCost').textContent=(bOK&&sq>0)?fmtC(cadSold):'—';
-  $('cadNet').textContent=sOK?fmtC(cadOut):'—';
-  $('cadFxFee').textContent=(bOK||sOK)?fmtC((feeIn+feeOut)*fxRate):'—';
-  if(bOK&&sOK){
-    const p=cadOut-cadSold;
-    cadPL.textContent=fmtCS(p);tint(cadPL,p);
-    heroCad.textContent='≈ '+fmtCS(p)+' 加紙';heroCad.style.color=p>0?upC():(p<0?dnC():'var(--muted)');
-  }else{cadPL.textContent='—';cadPL.style.color='var(--text)';heroCad.textContent=''}
-}
-$('fxBtn').addEventListener('click',loadFX);
-$('convAmt').addEventListener('input',renderConv);
-$('convDir').addEventListener('click',()=>{
-  convC2U=!convC2U;
-  $('convDir').textContent=convC2U?'加紙 → 美金':'美金 → 加紙';
-  renderConv();
-});
 
-/* ══ 入息稅計算機 · 2026 稅年 ══
-   稅階／BPA 對照 CRA T4127 表 8.1；BC 另經省政府官網核實。 */
-const FED={
-  br:[[58523,.14],[117045,.205],[181440,.26],[258482,.29],[Infinity,.33]],
-  bpaHi:16452,bpaLo:14829,phLo:181440,phHi:258482,cr:.14
-};
+let fxRate=null,fxSrcTxt='',fxMode='manual',convC2U=true;
+const FXH=['https://api.frankfurter.dev','https://api.frankfurter.app'];
+function fxFeeUSD(a){if(!a||a<=0)return 0;
+  if(fxMode==='manual')return Math.max(a*0.00002,2);
+  if(fxMode==='auto')return a*0.0003;return 0}
+async function yahooFX(){try{const d=await raceYahoo('USDCAD=X');
+  const m=d&&d.chart&&d.chart.result&&d.chart.result[0]&&d.chart.result[0].meta;
+  if(m&&m.regularMarketPrice)return{rate:m.regularMarketPrice,src:T('yahooSrc')+(m.regularMarketTime?' · '+new Date(m.regularMarketTime*1000).toLocaleString():'')}}catch(e){}
+  return null}
+async function backupFX(){
+  for(const h of FXH){try{const d=JSON.parse(await fetchText(h+'/v1/latest?base=USD&symbols=CAD',TIMEOUT));
+    if(d&&d.rates&&d.rates.CAD)return{rate:d.rates.CAD,src:T('ecbSrc')+(d.date?' · '+d.date:'')+T('daily')}}catch(e){}}
+  try{const d=JSON.parse(await fetchText('https://api.exchangerate.fun/latest?base=USD',TIMEOUT));
+    if(d&&d.rates&&d.rates.CAD)return{rate:d.rates.CAD,src:'exchangerate.fun'+T('hourly')}}catch(e){}
+  return null}
+function renderFX(){
+  if(fxRate==null){$('fxRate').textContent='—';$('fxEq').textContent='';return}
+  $('fxRate').textContent=fxRate.toFixed(4);
+  $('fxEq').textContent='1 USD = '+fxRate.toFixed(4)+' CAD · 1 CAD = '+(1/fxRate).toFixed(4)+' USD';
+  $('fxSrc').textContent=T('fxSrcL',fxSrcTxt);renderConv();
+}
+function renderConv(){const a=parseFloat($('convAmt').value);
+  if(fxRate==null||isNaN(a)||a<0){$('convOut').textContent='—';return}
+  $('convOut').textContent=convC2U?fmt(a/fxRate):fmtC(a*fxRate)}
+async function loadFX(){
+  const b=$('fxBtn');b.disabled=true;b.textContent=T('refreshing');$('fxMsg').classList.remove('show');
+  const bk=backupFX().catch(()=>null);
+  try{let g=await yahooFX();if(!g)g=await bk;
+    if(g){fxRate=g.rate;fxSrcTxt=g.src;renderFX();calc()}
+    else{$('fxMsg').textContent=T('fxFail');$('fxMsg').classList.add('show')}
+  }finally{b.disabled=false;b.textContent=T('refresh')}
+}
+function setFxMode(m){fxMode=m;
+  const map={manual:'fxManual',auto:'fxAuto',none:'fxNone'};
+  ['fxManual','fxAuto','fxNone'].forEach(i=>$(i).classList.toggle('on',i===map[m]));calc()}
+function renderCAD(cost,net,soldCost,sq,q,bOK,sOK){
+  const pl=$('cadPL'),hero=$('bigCad');
+  if(fxRate==null){['cadCost','cadSoldCost','cadNet','cadFxFee','cadPL'].forEach(i=>$(i).textContent='—');
+    pl.style.color='var(--text)';hero.textContent='';$('fxSv').textContent='';return}
+  const fi=bOK?fxFeeUSD(cost):0,fo=sOK?fxFeeUSD(net):0,share=q>0?sq/q:0;
+  const cIn=bOK?(cost+fi)*fxRate:0,cSold=(bOK&&sq>0)?(soldCost+fi*share)*fxRate:0,cOut=sOK?(net-fo)*fxRate:0;
+  $('cadCost').textContent=bOK?fmtC(cIn):'—';
+  $('cadSoldCost').textContent=(bOK&&sq>0)?fmtC(cSold):'—';
+  $('cadNet').textContent=sOK?fmtC(cOut):'—';
+  $('cadFxFee').textContent=(bOK||sOK)?fmtC((fi+fo)*fxRate):'—';
+  if(bOK&&sOK){const p=cOut-cSold;
+    pl.textContent=fmtCS(p);tint(pl,p);
+    hero.textContent='≈ '+fmtCS(p);hero.style.color=p>0?upC():(p<0?dnC():'var(--muted)');
+    $('fxSv').textContent=fxRate.toFixed(4)+' · '+fmtCS(p);
+  }else{pl.textContent='—';pl.style.color='var(--text)';hero.textContent='';$('fxSv').textContent=fxRate.toFixed(4)}
+}
+
+const FED={br:[[58523,.14],[117045,.205],[181440,.26],[258482,.29],[Infinity,.33]],
+  bpaHi:16452,bpaLo:14829,phLo:181440,phHi:258482,cr:.14};
 const CPP={ympe:74600,exempt:3500,rate:.0595,max:4230.45,yampe:85000,rate2:.04,max2:416,baseRate:.0495,baseMax:3519.45};
 const EI={mie:68900,rate:.0163,max:1123.07,qcRate:.0130,qcMax:895.70};
 const PROV={
-  BC:{n:'卑詩 BC',br:[[50363,.056],[100728,.077],[115648,.105],[140430,.1229],[190405,.147],[265545,.168],[Infinity,.205]],bpa:13216,cr:.056,red:{max:690,thr:25570,rate:.0356}},
-  AB:{n:'亞伯達 Alberta',br:[[61200,.08],[154259,.10],[185111,.12],[246813,.13],[370220,.14],[Infinity,.15]],bpa:22769,cr:.08},
-  ON:{n:'安大略 Ontario',br:[[53891,.0505],[107785,.0915],[150000,.1116],[220000,.1216],[Infinity,.1316]],bpa:12989,cr:.0505,sur:[[5818,.20],[7446,.36]],health:1},
-  QC:{n:'魁北克 Quebec（概算）',br:[[54345,.14],[108680,.19],[132245,.24],[Infinity,.2575]],bpa:18952,cr:.14,qc:1},
-  MB:{n:'緬尼托巴 Manitoba',br:[[47000,.108],[100000,.1275],[Infinity,.174]],bpa:15780,cr:.108},
-  SK:{n:'沙斯卡寸溫 Saskatchewan',br:[[54532,.105],[155805,.125],[Infinity,.145]],bpa:20381,cr:.105},
-  NS:{n:'新斯科舍 Nova Scotia',br:[[30995,.0879],[61991,.1495],[97417,.1667],[157124,.175],[Infinity,.21]],bpa:11932,cr:.0879},
-  NB:{n:'新布朗斯維克 New Brunswick',br:[[52333,.094],[104666,.14],[193861,.16],[Infinity,.195]],bpa:13664,cr:.094},
-  NL:{n:'紐芬蘭 Newfoundland',br:[[44678,.087],[89354,.145],[159528,.158],[223340,.178],[285319,.198],[570638,.208],[1141275,.213],[Infinity,.218]],bpa:13094,cr:.087},
-  PE:{n:'愛德華王子島 PEI',br:[[33928,.095],[65820,.1347],[106890,.166],[142520,.1762],[200000,.19],[Infinity,.20]],bpa:15000,cr:.095},
-  NT:{n:'西北地區 NWT',br:[[53003,.059],[106009,.086],[172346,.122],[Infinity,.1405]],bpa:18198,cr:.059},
-  YT:{n:'育空 Yukon',br:[[58523,.064],[117045,.09],[181440,.109],[500000,.128],[Infinity,.15]],bpa:16452,cr:.064},
-  NU:{n:'努納武特 Nunavut',br:[[55801,.04],[111602,.07],[181439,.09],[Infinity,.115]],bpa:19659,cr:.04}
-};
-const fmtA=n=>'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-const fmt0=n=>'$'+Math.round(n).toLocaleString('en-US');
-const pctS=n=>(n*100).toFixed(2)+'%';
-
-function bandTax(inc,br){
-  let tax=0,prev=0;const rows=[];
-  for(const[cap,rate]of br){
-    if(inc<=prev)break;
-    const hi=Math.min(inc,cap),amt=hi-prev;
-    if(amt>0){tax+=amt*rate;rows.push({lo:prev,hi,rate,amt,t:amt*rate})}
-    prev=cap;
-  }
-  return{tax,rows};
-}
-function onHealth(inc){
-  if(inc<=20000)return 0;
-  if(inc<=36000)return Math.min(300,(inc-20000)*.06);
-  if(inc<=48000)return Math.min(450,300+(inc-36000)*.06);
-  if(inc<=72000)return Math.min(600,450+(inc-48000)*.25);
-  if(inc<=200000)return Math.min(750,600+(inc-72000)*.25);
-  return Math.min(900,750+(inc-200000)*.25);
-}
+ BC:{zh:'卑詩 BC',en:'British Columbia',br:[[50363,.056],[100728,.077],[115648,.105],[140430,.1229],[190405,.147],[265545,.168],[Infinity,.205]],bpa:13216,cr:.056,red:{max:690,thr:25570,rate:.0356}},
+ AB:{zh:'亞伯達 Alberta',en:'Alberta',br:[[61200,.08],[154259,.10],[185111,.12],[246813,.13],[370220,.14],[Infinity,.15]],bpa:22769,cr:.08},
+ ON:{zh:'安大略 Ontario',en:'Ontario',br:[[53891,.0505],[107785,.0915],[150000,.1116],[220000,.1216],[Infinity,.1316]],bpa:12989,cr:.0505,sur:[[5818,.20],[7446,.36]],health:1},
+ QC:{zh:'魁北克 Quebec（概算）',en:'Quebec (estimate)',br:[[54345,.14],[108680,.19],[132245,.24],[Infinity,.2575]],bpa:18952,cr:.14,qc:1},
+ MB:{zh:'緬尼托巴 Manitoba',en:'Manitoba',br:[[47000,.108],[100000,.1275],[Infinity,.174]],bpa:15780,cr:.108},
+ SK:{zh:'沙斯卡寸溫 Saskatchewan',en:'Saskatchewan',br:[[54532,.105],[155805,.125],[Infinity,.145]],bpa:20381,cr:.105},
+ NS:{zh:'新斯科舍 Nova Scotia',en:'Nova Scotia',br:[[30995,.0879],[61991,.1495],[97417,.1667],[157124,.175],[Infinity,.21]],bpa:11932,cr:.0879},
+ NB:{zh:'新布朗斯維克 New Brunswick',en:'New Brunswick',br:[[52333,.094],[104666,.14],[193861,.16],[Infinity,.195]],bpa:13664,cr:.094},
+ NL:{zh:'紐芬蘭 Newfoundland',en:'Newfoundland and Labrador',br:[[44678,.087],[89354,.145],[159528,.158],[223340,.178],[285319,.198],[570638,.208],[1141275,.213],[Infinity,.218]],bpa:13094,cr:.087},
+ PE:{zh:'愛德華王子島 PEI',en:'Prince Edward Island',br:[[33928,.095],[65820,.1347],[106890,.166],[142520,.1762],[200000,.19],[Infinity,.20]],bpa:15000,cr:.095},
+ NT:{zh:'西北地區 NWT',en:'Northwest Territories',br:[[53003,.059],[106009,.086],[172346,.122],[Infinity,.1405]],bpa:18198,cr:.059},
+ YT:{zh:'育空 Yukon',en:'Yukon',br:[[58523,.064],[117045,.09],[181440,.109],[500000,.128],[Infinity,.15]],bpa:16452,cr:.064},
+ NU:{zh:'努納武特 Nunavut',en:'Nunavut',br:[[55801,.04],[111602,.07],[181439,.09],[Infinity,.115]],bpa:19659,cr:.04}};
+const pn=P=>LANG==='zh'?P.zh:P.en;
+function buildProv(){const cur=$('txProv').value||'BC';
+  $('txProv').innerHTML=Object.keys(PROV).map(k=>'<option value="'+k+'">'+pn(PROV[k])+'</option>').join('');
+  $('txProv').value=cur}
+function bandTax(inc,br){let tax=0,prev=0;const rows=[];
+  for(const[cap,rate]of br){if(inc<=prev)break;const hi=Math.min(inc,cap),amt=hi-prev;
+    if(amt>0){tax+=amt*rate;rows.push({lo:prev,hi,rate,t:amt*rate})}prev=cap}
+  return{tax,rows}}
+function onHealth(i){if(i<=20000)return 0;if(i<=36000)return Math.min(300,(i-20000)*.06);
+  if(i<=48000)return Math.min(450,300+(i-36000)*.06);if(i<=72000)return Math.min(600,450+(i-48000)*.25);
+  if(i<=200000)return Math.min(750,600+(i-72000)*.25);return Math.min(900,750+(i-200000)*.25)}
 function taxEngine(gross,rrsp,code){
   const P=PROV[code],isQC=!!P.qc;
-  const r1=isQC?.0630:CPP.rate, m1=isQC?4479.30:CPP.max, bRate=isQC?.0540:CPP.baseRate;
+  const r1=isQC?.0630:CPP.rate,m1=isQC?4479.30:CPP.max,bR=isQC?.0540:CPP.baseRate;
   const contrib=Math.max(0,Math.min(gross,CPP.ympe)-CPP.exempt);
   const c1=Math.min(contrib*r1,m1);
   const e2=Math.max(0,Math.min(gross,CPP.yampe)-CPP.ympe);
   const c2=Math.min(e2*CPP.rate2,CPP.max2);
-  const cppBase=Math.min(contrib*bRate,isQC?3839.40:CPP.baseMax);
+  const cppBase=Math.min(contrib*bR,isQC?3839.40:CPP.baseMax);
   const cppDed=Math.max(0,c1-cppBase)+c2;
   const ei=Math.min(Math.min(gross,EI.mie)*(isQC?EI.qcRate:EI.rate),isQC?EI.qcMax:EI.max);
   const qpip=isQC?Math.min(gross*.00494,442.90):0;
-
   const taxable=Math.max(0,gross-cppDed-rrsp);
   let bpa=FED.bpaHi;
   if(taxable>FED.phHi)bpa=FED.bpaLo;
   else if(taxable>FED.phLo)bpa=FED.bpaHi-(FED.bpaHi-FED.bpaLo)*(taxable-FED.phLo)/(FED.phHi-FED.phLo);
-
-  const F=bandTax(taxable,FED.br);
-  const fCred=(bpa+cppBase+ei+qpip)*FED.cr;
-  let fed=Math.max(0,F.tax-fCred);
-  const abate=isQC?fed*.165:0; fed-=abate;
-
-  const V=bandTax(taxable,P.br);
-  const pCred=(P.bpa+cppBase+ei+qpip)*P.cr;
-  let prov=Math.max(0,V.tax-pCred);
-  let sur=0,health=0,red=0;
+  const F=bandTax(taxable,FED.br),fCred=(bpa+cppBase+ei+qpip)*FED.cr;
+  let fed=Math.max(0,F.tax-fCred);const abate=isQC?fed*.165:0;fed-=abate;
+  const V=bandTax(taxable,P.br),pCred=(P.bpa+cppBase+ei+qpip)*P.cr;
+  let prov=Math.max(0,V.tax-pCred),sur=0,health=0,red=0;
   if(P.sur){sur=P.sur[0][1]*Math.max(0,prov-P.sur[0][0])+P.sur[1][1]*Math.max(0,prov-P.sur[1][0]);prov+=sur}
   if(P.health){health=onHealth(taxable);prov+=health}
   if(P.red){red=Math.max(0,P.red.max-Math.max(0,taxable-P.red.thr)*P.red.rate);prov=Math.max(0,prov-red)}
-
   const total=fed+prov+c1+c2+ei+qpip;
-  return{P,isQC,gross,rrsp,taxable,contrib,e2,c1,c2,cppBase,cppDed,ei,qpip,bpa,
-    F,fCred,fed,abate,V,pCred,prov,sur,health,red,total,net:gross-total};
-}
-
-function rowHTML(k,v,bold){
-  return'<tr'+(bold?' class="tot"':'')+'><td'+(bold?'':' class="k"')+'>'+k+'</td><td class="num">'+v+'</td></tr>';
+  return{P,isQC,gross,rrsp,taxable,contrib,e2,c1,c2,cppBase,cppDed,ei,qpip,bpa,F,fCred,fed,abate,V,pCred,prov,sur,health,red,total,net:gross-total};
 }
 let txPeriod='year';
-const PER_DIV={year:1,month:12,biweek:26,week:52};
-function txHoursYr(){const h=parseFloat($('txHours').value);return (isNaN(h)||h<=0)?0:h*52}
-function grossAnnual(){
-  const v=Math.max(0,parseFloat($('txIncome').value)||0);
-  return txPeriod==='hour' ? v*txHoursYr() : v*PER_DIV[txPeriod];
-}
-function setPeriod(p){
-  const a=grossAnnual();                 // 用舊單位換算，令年薪保持不變
-  txPeriod=p;
-  $('txHoursWrap').hidden=(p!=='hour');
-  const hy=txHoursYr();
-  let nv = p==='hour' ? (hy>0?a/hy:0) : a/PER_DIV[p];
+const PDIV={year:1,month:12,biweek:26,week:52};
+const txHoursYr=()=>{const h=parseFloat($('txHours').value);return(isNaN(h)||h<=0)?0:h*52};
+function grossAnnual(){const x=Math.max(0,parseFloat($('txIncome').value)||0);
+  return txPeriod==='hour'?x*txHoursYr():x*PDIV[txPeriod]}
+function setPeriod(p){const a=grossAnnual();txPeriod=p;$('txHoursWrap').hidden=(p!=='hour');
+  const hy=txHoursYr(),nv=p==='hour'?(hy>0?a/hy:0):a/PDIV[p];
   $('txIncome').value=Math.round(nv*100)/100;
-  $('txIncome').step = p==='hour'?0.25 : p==='year'?1000 : 100;
-  document.querySelectorAll('#txPerChips .chip').forEach(c=>c.classList.toggle('on',c.dataset.p===p));
-  calcTax();
-}
+  $('txIncome').step=p==='hour'?0.25:p==='year'?1000:100;
+  document.querySelectorAll('#txPerChips .chip').forEach(c=>c.classList.toggle('on',c.dataset.p===p));calcTax()}
 
 function calcTax(){
-  const gross=grossAnnual();
-  const rrsp=Math.max(0,parseFloat($('txRrsp').value)||0);
-  const code=$('txProv').value;
-  const R=taxEngine(gross,rrsp,code);
-  const R2=taxEngine(gross+1000,rrsp,code);
-
+  const gross=grossAnnual(),rrsp=Math.max(0,parseFloat($('txRrsp').value)||0),code=$('txProv').value||'BC';
+  const R=taxEngine(gross,rrsp,code),R2=taxEngine(gross+1000,rrsp,code);
   $('txNet').textContent=fmt0(R.net);
-  $('txNet').style.color='var(--text)';
-  $('txKeepPct').textContent=gross>0?('留低 '+pctS(R.net/gross)):'';
-  $('txKeepPct').style.color='var(--muted)';
-  $('txMonthly').textContent=gross>0?('每月約 '+fmt0(R.net/12)+' · 每兩星期約 '+fmt0(R.net/26)):'';
-  $('txMonthly').style.color='var(--muted)';
+  $('txKeep').textContent=gross>0?T('keepPct',pctS(R.net/gross)):'';
+  $('txKeep').style.color='var(--muted)';
+  $('txMonthly').textContent=gross>0?T('perMo',fmt0(R.net/12),fmt0(R.net/26)):'';
   $('txTotalDed').textContent=fmt0(R.total);
-
   $('txFed').textContent=fmtA(R.fed);
-  $('txProvLb').textContent=R.P.n.split(' ')[0]+'省稅';
+  $('txProvLb').textContent=T('provTax',LANG==='zh'?pn(R.P).split(' ')[0]:pn(R.P));
   $('txProvTax').textContent=fmtA(R.prov);
-  $('txCppLb').textContent=R.isQC?'QPP 供款':'CPP 供款';
+  $('txCppLb').textContent=R.isQC?T('qppC'):T('cppC');
   $('txCpp').textContent=fmtA(R.c1+R.c2);
-  $('txEiLb').textContent=R.isQC?'EI + QPIP':'EI 就業保險';
+  $('txEiLb').textContent=R.isQC?T('eiQpip'):T('eiC');
   $('txEi').textContent=fmtA(R.ei+R.qpip);
   $('txTot').textContent=fmtA(R.total);
-  $('txNet2').textContent=fmtA(R.net);
   $('txAvg').textContent=gross>0?pctS(R.total/gross):'—';
   $('txMarg').textContent=gross>0?pctS((R2.total-R.total)/1000):'—';
 
-  $('txTaxableLine').textContent='年薪 '+fmt0(gross)+' − CPP 加強部分扣除 '+fmtA(R.cppDed)
-    +(rrsp>0?' − RRSP '+fmt0(rrsp):'')+' = 應課稅收入 '+fmtA(R.taxable);
-
-  $('txFedRows').innerHTML=R.F.rows.map(r=>rowHTML(
-    fmt0(r.lo)+' – '+fmt0(r.hi)+' @ '+pctS(r.rate),fmtA(r.t))).join('')
-    +rowHTML('聯邦稅小計',fmtA(R.F.tax),1);
-  $('txFedCred').innerHTML=rowHTML('基本個人免稅額 '+fmt0(R.bpa),'')
-    +rowHTML('CPP 基本部分 '+fmt0(R.cppBase)+' + EI '+fmt0(R.ei+R.qpip),'')
-    +rowHTML('抵免合計 × '+pctS(FED.cr),'−'+fmtA(R.fCred))
-    +(R.abate>0?rowHTML('魁省聯邦回扣 16.5%','−'+fmtA(R.abate)):'')
-    +rowHTML('應繳聯邦稅',fmtA(R.fed),1);
-
-  $('txProvSum').textContent=R.P.n+' 稅詳情（逐級稅階）';
-  $('txProvRows').innerHTML=R.V.rows.map(r=>rowHTML(
-    fmt0(r.lo)+' – '+fmt0(r.hi)+' @ '+pctS(r.rate),fmtA(r.t))).join('')
-    +rowHTML('省稅小計',fmtA(R.V.tax),1);
-  $('txProvCred').innerHTML=rowHTML('省基本個人免稅額 '+fmt0(R.P.bpa),'')
-    +rowHTML('抵免合計 × '+pctS(R.P.cr),'−'+fmtA(R.pCred))
-    +(R.sur>0?rowHTML('安省附加稅','+'+fmtA(R.sur)):'')
-    +(R.health>0?rowHTML('安省健康保費','+'+fmtA(R.health)):'')
-    +(R.red>0?rowHTML('卑詩低收入稅務減免','−'+fmtA(R.red)):'')
-    +rowHTML('應繳省稅',fmtA(R.prov),1);
-
-  $('txCppRows').innerHTML=
-    rowHTML((R.isQC?'QPP':'CPP')+' 可供款收入（'+fmt0(Math.min(gross,CPP.ympe))+' − 免供額 '+fmt0(CPP.exempt)+'）',fmt0(R.contrib))
-    +rowHTML((R.isQC?'QPP':'CPP')+' @ '+pctS(R.isQC?.0630:CPP.rate),fmtA(R.c1))
-    +rowHTML('CPP2 可供款收入（'+fmt0(CPP.ympe)+' – '+fmt0(CPP.yampe)+'）',fmt0(R.e2))
-    +rowHTML('CPP2 @ '+pctS(CPP.rate2),fmtA(R.c2))
-    +rowHTML('EI（可保收入上限 '+fmt0(EI.mie)+' @ '+pctS(R.isQC?EI.qcRate:EI.rate)+'）',fmtA(R.ei))
-    +(R.qpip>0?rowHTML('QPIP 魁省育兒保險（概算）',fmtA(R.qpip)):'')
-    +rowHTML('供款合計',fmtA(R.c1+R.c2+R.ei+R.qpip),1)
-    +rowHTML('其中可扣稅（加強部分）',fmtA(R.cppDed))
-    +rowHTML('其中可作抵免（基本部分）',fmtA(R.cppBase));
-
-  const w=$('txWarn');
-  if(R.isQC){w.textContent='魁北克嘅 QPP／QPIP／16.5% 聯邦回扣為概算，請以 Revenu Québec 為準。';w.classList.add('show')}
-  else w.classList.remove('show');
-
-  $('txAnnualLine').textContent = gross>0
-    ? (txPeriod==='year' ? '' : '相當於年薪 '+fmt0(gross)
-        + (txPeriod==='hour' ? '（'+(parseFloat($('txHours').value)||0)+' 小時／週 × 52 週）' : ''))
-    : '';
+  $('txAnnualLine').textContent=(gross>0&&txPeriod!=='year')
+    ?T('annualEq',fmt0(gross))+(txPeriod==='hour'?T('hrNote',parseFloat($('txHours').value)||0):''):'';
 
   const hy=txHoursYr();
-  const conv=[['每年',1],['每月',12],['雙週（26 期）',26],['每週',52]];
-  let ch=conv.map(([lb,d])=>'<tr><td class="k">'+lb+'</td><td class="num">'+fmtA(gross/d)
-      +'</td><td class="num">'+fmtA(R.net/d)+'</td></tr>').join('');
-  if(hy>0)ch+='<tr><td class="k">每小時（'+(parseFloat($('txHours').value)||0)+' 小時／週）</td><td class="num">'
-      +fmtA(gross/hy)+'</td><td class="num">'+fmtA(R.net/hy)+'</td></tr>';
+  let ch=[['cYear',1],['cMonth',12],['cBi',26],['cWeek',52]].map(([k,d])=>
+    '<tr><td class="k">'+T(k)+'</td><td class="num">'+fmtA(gross/d)+'</td><td class="num">'+fmtA(R.net/d)+'</td></tr>').join('');
+  if(hy>0)ch+='<tr><td class="k">'+T('cHour',parseFloat($('txHours').value)||0)+'</td><td class="num">'
+    +fmtA(gross/hy)+'</td><td class="num">'+fmtA(R.net/hy)+'</td></tr>';
   $('txConvRows').innerHTML=ch;
-  $('txConvNote').textContent='稅後數字係全年平均。實際上年頭幾張糧會少啲，因為 CPP 同 EI 要供到年度上限先停；'
-    +'供滿之後嗰幾個月實收會多返。每小時以每年 52 週計（含有薪假期）。';
+  $('txConvNote').textContent=T('convNote');
+  $('convSv').textContent=hy>0?fmtA(R.net/hy)+'/h':fmtA(R.net/26)+'/bi';
 
-  document.querySelectorAll('#txIncChips .chip').forEach(c=>c.classList.toggle('on',parseFloat(c.dataset.i)===gross&&txPeriod==='year'));
+  $('txTaxableLine').textContent=T('taxableLine',fmt0(gross),fmtA(R.cppDed),
+    rrsp>0?T('rrspMinus',fmt0(rrsp)):'',fmtA(R.taxable));
+  $('txFedRows').innerHTML=R.F.rows.map(r=>row(fmt0(r.lo)+' – '+fmt0(r.hi)+' @ '+pctS(r.rate),fmtA(r.t))).join('')
+    +row(T('fedSub'),fmtA(R.F.tax),1);
+  $('txFedCred').innerHTML=row(T('bpaRow',fmt0(R.bpa)),'')
+    +row(T('cppEiRow',fmt0(R.cppBase),fmt0(R.ei+R.qpip)),'')
+    +row(T('credTot',pctS(FED.cr)),'−'+fmtA(R.fCred))
+    +(R.abate>0?row(T('abate'),'−'+fmtA(R.abate)):'')
+    +row(T('fedDue'),fmtA(R.fed),1);
+  $('fedSv').textContent=fmtA(R.fed);
+
+  $('txProvSum').textContent=T('provDetail',pn(R.P));
+  $('txProvRows').innerHTML=R.V.rows.map(r=>row(fmt0(r.lo)+' – '+fmt0(r.hi)+' @ '+pctS(r.rate),fmtA(r.t))).join('')
+    +row(T('provSub'),fmtA(R.V.tax),1);
+  $('txProvCred').innerHTML=row(T('provBpa',fmt0(R.P.bpa)),'')
+    +row(T('credTot',pctS(R.P.cr)),'−'+fmtA(R.pCred))
+    +(R.sur>0?row(T('surtax'),'+'+fmtA(R.sur)):'')
+    +(R.health>0?row(T('health'),'+'+fmtA(R.health)):'')
+    +(R.red>0?row(T('bcRed'),'−'+fmtA(R.red)):'')
+    +row(T('provDue'),fmtA(R.prov),1);
+  $('provSv').textContent=fmtA(R.prov);
+
+  const nm=R.isQC?'QPP':'CPP';
+  $('txCppRows').innerHTML=
+    row(T('cppEarn',nm,fmt0(Math.min(gross,CPP.ympe)),fmt0(CPP.exempt)),fmt0(R.contrib))
+    +row(T('cppAt',nm,pctS(R.isQC?.0630:CPP.rate)),fmtA(R.c1))
+    +row(T('cpp2Earn',fmt0(CPP.ympe),fmt0(CPP.yampe)),fmt0(R.e2))
+    +row(T('cpp2At',pctS(CPP.rate2)),fmtA(R.c2))
+    +row(T('eiRow',fmt0(EI.mie),pctS(R.isQC?EI.qcRate:EI.rate)),fmtA(R.ei))
+    +(R.qpip>0?row(T('qpipRow'),fmtA(R.qpip)):'')
+    +row(T('contTot'),fmtA(R.c1+R.c2+R.ei+R.qpip),1)
+    +row(T('dedPart'),fmtA(R.cppDed))+row(T('credPart'),fmtA(R.cppBase));
+  $('cppSv').textContent=fmtA(R.c1+R.c2+R.ei+R.qpip);
+
+  const w=$('txWarn');
+  if(R.isQC){w.textContent=T('qcWarn');w.classList.add('show')}else w.classList.remove('show');
 }
 
-function showTab(t){
-  const isTax=t==='tax';
-  $('tabStock').hidden=isTax; $('tabTax').hidden=!isTax;
-  $('footStock').hidden=isTax; $('footTax').hidden=!isTax;
-  $('tabBtnStock').classList.toggle('on',!isTax);
-  $('tabBtnTax').classList.toggle('on',isTax);
-  $('tabBtnStock').setAttribute('aria-selected',String(!isTax));
-  $('tabBtnTax').setAttribute('aria-selected',String(isTax));
+const curTax=()=>taxEngine(grossAnnual(),Math.max(0,parseFloat($('txRrsp').value)||0),$('txProv').value||'BC');
+const SHEETS={
+ fed:()=>{const R=curTax();return LANG==='zh'?{t:'聯邦入息稅',h:`
+  <h4>係咩嚟</h4><p>聯邦政府按應課稅收入分級徵收，2026 年由 14% 起、最高 33%。<b>每級稅率只適用於嗰段收入</b>，唔係成份糧跳上高稅率。</p>
+  <h4>點解要收</h4><p>資助全國性開支：醫療轉移撥款、長者保障金、國防、EI 制度等。</p>
+  <h4>幾時攞得返</h4><p>呢個係真正嘅稅，唔會自動退。三個情況會有退稅：僱主預扣多咗；RRSP／學費／醫療／託兒等扣除；各種非退款抵免。報稅截止一般 <b>4 月 30 日</b>。</p>
+  <div class="kv">應課稅收入 <b>${fmtA(R.taxable)}</b><br>基本個人免稅額 <b>${fmt0(R.bpa)}</b>（收入過 $181,440 開始遞減）<br>抵免 −${fmtA(R.fCred)} → 應繳 <b>${fmtA(R.fed)}</b></div>`}
+ :{t:'Federal income tax',h:`
+  <h4>What it is</h4><p>Charged on taxable income in brackets — 14% up to 33% for 2026. <b>Each rate applies only to the slice of income inside its band</b>, not to your whole salary.</p>
+  <h4>Why you pay it</h4><p>Funds national spending: health transfers, Old Age Security, defence and the EI system.</p>
+  <h4>Getting it back</h4><p>This is a real tax and is not refunded by itself. Refunds come from over-withholding by your employer, from deductions (RRSP, tuition, medical, childcare) and from non-refundable credits. The filing deadline is usually <b>30 April</b>.</p>
+  <div class="kv">Taxable income <b>${fmtA(R.taxable)}</b><br>Basic personal amount <b>${fmt0(R.bpa)}</b> (phases down above $181,440)<br>Credits −${fmtA(R.fCred)} → payable <b>${fmtA(R.fed)}</b></div>`}},
+ prov:()=>{const R=curTax();return LANG==='zh'?{t:pn(R.P)+' 入息稅',h:`
+  <h4>係咩嚟</h4><p>每個省／地區有自己一套稅階，用<b>同一筆應課稅收入</b>再計多次，所以邊際稅率 = 聯邦 + 省。</p>
+  <h4>邊個省計</h4><p>以你 <b>12 月 31 日居住嗰個省</b>為準，唔係你賺錢嗰個省。年中搬省，全年當新省計。</p>
+  <h4>幾時攞得返</h4><p>同聯邦稅一齊喺同一張 T1 報稅表計，預扣多咗會一次過退。${R.P.red?'<b>卑詩</b>有低收入減免：淨收入低於 $25,570 可得 $690，按 3.56% 遞減至 $44,952 歸零，自動計算。':''}${R.P.sur?'<b>安大略</b>有附加稅（省稅超 $5,818 加 20%、超 $7,446 再加 36%）同健康保費（最多 $900）。':''}${R.isQC?'<b>魁北克</b>要另交 Revenu Québec 報稅表，聯邦稅有 16.5% 回扣。':''}</p>
+  <div class="kv">省 BPA <b>${fmt0(R.P.bpa)}</b>，抵免率 ${pctS(R.P.cr)}<br>省稅 ${fmtA(R.V.tax)} − 抵免 ${fmtA(R.pCred)}${R.sur>0?' + 附加稅 '+fmtA(R.sur):''}${R.health>0?' + 健康保費 '+fmtA(R.health):''}${R.red>0?' − 減免 '+fmtA(R.red):''} → <b>${fmtA(R.prov)}</b></div>`}
+ :{t:pn(R.P)+' income tax',h:`
+  <h4>What it is</h4><p>Every province sets its own brackets and applies them to <b>the same taxable income</b>, so your marginal rate is federal plus provincial.</p>
+  <h4>Which province</h4><p>Your province of residence on <b>31 December</b> governs the whole year — not where you earned the money.</p>
+  <h4>Getting it back</h4><p>It is calculated on the same T1 return as federal tax, so over-withholding is refunded together. ${R.P.red?'<b>BC</b> has a low-income reduction: up to $690 below $25,570 of net income, tapering at 3.56% to nil at $44,952, applied automatically.':''}${R.P.sur?'<b>Ontario</b> adds a surtax (20% of tax above $5,818, plus 36% above $7,446) and a health premium of up to $900.':''}${R.isQC?'<b>Quebec</b> requires a separate Revenu Québec return and gives a 16.5% federal abatement.':''}</p>
+  <div class="kv">Provincial BPA <b>${fmt0(R.P.bpa)}</b> at ${pctS(R.P.cr)}<br>${fmtA(R.V.tax)} − credits ${fmtA(R.pCred)}${R.sur>0?' + surtax '+fmtA(R.sur):''}${R.health>0?' + health premium '+fmtA(R.health):''}${R.red>0?' − reduction '+fmtA(R.red):''} → <b>${fmtA(R.prov)}</b></div>`}},
+ cpp:()=>{const R=curTax();return LANG==='zh'?{t:(R.isQC?'QPP':'CPP')+' 退休金供款',h:`
+  <h4>係咩嚟</h4><p>強制退休金供款。2026 年薪金喺 <b>$3,500 至 $74,600</b> 按 5.95% 供（最多 $4,230.45）；<b>$74,600 至 $85,000</b> 再按 4% 供（CPP2，最多 $416）。僱主同額再供一份。</p>
+  <h4>點解要供</h4><p>嚴格嚟講<b>唔係稅</b>，係買緊你自己將來嘅退休金。</p>
+  <h4>幾時攞得返</h4><p><b>唔會現金退返，但唔係冇咗。</b>最早 60 歲可領（每早一個月扣 0.6%），65 歲標準，延到 70 歲每遲一個月加 0.7%。</p>
+  <p class="dim">兩個情況會真係退錢：① 一年內轉工／多個僱主扣多咗，報稅時退返。② 65 歲後已領 CPP 可填 CPT30 停供；70 歲自動停。</p>
+  <h4>稅務優惠</h4><p>加強部分（1% 同 CPP2）直接扣減應課稅收入；基本部分（4.95%，上限 $3,519.45）當非退款抵免。</p>
+  <div class="kv">可供款收入 <b>${fmt0(R.contrib)}</b><br>${fmtA(R.c1)}${R.c2>0?' + CPP2 '+fmtA(R.c2):''} = <b>${fmtA(R.c1+R.c2)}</b><br>可扣稅 ${fmtA(R.cppDed)} · 可抵免 ${fmtA(R.cppBase)}<br><span class="dim">僱主另供 ${fmtA(R.c1+R.c2)}</span></div>`}
+ :{t:(R.isQC?'QPP':'CPP')+' contributions',h:`
+  <h4>What it is</h4><p>Mandatory pension contributions. For 2026 you pay 5.95% on earnings between <b>$3,500 and $74,600</b> (max $4,230.45), plus 4% on the band from <b>$74,600 to $85,000</b> (CPP2, max $416). Your employer matches it.</p>
+  <h4>Why you pay it</h4><p>Strictly speaking this <b>is not a tax</b> — you are buying your own future retirement pension.</p>
+  <h4>Getting it back</h4><p><b>Never refunded in cash, but not lost either.</b> You can start as early as 60 (reduced 0.6% for each month early), 65 is standard, and deferring to 70 adds 0.7% per month.</p>
+  <p class="dim">Two cases do refund: ① over-contributing across several employers in one year — the excess comes back on your return; ② after 65, if already receiving CPP, filing CPT30 stops contributions. They end automatically at 70.</p>
+  <h4>Tax treatment</h4><p>The enhanced portion (1% plus CPP2) is deducted from taxable income; the base portion (4.95%, max $3,519.45) is a non-refundable credit.</p>
+  <div class="kv">Contributory earnings <b>${fmt0(R.contrib)}</b><br>${fmtA(R.c1)}${R.c2>0?' + CPP2 '+fmtA(R.c2):''} = <b>${fmtA(R.c1+R.c2)}</b><br>Deductible ${fmtA(R.cppDed)} · creditable ${fmtA(R.cppBase)}<br><span class="dim">Employer pays another ${fmtA(R.c1+R.c2)}</span></div>`}},
+ ei:()=>{const R=curTax();return LANG==='zh'?{t:'EI 就業保險',h:`
+  <h4>係咩嚟</h4><p>2026 年按可保收入 <b>${pctS(R.isQC?EI.qcRate:EI.rate)}</b> 扣，收入上限 <b>$68,900</b>，最多 <b>${fmtA(R.isQC?EI.qcMax:EI.max)}</b>。僱主再供 1.4 倍。</p>
+  <h4>點解要收</h4><p>係保險唔係稅。失業、生病、產假／育兒假、照顧重病家人可以攞津貼。</p>
+  <h4>幾時攞得返</h4><p>保費一般唔會退，但符合資格可申領津貼——約平均可保收入 <b>55%</b>，以 2026 上限推算大約每週 $729 封頂（實際以 Service Canada 為準）。</p>
+  <p class="dim">兩個情況會退：① 全年可保收入 <b>$2,000 或以下</b>全數退返。② 轉工／多僱主扣多咗會退。</p>
+  <h4>留意</h4><p>自僱一般唔使供（除非自願參加）。控制超過 40% 有投票權股份嘅公司東主通常唔受保。</p>
+  <div class="kv">可保收入 <b>${fmt0(Math.min(R.gross,EI.mie))}</b> → <b>${fmtA(R.ei)}</b>${R.qpip>0?'<br>QPIP '+fmtA(R.qpip)+'（概算）':''}<br><span class="dim">僱主另供 ${fmtA(R.ei*1.4)}</span></div>`}
+ :{t:'Employment Insurance (EI)',h:`
+  <h4>What it is</h4><p>Premiums of <b>${pctS(R.isQC?EI.qcRate:EI.rate)}</b> on insurable earnings up to <b>$68,900</b> for 2026 — a maximum of <b>${fmtA(R.isQC?EI.qcMax:EI.max)}</b>. Employers pay 1.4× that.</p>
+  <h4>Why you pay it</h4><p>It is insurance, not a tax: job loss, sickness, maternity and parental leave, and caring for a gravely ill family member.</p>
+  <h4>Getting it back</h4><p>Premiums are not refunded, but you can claim benefits when eligible — generally <b>55%</b> of average insurable earnings, capped at roughly $729 a week based on the 2026 ceiling (Service Canada sets the actual figure).</p>
+  <p class="dim">Two cases refund the premiums: ① insurable earnings of <b>$2,000 or less</b> for the year; ② over-deduction across several employers.</p>
+  <h4>Worth knowing</h4><p>Self-employed people generally do not contribute unless they opt in. Owners controlling more than 40% of voting shares are usually not insurable.</p>
+  <div class="kv">Insurable earnings <b>${fmt0(Math.min(R.gross,EI.mie))}</b> → <b>${fmtA(R.ei)}</b>${R.qpip>0?'<br>QPIP '+fmtA(R.qpip)+' (estimate)':''}<br><span class="dim">Employer pays ${fmtA(R.ei*1.4)}</span></div>`}},
+ avg:()=>{const R=curTax();return LANG==='zh'?{t:'平均稅率',h:`
+  <h4>點計</h4><p>總扣除 ÷ 年薪，即係你份糧實際有幾多百分比走咗。</p>
+  <h4>點解重要</h4><p>呢個先係真正負擔。好多人見自己「喺 26% 稅階」以為成份糧俾 26%，其實平均稅率低好多，因為低嗰幾級按低稅率計。</p>
+  <div class="kv">${fmtA(R.total)} ÷ ${fmt0(R.gross)} = <b>${R.gross>0?pctS(R.total/R.gross):'—'}</b><br><span class="dim">呢度「總扣除」包埋 CPP 同 EI，佢哋嚴格嚟講唔係稅。</span></div>`}
+ :{t:'Average rate',h:`
+  <h4>How it is calculated</h4><p>Total deductions ÷ gross salary — the share of your pay that actually leaves.</p>
+  <h4>Why it matters</h4><p>This is your real burden. People "in the 26% bracket" often assume 26% of everything goes to tax; the average is far lower, because the lower slices are taxed at lower rates.</p>
+  <div class="kv">${fmtA(R.total)} ÷ ${fmt0(R.gross)} = <b>${R.gross>0?pctS(R.total/R.gross):'—'}</b><br><span class="dim">Total deductions here include CPP and EI, which are not strictly taxes.</span></div>`}},
+ marg:()=>{const R=curTax(),R2=taxEngine(R.gross+1000,R.rrsp,$('txProv').value||'BC');return LANG==='zh'?{t:'邊際稅率',h:`
+  <h4>點計</h4><p>下一蚊收入會被抽走幾多。呢度用「多賺 $1,000 會多扣幾多」計。</p>
+  <h4>幾時要睇</h4><p>考慮<b>加人工、花紅、OT、賣股票、或者供 RRSP 慳幾多稅</b>嗰陣，睇呢個先啱。</p>
+  <h4>唔止稅階咁簡單</h4><p class="dim">① CPP／EI 未供滿上限前，每蚊都要再供。<br>② 收入 $181,440–$258,482 之間聯邦免稅額遞減，等於多抽約 0.3%。<br>③ 卑詩 $25,570–$44,952 之間低收入減免按 3.56% 遞減。<br>④ GST 抵免、兒童福利金等亦會遞減，未計。</p>
+  <div class="kv">多賺 $1,000 → 多扣 <b>${fmtA(R2.total-R.total)}</b> = <b>${pctS((R2.total-R.total)/1000)}</b><br><span class="dim">即實收多 ${fmtA(1000-(R2.total-R.total))}。</span></div>`}
+ :{t:'Marginal rate',h:`
+  <h4>How it is calculated</h4><p>How much of your next dollar is taken, measured here as the extra deducted on another $1,000 of income.</p>
+  <h4>When to use it</h4><p>Use this — not the average rate — when weighing <b>a raise, a bonus, overtime, selling stock, or how much an RRSP contribution saves you</b>.</p>
+  <h4>More than just brackets</h4><p class="dim">① CPP and EI keep coming off until you hit the annual maximums.<br>② Between $181,440 and $258,482 the federal basic personal amount phases out, adding roughly 0.3%.<br>③ In BC, between $25,570 and $44,952 the low-income reduction claws back at 3.56%.<br>④ Income-tested benefits (GST credit, child benefit) also taper — not modelled here.</p>
+  <div class="kv">Another $1,000 → <b>${fmtA(R2.total-R.total)}</b> deducted = <b>${pctS((R2.total-R.total)/1000)}</b><br><span class="dim">You keep ${fmtA(1000-(R2.total-R.total))}.</span></div>`}}
+};
+function openSheet(k){const d=SHEETS[k]&&SHEETS[k]();if(!d)return;
+  $('sheetTitle').textContent=d.t;$('sheetBody').innerHTML=d.h;
+  $('sheetBd').hidden=false;document.body.style.overflow='hidden';$('sheetX').focus()}
+function closeSheet(){$('sheetBd').hidden=true;document.body.style.overflow=''}
+
+function renderFoot(){
+ $('footStock').innerHTML=LANG==='zh'
+ ?`報價預設用 Yahoo Finance 非官方資料、免 key，經多個公共 CORS 代理（AllOrigins／CodeTabs／killcors）並行轉發，快者先得並設逾時。公共代理可能同時繁忙，故未必次次成功；填個免費 Finnhub key 會穩定好多。<br>
+   匯率：先取 Yahoo USDCAD 市場價，取唔到改用 Frankfurter 歐洲央行參考價（每個工作日更新一次）或 exchangerate.fun（每小時）。免費來源冇真正逐秒即時價，落單請以 IB 為準。<br>
+   費率預設（2026 年 7 月）：SEC Section 31 費 $20.60／每百萬成交額；FINRA TAF $0.000195／股、每單上限 $9.79。IB 換匯：手動 0.20 個基點（0.002%）、每單最低 US$2；自動 0.03%。約 US$6,667 以下自動較平，以上手動較平。<br>
+   賣出比例：賣出股數向下取整；成本按平均每股成本攤分，買入佣金及換匯費按已賣比例分攤。分批出貨每次都要俾最低佣金同換匯費，總成本高過一次過沽清。只供參考，唔構成投資建議。`
+ :`Quotes default to unofficial Yahoo Finance data with no API key, routed through several public CORS proxies (AllOrigins / CodeTabs / killcors) in parallel — fastest wins, with a timeout. All of them can be busy at once, so a fetch may occasionally fail; adding a free Finnhub key makes it far more reliable.<br>
+   FX: Yahoo's USDCAD market rate is tried first, falling back to Frankfurter's European Central Bank reference rate (updated once each business day) or exchangerate.fun (hourly). No free source is truly real-time, so confirm in IB before trading.<br>
+   Fee defaults (July 2026): SEC Section 31 fee $20.60 per million of proceeds; FINRA TAF $0.000195 per share, capped at $9.79 per order. IBKR FX: manual conversion 0.20 basis points (0.002%) with a US$2 minimum; auto-conversion 0.03%. Below roughly US$6,667 auto is cheaper; above it, manual is.<br>
+   Partial sells: share counts round down; cost basis is allocated at the average cost per share, with buy commission and FX fees apportioned to the sold portion. Selling in tranches repeats the minimum commission and FX fee each time, so it costs more than a single exit. For reference only, not investment advice.`;
+ $('footTax').innerHTML=LANG==='zh'
+ ?`2026 稅年數據：聯邦稅階及 BPA（$16,452，收入 $181,440–$258,482 遞減至 $14,829）、13 個省／地區稅階及 BPA 已對照 CRA T4127 薪俸扣除公式表 8.1；卑詩另經省政府官網核實（最低稅率由 5.06% 升至 5.60%、BPA $13,216、稅務減免上限 $690、門檻 $25,570、按 3.56% 遞減至 $44,952 歸零）。CPP：YMPE $74,600、免供額 $3,500、5.95%、上限 $4,230.45；CPP2：YAMPE $85,000、4%、上限 $416。EI：可保收入上限 $68,900、1.63%、上限 $1,123.07（魁省 1.30%／$895.70）。<br>
+   方法：CPP 加強部分（1% 及 CPP2）作收入扣除，基本部分（4.95%，上限 $3,519.45）同 EI 作非退款抵免。安大略計埋附加稅及健康保費。<br>
+   限制：只處理受僱薪金，假設單身、無受養人、無其他收入或抵免（配偶、託兒、學費、醫療、股息、資本增值、自僱等未計）。淨收入以應課稅收入代替。魁北克（QPP／QPIP／16.5% 回扣）為概算。安大略低收入減免未計。結果為估算，唔係報稅或稅務建議，實際以 CRA 評稅為準。`
+ :`2026 tax year data: federal brackets and the basic personal amount ($16,452, phasing down to $14,829 between $181,440 and $258,482), plus brackets and basic personal amounts for all 13 provinces and territories, checked against CRA guide T4127 (Payroll Deductions Formulas), Table 8.1. British Columbia was separately verified against the provincial government site — the lowest rate rose from 5.06% to 5.60%, BPA $13,216, and the tax reduction credit is $690 with a $25,570 threshold, clawed back at 3.56% to nil at $44,952. CPP: YMPE $74,600, $3,500 exemption, 5.95%, max $4,230.45; CPP2: YAMPE $85,000, 4%, max $416. EI: maximum insurable earnings $68,900 at 1.63%, max $1,123.07 (Quebec 1.30% / $895.70).<br>
+   Method: the enhanced portion of CPP (1% plus CPP2) is deducted from income, while the base portion (4.95%, max $3,519.45) and EI are non-refundable credits. Ontario includes the surtax and health premium.<br>
+   Limitations: employment income only, assuming a single filer with no dependants and no other income or credits — spousal, childcare, tuition, medical, dividends, capital gains and self-employment are all excluded. Taxable income stands in for net income. Quebec (QPP / QPIP / 16.5% abatement) is an estimate, and Ontario's low-income reduction is not modelled. These are estimates, not a tax return or tax advice; the CRA assessment governs.`;
+}
+
+function showTab(t){const x=t==='tax';
+  $('tabStock').hidden=x;$('tabTax').hidden=!x;
+  $('tabBtnStock').classList.toggle('on',!x);$('tabBtnTax').classList.toggle('on',x);
+  $('tabBtnStock').setAttribute('aria-selected',String(!x));$('tabBtnTax').setAttribute('aria-selected',String(x));
   try{window.scrollTo({top:0,behavior:'instant'})}catch(e){window.scrollTo(0,0)}
-  if(isTax)calcTax();
-}
+  if(x)calcTax()}
+let theme='auto';
+function cycleTheme(){theme=theme==='auto'?'light':theme==='light'?'dark':'auto';applyTheme()}
+function applyTheme(){const h=document.documentElement;
+  if(theme==='auto')h.removeAttribute('data-theme');else h.setAttribute('data-theme',theme);
+  $('themeBtn').style.color=theme==='auto'?'var(--muted)':'var(--green)';
+  try{localStorage.setItem('mc-theme',theme)}catch(e){}}
 
-$('txProv').innerHTML=Object.keys(PROV).map(k=>'<option value="'+k+'">'+PROV[k].n+'</option>').join('');
-$('txProv').value='BC';
+$('qtySlider').max=QSTEPS.length-1;
+$('qtySlider').addEventListener('input',()=>{$('qty').value=QSTEPS[+$('qtySlider').value];calc()});
+$('sellSlider').addEventListener('input',()=>{$('sellP').value=$('sellSlider').value;calc()});
+$('buyP').addEventListener('input',()=>{updateSlider();calc()});
+$('sellP').addEventListener('input',()=>{updateSlider();calc()});
+['qty','sellPct','per','minC','maxPct','secRate','tafRate','tafCap','target'].forEach(i=>$(i).addEventListener('input',calc));
+document.querySelectorAll('#pctChips .chip').forEach(c=>c.addEventListener('click',()=>{$('sellPct').value=c.dataset.p;calc()}));
+$('applyTarget').addEventListener('click',()=>{const p=$('targetOut').dataset.price;if(p){$('sellP').value=p;updateSlider();calc()}});
+$('qBtn').addEventListener('click',fetchQuote);
+$('ticker').addEventListener('keydown',e=>{if(e.key==='Enter')fetchQuote()});
+$('useBuy').addEventListener('click',()=>{if(lastPrice!=null){$('buyP').value=lastPrice;updateSlider();calc()}});
+$('useSell').addEventListener('click',()=>{if(lastPrice!=null){$('sellP').value=lastPrice;updateSlider();calc()}});
+$('apiKey').addEventListener('change',()=>{try{localStorage.setItem('mc-key',$('apiKey').value.trim())}catch(e){}});
+$('fxBtn').addEventListener('click',loadFX);
+$('convAmt').addEventListener('input',renderConv);
+$('convDir').addEventListener('click',()=>{convC2U=!convC2U;$('convDir').textContent=convC2U?'CAD → USD':'USD → CAD';renderConv()});
 $('txProv').addEventListener('change',calcTax);
 ['txIncome','txRrsp','txHours'].forEach(i=>$(i).addEventListener('input',calcTax));
-document.querySelectorAll('#txPerChips .chip').forEach(c=>{
-  c.addEventListener('click',()=>setPeriod(c.dataset.p));
-});
-document.querySelectorAll('#txIncChips .chip').forEach(c=>{
-  c.addEventListener('click',()=>{
-    txPeriod='year';
-    $('txHoursWrap').hidden=true;
-    $('txIncome').step=1000;
-    document.querySelectorAll('#txPerChips .chip').forEach(x=>x.classList.toggle('on',x.dataset.p==='year'));
-    $('txIncome').value=c.dataset.i;calcTax();
-  });
-});
-calcTax();
-
-/* ── 稅項說明彈窗 ── */
-function curTax(){
-  return taxEngine(grossAnnual(),
-                   Math.max(0,parseFloat($('txRrsp').value)||0),$('txProv').value);
-}
-const TAXINFO={
-  fed:()=>{const R=curTax();return{t:'聯邦入息稅',h:`
-    <h4>係咩嚟</h4><p>聯邦政府按你嘅應課稅收入分級徵收。2026 年由 14% 起，最高 33%。<b>每一級稅率只適用於嗰一段收入</b>——唔係成份糧跳晒上高稅率。</p>
-    <h4>點解要收</h4><p>資助全國性開支：醫療轉移撥款、長者保障金、國防、EI 制度等。</p>
-    <h4>幾時攞得返</h4><p>呢個係真正嘅稅，唔會自動退返。但有三個情況會有退稅：</p>
-    <p class="dim">① 僱主每期預扣多咗（最常見）——報稅之後多繳部分退返你。<br>
-    ② RRSP 供款、學費、醫療費、託兒費、搬屋費等扣除，可以減低應課稅收入。<br>
-    ③ 各種非退款抵免（基本個人免稅額、CPP、EI 等）直接減應繳稅。</p>
-    <p>報稅截止一般係每年 <b>4 月 30 日</b>（自僱人士 6 月 15 日，但欠稅仍然 4 月 30 日到期）。</p>
-    <div class="kv">你嘅情況：應課稅收入 <b>${fmtA(R.taxable)}</b><br>
-    基本個人免稅額 <b>${fmt0(R.bpa)}</b>（收入超過 $181,440 會開始遞減）<br>
-    抵免合計 −${fmtA(R.fCred)} → 應繳 <b>${fmtA(R.fed)}</b></div>`}},
-
-  prov:()=>{const R=curTax();return{t:R.P.n+' 入息稅',h:`
-    <h4>係咩嚟</h4><p>每個省／地區有自己一套稅階，用<b>同一筆應課稅收入</b>再計多次。所以你嘅邊際稅率 = 聯邦 + 省。</p>
-    <h4>邊個省計</h4><p>以你 <b>12 月 31 日居住嗰個省</b>為準，唔係你賺錢嗰個省。年中搬省，全年都當新省計。</p>
-    <h4>幾時攞得返</h4><p>同聯邦稅一齊喺同一張 T1 報稅表計，預扣多咗會一次過退返。${
-      R.P.red?'<b>卑詩</b>另有低收入稅務減免：淨收入低於 $25,570 可得足額 $690，之後按 3.56% 遞減，至 $44,952 歸零——自動計算，唔使申請。':''}${
-      R.P.sur?'<b>安大略</b>另有附加稅（省稅超過 $5,818 加 20%，超過 $7,446 再加 36%）同健康保費（最多 $900），所以實際負擔高過表面稅率。':''}${
-      R.isQC?'<b>魁北克</b>要另外交一份 Revenu Québec 報稅表，聯邦稅有 16.5% 回扣。':''}</p>
-    <div class="kv">${R.P.n}：省 BPA <b>${fmt0(R.P.bpa)}</b>，抵免率 ${pctS(R.P.cr)}<br>
-    省稅小計 ${fmtA(R.V.tax)} − 抵免 ${fmtA(R.pCred)}${R.sur>0?' + 附加稅 '+fmtA(R.sur):''}${R.health>0?' + 健康保費 '+fmtA(R.health):''}${R.red>0?' − 減免 '+fmtA(R.red):''} → <b>${fmtA(R.prov)}</b></div>`}},
-
-  cpp:()=>{const R=curTax();return{t:(R.isQC?'QPP':'CPP')+' 退休金供款',h:`
-    <h4>係咩嚟</h4><p>強制性退休金供款。2026 年：薪金喺 <b>$3,500 至 $74,600</b> 之間按 5.95% 供（最多 $4,230.45）；<b>$74,600 至 $85,000</b> 嗰段再按 4% 供（CPP2，最多 $416）。僱主同你供一樣多。</p>
-    <h4>點解要供</h4><p>嚴格嚟講<b>唔係稅</b>——係買緊你自己將來嘅退休金。供得越多、越耐，將來每月攞得越多。</p>
-    <h4>幾時攞得返</h4><p><b>唔會現金退返，但唔係冇咗。</b>最早 60 歲可以開始領（每早一個月扣 0.6%），65 歲為標準，延到 70 歲每遲一個月加 0.7%。</p>
-    <p>兩個情況會真係退錢返你：</p>
-    <p class="dim">① 一年內轉過工，或者同時有幾個僱主，合共扣多咗 → 報稅時退返超額部分。<br>
-    ② 65 歲後如果已經領緊 CPP，可以填 CPT30 表停止供款；70 歲之後自動停。</p>
-    <h4>稅務優惠</h4><p>加強部分（1% 同 CPP2）可以<b>直接扣減應課稅收入</b>；基本部分（4.95%，上限 $3,519.45）當<b>非退款抵免</b>。</p>
-    <div class="kv">你嘅情況：可供款收入 <b>${fmt0(R.contrib)}</b><br>
-    CPP ${fmtA(R.c1)}${R.c2>0?' + CPP2 '+fmtA(R.c2):''} = <b>${fmtA(R.c1+R.c2)}</b><br>
-    其中可扣稅 ${fmtA(R.cppDed)} · 可作抵免 ${fmtA(R.cppBase)}<br>
-    <span class="dim">僱主另外幫你供 ${fmtA(R.c1+R.c2)}</span></div>`}},
-
-  ei:()=>{const R=curTax();return{t:'EI 就業保險',h:`
-    <h4>係咩嚟</h4><p>就業保險保費。2026 年按可保收入 <b>${pctS(R.isQC?EI.qcRate:EI.rate)}</b> 扣，收入上限 <b>$68,900</b>，即最多 <b>${fmtA(R.isQC?EI.qcMax:EI.max)}</b>。僱主再供 1.4 倍。</p>
-    <h4>點解要收</h4><p>係一份保險，唔係稅。失業、生病、產假／育兒假、照顧重病家人嗰陣，可以攞津貼。</p>
-    <h4>幾時攞得返</h4><p>正常情況下保費<b>唔會退</b>，但符合資格時可以申領津貼——一般係平均可保收入嘅 <b>55%</b>，以 2026 年收入上限推算大約每週 $729 封頂（實際金額以 Service Canada 為準）。</p>
-    <p>兩個情況會退返保費：</p>
-    <p class="dim">① 全年可保收入 <b>$2,000 或以下</b> → 報稅時全數退返。<br>
-    ② 轉工／多個僱主扣多咗 → 超額部分退返。</p>
-    <h4>留意</h4><p>自僱人士一般唔使供（除非自願參加特別津貼計劃）。如果你係公司東主而且控制超過 40% 有投票權股份，通常唔受保。${R.isQC?'<b>魁省</b>保費較低，因為產假／育兒假由 QPIP 另外負責。':''}</p>
-    <div class="kv">你嘅情況：可保收入 <b>${fmt0(Math.min(R.gross,EI.mie))}</b> → 保費 <b>${fmtA(R.ei)}</b>${R.qpip>0?'<br>QPIP '+fmtA(R.qpip)+'（概算）':''}<br>
-    <span class="dim">僱主另外供 ${fmtA(R.ei*1.4)}</span></div>`}},
-
-  avg:()=>{const R=curTax();return{t:'平均稅率',h:`
-    <h4>點計</h4><p>總扣除 ÷ 年薪。即係你份糧實際上有幾多百分比走咗。</p>
-    <h4>點解重要</h4><p>呢個先係你真正嘅負擔。好多人見自己「喺 26% 稅階」就以為成份糧俾 26%，其實平均稅率通常低好多，因為低嗰幾級收入係按低稅率計。</p>
-    <div class="kv">你嘅情況：總扣除 <b>${fmtA(R.total)}</b> ÷ 年薪 ${fmt0(R.gross)} = <b>${R.gross>0?pctS(R.total/R.gross):'—'}</b><br>
-    <span class="dim">注意：呢度嘅「總扣除」包埋 CPP 同 EI，佢哋嚴格嚟講唔係稅。</span></div>`}},
-
-  marg:()=>{const R=curTax(),R2=taxEngine(R.gross+1000,R.rrsp,$('txProv').value);return{t:'邊際稅率',h:`
-    <h4>點計</h4><p>你下一蚊收入會被抽走幾多。呢度用「多賺 $1,000 會多扣幾多」嚟計。</p>
-    <h4>幾時要睇呢個</h4><p>考慮<b>加人工、收花紅、做 OT、賣股票賺錢、或者供 RRSP 慳幾多稅</b>嗰陣，睇邊際稅率先啱，唔係平均稅率。</p>
-    <h4>唔止係稅階咁簡單</h4><p>幾樣嘢會令實際邊際稅率高過表面嘅「聯邦 + 省」：</p>
-    <p class="dim">① CPP／EI 未供滿上限之前，每蚊都要再供。<br>
-    ② 收入 $181,440–$258,482 之間，聯邦基本個人免稅額逐步遞減，等於變相多抽約 0.3%。<br>
-    ③ 卑詩淨收入 $25,570–$44,952 之間，低收入減免按 3.56% 遞減。<br>
-    ④ 其他收入相關福利（GST 抵免、兒童福利金等）亦會遞減，呢個計算機未計。</p>
-    <div class="kv">你嘅情況：多賺 $1,000 → 多扣 <b>${fmtA(R2.total-R.total)}</b> = <b>${pctS((R2.total-R.total)/1000)}</b><br>
-    <span class="dim">即係實收多 ${fmtA(1000-(R2.total-R.total))}。</span></div>`}}
-};
-function openSheet(k){
-  const d=TAXINFO[k]&&TAXINFO[k]();
-  if(!d)return;
-  $('sheetTitle').textContent=d.t;
-  $('sheetBody').innerHTML=d.h;
-  $('sheetBd').hidden=false;
-  document.body.style.overflow='hidden';
-  $('sheetX').focus();
-}
-function closeSheet(){$('sheetBd').hidden=true;document.body.style.overflow=''}
+document.querySelectorAll('#txPerChips .chip').forEach(c=>c.addEventListener('click',()=>setPeriod(c.dataset.p)));
 $('sheetX').addEventListener('click',closeSheet);
 $('sheetBd').addEventListener('click',e=>{if(e.target===$('sheetBd'))closeSheet()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sheetBd').hidden)closeSheet()});
 
-/* ── 防止手機唔小心放大 ──
-   iOS Safari 由 iOS 10 起會無視 user-scalable=no，所以要攔截手勢事件。
-   只攔兩指以上嘅縮放，單指捲動、㩒掣、揀字通通照舊。 */
-['gesturestart','gesturechange','gestureend'].forEach(ev=>{
-  document.addEventListener(ev,e=>e.preventDefault(),{passive:false});
-});
-document.addEventListener('touchmove',e=>{
-  if(e.touches.length>1||(e.scale&&e.scale!==1))e.preventDefault();
-},{passive:false});
+['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault(),{passive:false}));
+document.addEventListener('touchmove',e=>{if(e.touches.length>1||(e.scale&&e.scale!==1))e.preventDefault()},{passive:false});
 document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
 
-updateSlider();calc();loadFX();
+(function(){
+  try{theme=localStorage.getItem('mc-theme')||'auto'}catch(e){}
+  applyTheme();
+  let k='';try{k=localStorage.getItem('mc-key')||''}catch(e){}
+  if(k)$('apiKey').value=k;
+  let l='zh';try{l=localStorage.getItem('mc-lang')||'zh'}catch(e){}
+  buildProv();$('txProv').value='BC';
+  updateSlider();
+  setLang(l);
+  loadFX();
+})();
 </script>
 </body>
 </html>
