@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>IB 美股買賣計數機</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,7 +45,7 @@ html{scroll-behavior:smooth}
 body{
   margin:0; background:var(--bg); color:var(--text);
   font-family:"Inter","Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
-  font-size:16px; line-height:1.6; padding:0 14px 60px; -webkit-font-smoothing:antialiased;
+  font-size:16px; line-height:1.6; padding:0 14px calc(84px + env(safe-area-inset-bottom,0px)); -webkit-font-smoothing:antialiased;
 }
 .num{font-variant-numeric:tabular-nums; letter-spacing:-.01em}
 main{max-width:640px; margin:0 auto}
@@ -151,6 +151,80 @@ input[type=range]{width:100%; margin:14px 0 4px; accent-color:var(--accent); min
 .fx-out{font-size:19px; font-weight:700}
 .fx-sub{font-size:12.5px; color:var(--muted); font-weight:500; margin:14px 0 10px; padding-top:14px; border-top:1px solid var(--line)}
 
+/* tabs */
+/* bottom tab bar (mobile-app style) */
+.tabbar{
+  position:fixed; left:0; right:0; bottom:0; z-index:60;
+  background:var(--card); border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  box-shadow:0 -1px 12px rgba(20,30,45,.06);
+}
+@supports ((-webkit-backdrop-filter:blur(1px)) or (backdrop-filter:blur(1px))){
+  .tabbar{background:color-mix(in srgb,var(--card) 88%,transparent); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px)}
+}
+.tabbar-in{max-width:640px; margin:0 auto; display:flex}
+.tabbar button{
+  flex:1; border:0; background:transparent; color:var(--muted);
+  font-family:inherit; font-size:11px; font-weight:600; letter-spacing:.01em;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+  padding:8px 4px 7px; cursor:pointer; min-height:56px; position:relative; -webkit-tap-highlight-color:transparent;
+}
+.tabbar button.on{color:var(--green)}
+.tabbar button.on::before{content:""; position:absolute; top:0; left:50%; transform:translateX(-50%); width:32px; height:2.5px; border-radius:0 0 3px 3px; background:var(--green)}
+.tabbar button:focus-visible{outline:2px solid var(--accent); outline-offset:-3px; border-radius:10px}
+.tabbar svg{width:23px; height:23px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+
+/* info button + bottom sheet */
+.ib{
+  position:relative; display:inline-flex; align-items:center; justify-content:center;
+  width:18px; height:18px; margin-left:6px; vertical-align:-3px; padding:0; line-height:1;
+  border:1.3px solid var(--line-2); border-radius:50%; background:transparent; color:var(--muted);
+  font-family:Georgia,serif; font-size:12px; font-weight:700; font-style:italic; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.ib::after{content:""; position:absolute; top:-12px; left:-12px; right:-12px; bottom:-12px}
+.ib:hover{border-color:var(--accent); color:var(--green)}
+.ib:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.sheet-bd{position:fixed; inset:0; z-index:100; background:rgba(12,20,30,.55); display:flex; align-items:flex-end; justify-content:center}
+.sheet{
+  width:100%; max-width:640px; background:var(--card); color:var(--text);
+  border-radius:20px 20px 0 0; padding:10px 20px calc(26px + env(safe-area-inset-bottom,0px));
+  max-height:84vh; overflow-y:auto; box-shadow:0 -8px 30px rgba(0,0,0,.22);
+}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:sheetUp .22s cubic-bezier(.2,.8,.3,1)}}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.sheet-grab{width:38px; height:4px; border-radius:99px; background:var(--line-2); margin:0 auto 14px}
+.sheet-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:4px}
+.sheet-head h3{font-size:18px; font-weight:700; margin:0}
+.sheet-x{border:0; background:var(--card-2); color:var(--muted); width:32px; height:32px; border-radius:50%; font-size:15px; cursor:pointer; flex:none}
+.sheet-x:hover{color:var(--text)}
+.sheet-x:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.sheet h4{font-size:12.5px; font-weight:600; color:var(--green); letter-spacing:.03em; margin:18px 0 5px; text-transform:uppercase}
+.sheet p{font-size:14.5px; line-height:1.7; margin:0 0 8px; color:var(--text)}
+.sheet .dim{color:var(--muted); font-size:13px}
+.sheet .kv{background:var(--card-2); border-radius:10px; padding:12px 14px; margin:10px 0 0; font-size:14px}
+.sheet .kv b{font-weight:700}
+[hidden]{display:none !important}
+
+/* tax */
+select{
+  width:100%; background:var(--card-2); border:1px solid var(--line); border-radius:10px; color:var(--text);
+  font-family:inherit; font-size:16px; font-weight:600; padding:12px 13px; outline:none; min-height:48px;
+  -webkit-appearance:none; appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+  background-position:calc(100% - 19px) 21px,calc(100% - 13px) 21px; background-size:6px 6px,6px 6px; background-repeat:no-repeat;
+}
+select:focus{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-bg)}
+.tx-rows td{font-size:14px}
+.tx-rows td.k{color:var(--muted)}
+.tx-note{font-size:12px; color:var(--faint); margin:10px 0 0; line-height:1.6}
+.tx-warn{font-size:12.5px; color:var(--red); font-weight:500; margin:10px 0 0; display:none}
+.tx-warn.show{display:block}
+.tx-band{font-size:13px; color:var(--muted)}
+.tx-two{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px; padding-top:14px; border-top:1px solid var(--line)}
+.tx-two .lb{font-size:12px; color:var(--muted); font-weight:500}
+.tx-two .vl{font-size:18px; font-weight:700}
+
 /* table */
 table{width:100%; border-collapse:collapse; font-size:14.5px}
 td,th{padding:11px 4px; border-top:1px solid var(--line); text-align:right}
@@ -198,6 +272,7 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
     </div>
   </header>
 
+  <div id="tabStock">
   <div class="hero">
     <div class="hero-lb" id="heroLb">淨盈虧（已扣所有費用）</div>
     <div class="hero-main">
@@ -371,15 +446,125 @@ footer{max-width:640px; margin:10px auto 0; color:var(--faint); font-size:12px; 
       </div>
     </div>
   </details>
+  </div><!-- /tabStock -->
+
+  <div id="tabTax" hidden>
+    <div class="hero">
+      <div class="hero-lb">稅後淨收入（全年）</div>
+      <div class="hero-main">
+        <span class="num" id="txNet">—</span>
+        <span class="num" id="txKeepPct"></span>
+      </div>
+      <div class="hero-cad num" id="txMonthly"></div>
+      <div class="hero-foot">
+        <span class="lb">總扣除（稅 + CPP + EI）</span>
+        <span class="vl num" id="txTotalDed">—</span>
+      </div>
+    </div>
+
+    <section class="card" aria-label="基本資料">
+      <h2>基本資料 · 2026 稅年</h2>
+      <div style="margin-bottom:16px">
+        <label for="txProv">省份 / 地區</label>
+        <select id="txProv"></select>
+      </div>
+      <div style="margin-bottom:16px">
+        <label for="txIncome">年薪 · 受僱入息（加紙）</label>
+        <input id="txIncome" type="number" inputmode="numeric" min="0" step="1000" value="80000">
+        <div class="chips" id="txIncChips">
+          <button class="chip" data-i="50000">50k</button>
+          <button class="chip" data-i="80000">80k</button>
+          <button class="chip" data-i="120000">120k</button>
+          <button class="chip" data-i="200000">200k</button>
+        </div>
+      </div>
+      <div>
+        <label for="txRrsp">RRSP 供款（可扣稅，冇就填 0）</label>
+        <input id="txRrsp" type="number" inputmode="numeric" min="0" step="500" value="0">
+      </div>
+      <p class="tx-warn" id="txWarn"></p>
+    </section>
+
+    <section class="card" aria-label="扣除總覽">
+      <h2>扣除總覽</h2>
+      <table class="tx-rows">
+        <tr><td class="k">聯邦入息稅<button class="ib" onclick="openSheet('fed')" aria-label="聯邦入息稅說明">i</button></td><td class="num" id="txFed">—</td></tr>
+        <tr><td class="k"><span id="txProvLb">省入息稅</span><button class="ib" onclick="openSheet('prov')" aria-label="省入息稅說明">i</button></td><td class="num" id="txProvTax">—</td></tr>
+        <tr><td class="k"><span id="txCppLb">CPP 供款</span><button class="ib" onclick="openSheet('cpp')" aria-label="CPP 供款說明">i</button></td><td class="num" id="txCpp">—</td></tr>
+        <tr><td class="k"><span id="txEiLb">EI 就業保險</span><button class="ib" onclick="openSheet('ei')" aria-label="EI 說明">i</button></td><td class="num" id="txEi">—</td></tr>
+        <tr class="tot"><td>總扣除</td><td class="num" id="txTot">—</td></tr>
+        <tr><td class="k">稅後淨收入</td><td class="num" id="txNet2">—</td></tr>
+      </table>
+      <div class="tx-two">
+        <div><div class="lb">平均稅率（佔年薪）<button class="ib" onclick="openSheet('avg')" aria-label="平均稅率說明">i</button></div><div class="vl num" id="txAvg">—</div></div>
+        <div><div class="lb">邊際稅率（下一蚊）<button class="ib" onclick="openSheet('marg')" aria-label="邊際稅率說明">i</button></div><div class="vl num" id="txMarg">—</div></div>
+      </div>
+    </section>
+
+    <details open>
+      <summary>聯邦稅詳情（逐級稅階）</summary>
+      <div class="body">
+        <p class="tx-band" id="txTaxableLine"></p>
+        <table class="tx-rows"><tbody id="txFedRows"></tbody></table>
+        <table class="tx-rows" style="margin-top:10px"><tbody id="txFedCred"></tbody></table>
+      </div>
+    </details>
+
+    <details>
+      <summary id="txProvSum">省稅詳情（逐級稅階）</summary>
+      <div class="body">
+        <table class="tx-rows"><tbody id="txProvRows"></tbody></table>
+        <table class="tx-rows" style="margin-top:10px"><tbody id="txProvCred"></tbody></table>
+      </div>
+    </details>
+
+    <details>
+      <summary>CPP / EI 供款詳情</summary>
+      <div class="body">
+        <table class="tx-rows"><tbody id="txCppRows"></tbody></table>
+      </div>
+    </details>
+  </div><!-- /tabTax -->
 </main>
 
 <footer>
+<div id="footStock">
   報價預設用 Yahoo Finance 非官方資料、無需 key，經多個公共 CORS 代理（AllOrigins／CodeTabs／killcors）並行轉發，邊個先返到就用邊個，並設有逾時。公共代理仍可能同時繁忙或暫停，故取價未必次次成功；如需近乎穩定，可喺報價卡填一個免費 Finnhub key（會優先使用，免 key 作後備）。Yahoo 隨時可能更改介面而導致免 key 報價失效。<br>
   賣出比例：可揀只賣部分持股。賣出股數會向下取整（例如 7 股賣 20% 當 1 股）。此時盈虧為「已實現」盈虧，成本按平均每股成本（買入金額連買入佣金 ÷ 總股數）攤分到已賣股數；買入佣金及換匯費按已賣比例分攤。注意分批出貨每次都要俾一次最低佣金同最低換匯費，總成本會高過一次過沽清。<br>
   匯率：優先取 Yahoo USDCAD 市場價（較接近即時，經上述代理）；取唔到時自動改用 Frankfurter 的歐洲央行參考價（免 key 直連，每個工作日約歐洲時間 16:00 更新一次）或 exchangerate.fun（每小時）。免費來源冇真正逐秒即時價，卡上會顯示當次用咗邊個來源同時間，落單前請以 IB 報價為準。<br>
   IB 換匯費：手動換匯（IDEALPRO）為成交額 0.20 個基點（0.002%），每單最低 US$2；自動換匯為 0.03%、冇另外佣金。約 US$6,667 以下自動較便宜，以上手動較便宜。加紙欄假設買入前由加紙換美金、賣出後換返加紙，即計兩次換匯費；如你本身持有美金，可揀「已有美金 · 免費」。<br>
   費率預設值（2026 年 7 月）：SEC Section 31 費 $20.60／每百萬成交額（2026-04-04 生效）；FINRA TAF $0.000195／股、每單上限 $9.79（2026-01-01 生效）。費率會不時調整，可以喺「進階費率設定」自行修改。階梯式佣金未計交易所／清算轉嫁費，實際略高。本工具只供參考，唔構成投資建議。
+</div>
+<div id="footTax" hidden>
+  2026 稅年數據來源：聯邦稅階及基本個人免稅額（BPA $16,452，收入 $181,440–$258,482 之間遞減至 $14,829）、各省／地區稅階及 BPA 已對照 CRA T4127 薪俸扣除公式表 8.1；卑詩數字另經卑詩省政府官網核實（2026 年最低稅率由 5.06% 升至 5.60%，BPA $13,216，稅務減免上限 $690、淨收入門檻 $25,570、超出部分按 3.56% 遞減，至 $44,952 歸零）。CPP：YMPE $74,600、基本免供額 $3,500、稅率 5.95%、上限 $4,230.45；CPP2：YAMPE $85,000、稅率 4%、上限 $416。EI：最高可保收入 $68,900、稅率 1.63%、上限 $1,123.07（魁省 1.30%／$895.70）。<br>
+  計算方法：CPP 供款中「加強部分」（1% 及 CPP2）作收入扣除，「基本部分」（4.95%，上限 $3,519.45）同 EI 一樣作非退款稅項抵免。安大略計埋附加稅（省稅超過 $5,818 部分加 20%，超過 $7,446 部分再加 36%）及健康保費。<br>
+  重要限制：此計算機只處理受僱薪金收入，假設單身、無受養人、無其他收入或抵免（例如配偶、託兒、學費、醫療、股息、資本增值、自僱）。淨收入以應課稅收入代替，如有其他扣除會有差異。魁北克（QPP／QPIP／16.5% 聯邦回扣）為概算，請以 Revenu Québec 為準。安大略低收入稅務減免未計算。結果為估算，唔係報稅或稅務建議，實際以 CRA 評稅為準；重要決定請諮詢會計師。
+</div>
 </footer>
+
+<nav class="tabbar" role="tablist" aria-label="主導航">
+  <div class="tabbar-in">
+    <button id="tabBtnStock" class="on" role="tab" aria-selected="true" onclick="showTab('stock')">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
+      <span>股票計數機</span>
+    </button>
+    <button id="tabBtnTax" role="tab" aria-selected="false" onclick="showTab('tax')">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.8" cy="6.8" r="2.6"/><circle cx="17.2" cy="17.2" r="2.6"/></svg>
+      <span>入息稅</span>
+    </button>
+  </div>
+</nav>
+
+<div class="sheet-bd" id="sheetBd" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="sheet-grab"></div>
+    <div class="sheet-head">
+      <h3 id="sheetTitle"></h3>
+      <button class="sheet-x" id="sheetX" aria-label="關閉">✕</button>
+    </div>
+    <div id="sheetBody"></div>
+  </div>
+</div>
 
 <script>
 const $=id=>document.getElementById(id);
@@ -696,6 +881,261 @@ $('convDir').addEventListener('click',()=>{
   $('convDir').textContent=convC2U?'加紙 → 美金':'美金 → 加紙';
   renderConv();
 });
+
+/* ══ 入息稅計算機 · 2026 稅年 ══
+   稅階／BPA 對照 CRA T4127 表 8.1；BC 另經省政府官網核實。 */
+const FED={
+  br:[[58523,.14],[117045,.205],[181440,.26],[258482,.29],[Infinity,.33]],
+  bpaHi:16452,bpaLo:14829,phLo:181440,phHi:258482,cr:.14
+};
+const CPP={ympe:74600,exempt:3500,rate:.0595,max:4230.45,yampe:85000,rate2:.04,max2:416,baseRate:.0495,baseMax:3519.45};
+const EI={mie:68900,rate:.0163,max:1123.07,qcRate:.0130,qcMax:895.70};
+const PROV={
+  BC:{n:'卑詩 BC',br:[[50363,.056],[100728,.077],[115648,.105],[140430,.1229],[190405,.147],[265545,.168],[Infinity,.205]],bpa:13216,cr:.056,red:{max:690,thr:25570,rate:.0356}},
+  AB:{n:'亞伯達 Alberta',br:[[61200,.08],[154259,.10],[185111,.12],[246813,.13],[370220,.14],[Infinity,.15]],bpa:22769,cr:.08},
+  ON:{n:'安大略 Ontario',br:[[53891,.0505],[107785,.0915],[150000,.1116],[220000,.1216],[Infinity,.1316]],bpa:12989,cr:.0505,sur:[[5818,.20],[7446,.36]],health:1},
+  QC:{n:'魁北克 Quebec（概算）',br:[[54345,.14],[108680,.19],[132245,.24],[Infinity,.2575]],bpa:18952,cr:.14,qc:1},
+  MB:{n:'緬尼托巴 Manitoba',br:[[47000,.108],[100000,.1275],[Infinity,.174]],bpa:15780,cr:.108},
+  SK:{n:'沙斯卡寸溫 Saskatchewan',br:[[54532,.105],[155805,.125],[Infinity,.145]],bpa:20381,cr:.105},
+  NS:{n:'新斯科舍 Nova Scotia',br:[[30995,.0879],[61991,.1495],[97417,.1667],[157124,.175],[Infinity,.21]],bpa:11932,cr:.0879},
+  NB:{n:'新布朗斯維克 New Brunswick',br:[[52333,.094],[104666,.14],[193861,.16],[Infinity,.195]],bpa:13664,cr:.094},
+  NL:{n:'紐芬蘭 Newfoundland',br:[[44678,.087],[89354,.145],[159528,.158],[223340,.178],[285319,.198],[570638,.208],[1141275,.213],[Infinity,.218]],bpa:13094,cr:.087},
+  PE:{n:'愛德華王子島 PEI',br:[[33928,.095],[65820,.1347],[106890,.166],[142520,.1762],[200000,.19],[Infinity,.20]],bpa:15000,cr:.095},
+  NT:{n:'西北地區 NWT',br:[[53003,.059],[106009,.086],[172346,.122],[Infinity,.1405]],bpa:18198,cr:.059},
+  YT:{n:'育空 Yukon',br:[[58523,.064],[117045,.09],[181440,.109],[500000,.128],[Infinity,.15]],bpa:16452,cr:.064},
+  NU:{n:'努納武特 Nunavut',br:[[55801,.04],[111602,.07],[181439,.09],[Infinity,.115]],bpa:19659,cr:.04}
+};
+const fmtA=n=>'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmt0=n=>'$'+Math.round(n).toLocaleString('en-US');
+const pctS=n=>(n*100).toFixed(2)+'%';
+
+function bandTax(inc,br){
+  let tax=0,prev=0;const rows=[];
+  for(const[cap,rate]of br){
+    if(inc<=prev)break;
+    const hi=Math.min(inc,cap),amt=hi-prev;
+    if(amt>0){tax+=amt*rate;rows.push({lo:prev,hi,rate,amt,t:amt*rate})}
+    prev=cap;
+  }
+  return{tax,rows};
+}
+function onHealth(inc){
+  if(inc<=20000)return 0;
+  if(inc<=36000)return Math.min(300,(inc-20000)*.06);
+  if(inc<=48000)return Math.min(450,300+(inc-36000)*.06);
+  if(inc<=72000)return Math.min(600,450+(inc-48000)*.25);
+  if(inc<=200000)return Math.min(750,600+(inc-72000)*.25);
+  return Math.min(900,750+(inc-200000)*.25);
+}
+function taxEngine(gross,rrsp,code){
+  const P=PROV[code],isQC=!!P.qc;
+  const r1=isQC?.0630:CPP.rate, m1=isQC?4479.30:CPP.max, bRate=isQC?.0540:CPP.baseRate;
+  const contrib=Math.max(0,Math.min(gross,CPP.ympe)-CPP.exempt);
+  const c1=Math.min(contrib*r1,m1);
+  const e2=Math.max(0,Math.min(gross,CPP.yampe)-CPP.ympe);
+  const c2=Math.min(e2*CPP.rate2,CPP.max2);
+  const cppBase=Math.min(contrib*bRate,isQC?3839.40:CPP.baseMax);
+  const cppDed=Math.max(0,c1-cppBase)+c2;
+  const ei=Math.min(Math.min(gross,EI.mie)*(isQC?EI.qcRate:EI.rate),isQC?EI.qcMax:EI.max);
+  const qpip=isQC?Math.min(gross*.00494,442.90):0;
+
+  const taxable=Math.max(0,gross-cppDed-rrsp);
+  let bpa=FED.bpaHi;
+  if(taxable>FED.phHi)bpa=FED.bpaLo;
+  else if(taxable>FED.phLo)bpa=FED.bpaHi-(FED.bpaHi-FED.bpaLo)*(taxable-FED.phLo)/(FED.phHi-FED.phLo);
+
+  const F=bandTax(taxable,FED.br);
+  const fCred=(bpa+cppBase+ei+qpip)*FED.cr;
+  let fed=Math.max(0,F.tax-fCred);
+  const abate=isQC?fed*.165:0; fed-=abate;
+
+  const V=bandTax(taxable,P.br);
+  const pCred=(P.bpa+cppBase+ei+qpip)*P.cr;
+  let prov=Math.max(0,V.tax-pCred);
+  let sur=0,health=0,red=0;
+  if(P.sur){sur=P.sur[0][1]*Math.max(0,prov-P.sur[0][0])+P.sur[1][1]*Math.max(0,prov-P.sur[1][0]);prov+=sur}
+  if(P.health){health=onHealth(taxable);prov+=health}
+  if(P.red){red=Math.max(0,P.red.max-Math.max(0,taxable-P.red.thr)*P.red.rate);prov=Math.max(0,prov-red)}
+
+  const total=fed+prov+c1+c2+ei+qpip;
+  return{P,isQC,gross,rrsp,taxable,contrib,e2,c1,c2,cppBase,cppDed,ei,qpip,bpa,
+    F,fCred,fed,abate,V,pCred,prov,sur,health,red,total,net:gross-total};
+}
+
+function rowHTML(k,v,bold){
+  return'<tr'+(bold?' class="tot"':'')+'><td'+(bold?'':' class="k"')+'>'+k+'</td><td class="num">'+v+'</td></tr>';
+}
+function calcTax(){
+  const gross=Math.max(0,parseFloat($('txIncome').value)||0);
+  const rrsp=Math.max(0,parseFloat($('txRrsp').value)||0);
+  const code=$('txProv').value;
+  const R=taxEngine(gross,rrsp,code);
+  const R2=taxEngine(gross+1000,rrsp,code);
+
+  $('txNet').textContent=fmt0(R.net);
+  $('txNet').style.color='var(--text)';
+  $('txKeepPct').textContent=gross>0?('留低 '+pctS(R.net/gross)):'';
+  $('txKeepPct').style.color='var(--muted)';
+  $('txMonthly').textContent=gross>0?('每月約 '+fmt0(R.net/12)+' · 每兩星期約 '+fmt0(R.net/26)):'';
+  $('txMonthly').style.color='var(--muted)';
+  $('txTotalDed').textContent=fmt0(R.total);
+
+  $('txFed').textContent=fmtA(R.fed);
+  $('txProvLb').textContent=R.P.n.split(' ')[0]+'省稅';
+  $('txProvTax').textContent=fmtA(R.prov);
+  $('txCppLb').textContent=R.isQC?'QPP 供款':'CPP 供款';
+  $('txCpp').textContent=fmtA(R.c1+R.c2);
+  $('txEiLb').textContent=R.isQC?'EI + QPIP':'EI 就業保險';
+  $('txEi').textContent=fmtA(R.ei+R.qpip);
+  $('txTot').textContent=fmtA(R.total);
+  $('txNet2').textContent=fmtA(R.net);
+  $('txAvg').textContent=gross>0?pctS(R.total/gross):'—';
+  $('txMarg').textContent=gross>0?pctS((R2.total-R.total)/1000):'—';
+
+  $('txTaxableLine').textContent='年薪 '+fmt0(gross)+' − CPP 加強部分扣除 '+fmtA(R.cppDed)
+    +(rrsp>0?' − RRSP '+fmt0(rrsp):'')+' = 應課稅收入 '+fmtA(R.taxable);
+
+  $('txFedRows').innerHTML=R.F.rows.map(r=>rowHTML(
+    fmt0(r.lo)+' – '+fmt0(r.hi)+' @ '+pctS(r.rate),fmtA(r.t))).join('')
+    +rowHTML('聯邦稅小計',fmtA(R.F.tax),1);
+  $('txFedCred').innerHTML=rowHTML('基本個人免稅額 '+fmt0(R.bpa),'')
+    +rowHTML('CPP 基本部分 '+fmt0(R.cppBase)+' + EI '+fmt0(R.ei+R.qpip),'')
+    +rowHTML('抵免合計 × '+pctS(FED.cr),'−'+fmtA(R.fCred))
+    +(R.abate>0?rowHTML('魁省聯邦回扣 16.5%','−'+fmtA(R.abate)):'')
+    +rowHTML('應繳聯邦稅',fmtA(R.fed),1);
+
+  $('txProvSum').textContent=R.P.n+' 稅詳情（逐級稅階）';
+  $('txProvRows').innerHTML=R.V.rows.map(r=>rowHTML(
+    fmt0(r.lo)+' – '+fmt0(r.hi)+' @ '+pctS(r.rate),fmtA(r.t))).join('')
+    +rowHTML('省稅小計',fmtA(R.V.tax),1);
+  $('txProvCred').innerHTML=rowHTML('省基本個人免稅額 '+fmt0(R.P.bpa),'')
+    +rowHTML('抵免合計 × '+pctS(R.P.cr),'−'+fmtA(R.pCred))
+    +(R.sur>0?rowHTML('安省附加稅','+'+fmtA(R.sur)):'')
+    +(R.health>0?rowHTML('安省健康保費','+'+fmtA(R.health)):'')
+    +(R.red>0?rowHTML('卑詩低收入稅務減免','−'+fmtA(R.red)):'')
+    +rowHTML('應繳省稅',fmtA(R.prov),1);
+
+  $('txCppRows').innerHTML=
+    rowHTML((R.isQC?'QPP':'CPP')+' 可供款收入（'+fmt0(Math.min(gross,CPP.ympe))+' − 免供額 '+fmt0(CPP.exempt)+'）',fmt0(R.contrib))
+    +rowHTML((R.isQC?'QPP':'CPP')+' @ '+pctS(R.isQC?.0630:CPP.rate),fmtA(R.c1))
+    +rowHTML('CPP2 可供款收入（'+fmt0(CPP.ympe)+' – '+fmt0(CPP.yampe)+'）',fmt0(R.e2))
+    +rowHTML('CPP2 @ '+pctS(CPP.rate2),fmtA(R.c2))
+    +rowHTML('EI（可保收入上限 '+fmt0(EI.mie)+' @ '+pctS(R.isQC?EI.qcRate:EI.rate)+'）',fmtA(R.ei))
+    +(R.qpip>0?rowHTML('QPIP 魁省育兒保險（概算）',fmtA(R.qpip)):'')
+    +rowHTML('供款合計',fmtA(R.c1+R.c2+R.ei+R.qpip),1)
+    +rowHTML('其中可扣稅（加強部分）',fmtA(R.cppDed))
+    +rowHTML('其中可作抵免（基本部分）',fmtA(R.cppBase));
+
+  const w=$('txWarn');
+  if(R.isQC){w.textContent='魁北克嘅 QPP／QPIP／16.5% 聯邦回扣為概算，請以 Revenu Québec 為準。';w.classList.add('show')}
+  else w.classList.remove('show');
+
+  document.querySelectorAll('#txIncChips .chip').forEach(c=>c.classList.toggle('on',parseFloat(c.dataset.i)===gross));
+}
+
+function showTab(t){
+  const isTax=t==='tax';
+  $('tabStock').hidden=isTax; $('tabTax').hidden=!isTax;
+  $('footStock').hidden=isTax; $('footTax').hidden=!isTax;
+  $('tabBtnStock').classList.toggle('on',!isTax);
+  $('tabBtnTax').classList.toggle('on',isTax);
+  $('tabBtnStock').setAttribute('aria-selected',String(!isTax));
+  $('tabBtnTax').setAttribute('aria-selected',String(isTax));
+  try{window.scrollTo({top:0,behavior:'instant'})}catch(e){window.scrollTo(0,0)}
+  if(isTax)calcTax();
+}
+
+$('txProv').innerHTML=Object.keys(PROV).map(k=>'<option value="'+k+'">'+PROV[k].n+'</option>').join('');
+$('txProv').value='BC';
+$('txProv').addEventListener('change',calcTax);
+['txIncome','txRrsp'].forEach(i=>$(i).addEventListener('input',calcTax));
+document.querySelectorAll('#txIncChips .chip').forEach(c=>{
+  c.addEventListener('click',()=>{$('txIncome').value=c.dataset.i;calcTax()});
+});
+calcTax();
+
+/* ── 稅項說明彈窗 ── */
+function curTax(){
+  return taxEngine(Math.max(0,parseFloat($('txIncome').value)||0),
+                   Math.max(0,parseFloat($('txRrsp').value)||0),$('txProv').value);
+}
+const TAXINFO={
+  fed:()=>{const R=curTax();return{t:'聯邦入息稅',h:`
+    <h4>係咩嚟</h4><p>聯邦政府按你嘅應課稅收入分級徵收。2026 年由 14% 起，最高 33%。<b>每一級稅率只適用於嗰一段收入</b>——唔係成份糧跳晒上高稅率。</p>
+    <h4>點解要收</h4><p>資助全國性開支：醫療轉移撥款、長者保障金、國防、EI 制度等。</p>
+    <h4>幾時攞得返</h4><p>呢個係真正嘅稅，唔會自動退返。但有三個情況會有退稅：</p>
+    <p class="dim">① 僱主每期預扣多咗（最常見）——報稅之後多繳部分退返你。<br>
+    ② RRSP 供款、學費、醫療費、託兒費、搬屋費等扣除，可以減低應課稅收入。<br>
+    ③ 各種非退款抵免（基本個人免稅額、CPP、EI 等）直接減應繳稅。</p>
+    <p>報稅截止一般係每年 <b>4 月 30 日</b>（自僱人士 6 月 15 日，但欠稅仍然 4 月 30 日到期）。</p>
+    <div class="kv">你嘅情況：應課稅收入 <b>${fmtA(R.taxable)}</b><br>
+    基本個人免稅額 <b>${fmt0(R.bpa)}</b>（收入超過 $181,440 會開始遞減）<br>
+    抵免合計 −${fmtA(R.fCred)} → 應繳 <b>${fmtA(R.fed)}</b></div>`}},
+
+  prov:()=>{const R=curTax();return{t:R.P.n+' 入息稅',h:`
+    <h4>係咩嚟</h4><p>每個省／地區有自己一套稅階，用<b>同一筆應課稅收入</b>再計多次。所以你嘅邊際稅率 = 聯邦 + 省。</p>
+    <h4>邊個省計</h4><p>以你 <b>12 月 31 日居住嗰個省</b>為準，唔係你賺錢嗰個省。年中搬省，全年都當新省計。</p>
+    <h4>幾時攞得返</h4><p>同聯邦稅一齊喺同一張 T1 報稅表計，預扣多咗會一次過退返。${
+      R.P.red?'<b>卑詩</b>另有低收入稅務減免：淨收入低於 $25,570 可得足額 $690，之後按 3.56% 遞減，至 $44,952 歸零——自動計算，唔使申請。':''}${
+      R.P.sur?'<b>安大略</b>另有附加稅（省稅超過 $5,818 加 20%，超過 $7,446 再加 36%）同健康保費（最多 $900），所以實際負擔高過表面稅率。':''}${
+      R.isQC?'<b>魁北克</b>要另外交一份 Revenu Québec 報稅表，聯邦稅有 16.5% 回扣。':''}</p>
+    <div class="kv">${R.P.n}：省 BPA <b>${fmt0(R.P.bpa)}</b>，抵免率 ${pctS(R.P.cr)}<br>
+    省稅小計 ${fmtA(R.V.tax)} − 抵免 ${fmtA(R.pCred)}${R.sur>0?' + 附加稅 '+fmtA(R.sur):''}${R.health>0?' + 健康保費 '+fmtA(R.health):''}${R.red>0?' − 減免 '+fmtA(R.red):''} → <b>${fmtA(R.prov)}</b></div>`}},
+
+  cpp:()=>{const R=curTax();return{t:(R.isQC?'QPP':'CPP')+' 退休金供款',h:`
+    <h4>係咩嚟</h4><p>強制性退休金供款。2026 年：薪金喺 <b>$3,500 至 $74,600</b> 之間按 5.95% 供（最多 $4,230.45）；<b>$74,600 至 $85,000</b> 嗰段再按 4% 供（CPP2，最多 $416）。僱主同你供一樣多。</p>
+    <h4>點解要供</h4><p>嚴格嚟講<b>唔係稅</b>——係買緊你自己將來嘅退休金。供得越多、越耐，將來每月攞得越多。</p>
+    <h4>幾時攞得返</h4><p><b>唔會現金退返，但唔係冇咗。</b>最早 60 歲可以開始領（每早一個月扣 0.6%），65 歲為標準，延到 70 歲每遲一個月加 0.7%。</p>
+    <p>兩個情況會真係退錢返你：</p>
+    <p class="dim">① 一年內轉過工，或者同時有幾個僱主，合共扣多咗 → 報稅時退返超額部分。<br>
+    ② 65 歲後如果已經領緊 CPP，可以填 CPT30 表停止供款；70 歲之後自動停。</p>
+    <h4>稅務優惠</h4><p>加強部分（1% 同 CPP2）可以<b>直接扣減應課稅收入</b>；基本部分（4.95%，上限 $3,519.45）當<b>非退款抵免</b>。</p>
+    <div class="kv">你嘅情況：可供款收入 <b>${fmt0(R.contrib)}</b><br>
+    CPP ${fmtA(R.c1)}${R.c2>0?' + CPP2 '+fmtA(R.c2):''} = <b>${fmtA(R.c1+R.c2)}</b><br>
+    其中可扣稅 ${fmtA(R.cppDed)} · 可作抵免 ${fmtA(R.cppBase)}<br>
+    <span class="dim">僱主另外幫你供 ${fmtA(R.c1+R.c2)}</span></div>`}},
+
+  ei:()=>{const R=curTax();return{t:'EI 就業保險',h:`
+    <h4>係咩嚟</h4><p>就業保險保費。2026 年按可保收入 <b>${pctS(R.isQC?EI.qcRate:EI.rate)}</b> 扣，收入上限 <b>$68,900</b>，即最多 <b>${fmtA(R.isQC?EI.qcMax:EI.max)}</b>。僱主再供 1.4 倍。</p>
+    <h4>點解要收</h4><p>係一份保險，唔係稅。失業、生病、產假／育兒假、照顧重病家人嗰陣，可以攞津貼。</p>
+    <h4>幾時攞得返</h4><p>正常情況下保費<b>唔會退</b>，但符合資格時可以申領津貼——一般係平均可保收入嘅 <b>55%</b>，以 2026 年收入上限推算大約每週 $729 封頂（實際金額以 Service Canada 為準）。</p>
+    <p>兩個情況會退返保費：</p>
+    <p class="dim">① 全年可保收入 <b>$2,000 或以下</b> → 報稅時全數退返。<br>
+    ② 轉工／多個僱主扣多咗 → 超額部分退返。</p>
+    <h4>留意</h4><p>自僱人士一般唔使供（除非自願參加特別津貼計劃）。如果你係公司東主而且控制超過 40% 有投票權股份，通常唔受保。${R.isQC?'<b>魁省</b>保費較低，因為產假／育兒假由 QPIP 另外負責。':''}</p>
+    <div class="kv">你嘅情況：可保收入 <b>${fmt0(Math.min(R.gross,EI.mie))}</b> → 保費 <b>${fmtA(R.ei)}</b>${R.qpip>0?'<br>QPIP '+fmtA(R.qpip)+'（概算）':''}<br>
+    <span class="dim">僱主另外供 ${fmtA(R.ei*1.4)}</span></div>`}},
+
+  avg:()=>{const R=curTax();return{t:'平均稅率',h:`
+    <h4>點計</h4><p>總扣除 ÷ 年薪。即係你份糧實際上有幾多百分比走咗。</p>
+    <h4>點解重要</h4><p>呢個先係你真正嘅負擔。好多人見自己「喺 26% 稅階」就以為成份糧俾 26%，其實平均稅率通常低好多，因為低嗰幾級收入係按低稅率計。</p>
+    <div class="kv">你嘅情況：總扣除 <b>${fmtA(R.total)}</b> ÷ 年薪 ${fmt0(R.gross)} = <b>${R.gross>0?pctS(R.total/R.gross):'—'}</b><br>
+    <span class="dim">注意：呢度嘅「總扣除」包埋 CPP 同 EI，佢哋嚴格嚟講唔係稅。</span></div>`}},
+
+  marg:()=>{const R=curTax(),R2=taxEngine(R.gross+1000,R.rrsp,$('txProv').value);return{t:'邊際稅率',h:`
+    <h4>點計</h4><p>你下一蚊收入會被抽走幾多。呢度用「多賺 $1,000 會多扣幾多」嚟計。</p>
+    <h4>幾時要睇呢個</h4><p>考慮<b>加人工、收花紅、做 OT、賣股票賺錢、或者供 RRSP 慳幾多稅</b>嗰陣，睇邊際稅率先啱，唔係平均稅率。</p>
+    <h4>唔止係稅階咁簡單</h4><p>幾樣嘢會令實際邊際稅率高過表面嘅「聯邦 + 省」：</p>
+    <p class="dim">① CPP／EI 未供滿上限之前，每蚊都要再供。<br>
+    ② 收入 $181,440–$258,482 之間，聯邦基本個人免稅額逐步遞減，等於變相多抽約 0.3%。<br>
+    ③ 卑詩淨收入 $25,570–$44,952 之間，低收入減免按 3.56% 遞減。<br>
+    ④ 其他收入相關福利（GST 抵免、兒童福利金等）亦會遞減，呢個計算機未計。</p>
+    <div class="kv">你嘅情況：多賺 $1,000 → 多扣 <b>${fmtA(R2.total-R.total)}</b> = <b>${pctS((R2.total-R.total)/1000)}</b><br>
+    <span class="dim">即係實收多 ${fmtA(1000-(R2.total-R.total))}。</span></div>`}}
+};
+function openSheet(k){
+  const d=TAXINFO[k]&&TAXINFO[k]();
+  if(!d)return;
+  $('sheetTitle').textContent=d.t;
+  $('sheetBody').innerHTML=d.h;
+  $('sheetBd').hidden=false;
+  document.body.style.overflow='hidden';
+  $('sheetX').focus();
+}
+function closeSheet(){$('sheetBd').hidden=true;document.body.style.overflow=''}
+$('sheetX').addEventListener('click',closeSheet);
+$('sheetBd').addEventListener('click',e=>{if(e.target===$('sheetBd'))closeSheet()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sheetBd').hidden)closeSheet()});
 
 updateSlider();calc();loadFX();
 </script>
